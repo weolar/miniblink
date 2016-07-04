@@ -1,6 +1,6 @@
 {
-  "name": "史上最小巧的chromium内核：miniblink",
-  "tagline": "",
+  "name": "Miniblink",
+  "tagline": "史上最小巧的chromium内核：miniblink",
   "body": "### 追求极致小巧的chromium内核  \r\n\r\n\r\nMiniblink是一个全新的、追求极致小巧的浏览器内核项目，其基于chromium最新版内核，  \r\n去除了所有chromium所有多余的部件，只保留最基本的排版引擎blink。  \r\n包括chromium的content层、硬件合成cc层在内的所有部件都被去除，保持了10M左右的极简大小，同时支持windows xp。\r\n\r\n### 更丰富的适配层\r\n\r\nMiniblink导出了CEF的接口，可以直接替换现有的CEF项目，未来即将引入electron的接口，大家拭目以待。\r\n\r\n博客地址：http://blog.csdn.net/weolar/article/details/51447704",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
