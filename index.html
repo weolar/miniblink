@@ -14,6 +14,7 @@
     }
     
     if (typeof window.WeixinJSBridge != 'undefined') {
+      alert("进入微信");
       WeixinJSBridge.invoke('closeWindow',{},function(res){
         alert("确定离开当前页面吗？");
       });
