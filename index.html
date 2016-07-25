@@ -10,8 +10,15 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
     <script>
     function checkLeave(){
-     　event.returnValue="确定离开当前页面吗？";
+     　alert("确定离开当前页面吗？");
     }
+    
+    if (typeof window.WeixinJSBridge != 'undefined') {
+      WeixinJSBridge.invoke('closeWindow',{},function(res){
+        alert("确定离开当前页面吗？");
+      });
+    } else
+      alert("请在微信中查看");
     </script>
   </head>
   <body onbeforeunload="checkLeave()">
