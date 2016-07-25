@@ -16,7 +16,7 @@
     document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
       if (typeof window.WeixinJSBridge != 'undefined') {
         document.write("进入微信");
-        WeixinJSBridge.invoke('closeWindow',{},function(res){
+        WeixinJSBridge.on("activity:state_change", function(res) {
           document.write("确定离开当前页面吗？");
         });
       } else
