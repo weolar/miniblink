@@ -10,16 +10,16 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
     <script>
     function checkLeave(){
-     　alert("确定离开当前页面吗？");
+     　document.write("确定离开当前页面吗？");
     }
     
     if (typeof window.WeixinJSBridge != 'undefined') {
-      alert("进入微信");
+      document.write("进入微信");
       WeixinJSBridge.invoke('closeWindow',{},function(res){
-        alert("确定离开当前页面吗？");
+        document.write("确定离开当前页面吗？");
       });
     } else
-      alert("请在微信中查看");
+      document.write("请在微信中查看");
     </script>
   </head>
   <body onbeforeunload="checkLeave()">
