@@ -13,13 +13,19 @@
      　document.write("确定离开当前页面吗？");
     }
     
-    if (typeof window.WeixinJSBridge != 'undefined') {
-      document.write("进入微信");
-      WeixinJSBridge.invoke('closeWindow',{},function(res){
-        document.write("确定离开当前页面吗？");
-      });
-    } else
-      document.write("请在微信中查看");
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+      if (typeof window.WeixinJSBridge != 'undefined') {
+        document.write("进入微信");
+        WeixinJSBridge.invoke('closeWindow',{},function(res){
+          document.write("确定离开当前页面吗？");
+        });
+      } else
+        document.write("请在微信中查看");
+      
+      // 通过下面这个API隐藏右上角按钮
+      WeixinJSBridge.call('hideOptionMenu');
+    });
+    
     </script>
   </head>
   <body onbeforeunload="checkLeave()">
