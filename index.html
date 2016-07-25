@@ -8,8 +8,13 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script>
+    function checkLeave(){
+     　event.returnValue="确定离开当前页面吗？";
+    }
+    </script>
   </head>
-  <body>
+  <body onbeforeunload="checkLeave()">
     <section class="page-header">
       <h1 class="project-name">Miniblink</h1>
       <h2 class="project-tagline">史上最小巧的chromium内核：miniblink</h2>
@@ -18,7 +23,7 @@
 
     <section class="main-content">
       <h3>
-<a id="miniblink是什么" class="anchor" href="#%E8%BF%BD%E6%B1%82%E6%9E%81%E8%87%B4%E5%B0%8F%E5%B7%A7%E7%9A%84chromium%E5%86%85%E6%A0%B8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>miniblink是什么？</h3>
+<a id="miniblink是什么？" class="anchor" href="#%E8%BF%BD%E6%B1%82%E6%9E%81%E8%87%B4%E5%B0%8F%E5%B7%A7%E7%9A%84chromium%E5%86%85%E6%A0%B8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>miniblink是什么？</h3>
 
 <p>Miniblink是一个全新的、追求极致小巧的浏览器内核项目，<br>
 其基于chromium最新版内核，去除了所有chromium所有多余的部件，只保留最基本的排版引擎blink。<br>
