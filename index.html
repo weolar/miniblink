@@ -9,24 +9,6 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
     <script>
-    function checkLeave(){
-     　document.write("确定离开当前页面吗？");
-    }
-    
-    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-      if (typeof window.WeixinJSBridge != 'undefined') {
-        document.write("进入微信");
-        WeixinJSBridge.on("activity:state_change", function(res) {
-          document.write("确定离开当前页面吗？");
-          alert("!!!");
-        });
-      } else
-        document.write("请在微信中查看");
-      
-      // 通过下面这个API隐藏右上角按钮
-      //WeixinJSBridge.call('hideOptionMenu');
-    });
-    
     </script>
   </head>
   <body onbeforeunload="checkLeave()">
