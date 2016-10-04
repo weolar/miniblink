@@ -59,7 +59,8 @@ Miniblink保持了10M左右的极简大小，是所有同类产品最小的体�
 
 <p>这个比较复杂了。主要就是把blink从chromium抽离了出来，同时补上了cc层（硬件渲染层）。现在的blink，已经不是当年的那个webkit了，渲染部分全走cc层，复杂无比。我这大半年都在重写他那个蛋疼又复杂的cc层。</p>
 
-<p>和webkit比，miniblink架构有什么优势</p>
+<h3>
+<a id="和webkit比miniblink架构有什么优势" class="anchor" href="#%E5%92%8Cwebkit%E6%AF%94miniblink%E6%9E%B6%E6%9E%84%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E5%8A%BF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>和webkit比，miniblink架构有什么优势</h3>
 
 <p>现在的webkit版本，已经比miniblink落后太多了。blink一直在加入各种极富创造力和想象力的功能、组件。例如，blink早就加入多线程解析html token、blink gc回收器、多线程录制回放渲染机制。这些能让blink的解析渲染速度极大提升。下一次，我会先开源出blink gc组件，这东西很有意思，在c++里硬是搞出了一个垃圾回收机制，能让你像写java一样写c++。</p>
 
