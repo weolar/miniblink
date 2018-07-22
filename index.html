@@ -1,83 +1,191 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Miniblink by weolar</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Miniblink</h1>
-      <h2 class="project-tagline">史上最小巧的chromium内核：miniblink</h2>
-      <a href="https://github.com/weolar/miniblink49" class="btn">View on GitHub</a>
-    </section>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author"      content="weolar (minibink.net)">
+	
+	<title>Miniblink：Coming html5 browse kernel</title>
 
-    <section class="main-content">
-      <h3>
-<a id="miniblink是什么" class="anchor" href="#miniblink%E6%98%AF%E4%BB%80%E4%B9%88" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>miniblink是什么？</h3>
+	<link href="assets/css/navbar.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="assets/css/styles.css">
+	
+	<!-- Bootstrap itself -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<!-- Icons -->
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> 
+	<!-- Fonts -->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700"> 
+	<!-- Custom styles -->
+	<link rel="stylesheet" href="assets/css/styles.css">
 
-<p>Miniblink是一个全新的、追求极致小巧的浏览器内核项目，
-其基于chromium最新版内核，去除了chromium所有多余的部件，只保留最基本的排版引擎blink。
-Miniblink保持了10M左右的极简大小，是所有同类产品最小的体积，同时支持windows xp、npapi。</p>
+	<!--[if lt IE 9]> <script src="assets/js/html5shiv.js"></script> <![endif]-->
+</head>
 
-<h3>
-<a id="为什么要做miniblink" class="anchor" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9Aminiblink" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>为什么要做miniblink？</h3>
-
-<p>市面上作为嵌入的组件的可用的浏览器内核，不外乎这几个：webkit、cef、nwjs、electron。</p>
-
-<p>cef：优点是由于集成的chromium内核，所以对H5支持的很全，同时因为使用的人也多，各种教程、示例，资源很多。但缺点很明显，太大了。最新的cef已经夸张到了100多M，还要带一堆的文件。同时新的cef已经不支持xp了（chromium对应版本是M49）。而且由于是多进程架构，对资源的消耗也很夸张。如果只是想做个小软件，一坨文件需要带上、超大的安装包，显然不能忍受。</p>
-
-<p>nwjs，或者最近大火的electron：和cef内核类似，都是chromium内核。缺点和cef一模一样。优点是由于可以使用nodejs的资源，同时又自带了各种api的绑定，所以可以用的周边资源非常丰富；而基于js的开发方案，使得前端很容易上手。所以最近N多项目都是基于nwjs或electron来实现。例如vscode，atom等等。</p>
-
-<p>原版webkit：现在官网还在更新windows port，但显然漫不在心，而且最新的webkit也很大了，超过20几M。最关键的是，周边资源很少，几乎没人再基于webkit来做开发。同时由于windows版的safari已经停止开发了，所以用webkit就用不了他的dev tools了。这是个大遗憾。</p>
-
-<p>WKE：这是个很老的webkit内核的裁剪版了。小是小，但bug太多了。</p>
-
-<h3>
-<a id="那么关键点来了使用miniblink有啥好处呢" class="anchor" href="#%E9%82%A3%E4%B9%88%E5%85%B3%E9%94%AE%E7%82%B9%E6%9D%A5%E4%BA%86%E4%BD%BF%E7%94%A8miniblink%E6%9C%89%E5%95%A5%E5%A5%BD%E5%A4%84%E5%91%A2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>那么关键点来了，使用miniblink有啥好处呢？？</h3>
-
-<p>首先，miniblink对大小要求非常严格。原版chromium、blink里对排版渲染没啥大用的如音视频全都被砍了，只专注于网页的排版和渲染。甚至为了裁剪大小，我不惜使用vc6的crt来跑mininblink(见我上篇文章)。这个也算前无古人后无来者了。</p>
-
-<p>其次，miniblink紧跟最新chromium，这意味着chromium相关的资源都可以利用。在未来的规划里，我是打算把electron的接口也加上的，这样可以无缝替换electron。使用miniblink的话，开发调试时用原版electron，发布的时候再替换掉那些dll，直接可以无缝切换，非常方便。</p>
-
-<h3>
-<a id="miniblink如何使用" class="anchor" href="#miniblink%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>miniblink如何使用？</h3>
-
-<p>Miniblink导出了CEF、WKE的接口，可以直接无缝替换现有的CEF、WKE项目。
-同时，正在开发electron的接口，大家拭目以待。</p>
-
-<p>目前miniblink放出了一个小demo，从demo里可以看到，brackct这个基于cef的开源编辑器，已经顺利由miniblink跑起来了。未来如果electron的接口做好，把vscode跑起来，那就屌炸天了。</p>
-
-<h3>
-<a id="miniblink如何裁剪到这么小" class="anchor" href="#miniblink%E5%A6%82%E4%BD%95%E8%A3%81%E5%89%AA%E5%88%B0%E8%BF%99%E4%B9%88%E5%B0%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>miniblink如何裁剪到这么小？</h3>
-
-<p>这个比较复杂了。主要就是把blink从chromium抽离了出来，同时补上了cc层（硬件渲染层）。现在的blink，已经不是当年的那个webkit了，渲染部分全走cc层，复杂无比。我这大半年都在重写他那个蛋疼又复杂的cc层。</p>
-
-<h3>
-<a id="和webkit比miniblink架构有什么优势" class="anchor" href="#%E5%92%8Cwebkit%E6%AF%94miniblink%E6%9E%B6%E6%9E%84%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E5%8A%BF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>和webkit比，miniblink架构有什么优势</h3>
-
-<p>现在的webkit版本，已经比miniblink落后太多了。blink一直在加入各种极富创造力和想象力的功能、组件。例如，blink早就加入多线程解析html token、blink gc回收器、多线程录制回放渲染机制。这些能让blink的解析渲染速度极大提升。下一次，我会先开源出blink gc组件，这东西很有意思，在c++里硬是搞出了一个垃圾回收机制，能让你像写java一样写c++。</p>
-
-<h3>
-<a id="miniblink是开源的吗" class="anchor" href="#miniblink%E6%98%AF%E5%BC%80%E6%BA%90%E7%9A%84%E5%90%97" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>miniblink是开源的吗？</h3>
-
-<p>是的，已经开源在github了。见<a href="https://github.com/weolar/miniblink49">https://github.com/weolar/miniblink49</a>。
-一个成熟的产品，需要更多人去测试和使用，虽然我完全不指望会有人给我提代码。。</p>
-
-<p>miniblink还在开发中，目前还是内测版。我会持续维护这个项目的，我相信，这个才是此项目最有价值的地方</p>
-
-<p>博客地址：<a href="http://blog.csdn.net/weolar/article/details/51447704">http://blog.csdn.net/weolar/article/details/51447704</a></p>
-
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/weolar/miniblink">Miniblink</a> is maintained by <a href="https://github.com/weolar">weolar</a>.</span>
-      </footer>
-
-    </section>
+<body>
 
   
-  </body>
+<nav class="top-bar" aria-label="Primary">
+  <div class="wrapper no-pad">
+
+    <ul class="navigation">
+      
+      <li><a class="" href="/packages">Packages</a></li>
+      <li><a class="" href="/themes">Themes</a></li>
+      <li><a class="" href="/docs">Documentation</a></li>
+      <li><a href="http://blog.atom.io">Blog</a></li>
+      <li><a href="http://discuss.atom.io">Discuss</a></li>
+    </ul>
+
+    <div class="top-bar-right">
+        <a href="/login?last_url=%2F">
+          <span class="octicon octicon-log-in"></span> Sign in
+        </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header class="header">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-push-2 text-center">
+				<h1>Miniblink</h1>
+				<h2>史上最小巧的chromium内核</h2>
+				<p class="lead">
+					Miniblink是一个追求极致小巧的开源浏览器内核项目。
+				</p>
+				<p class="lead">
+					Miniblink is a least browser kernel project
+				</p>
+				
+				<p>Miniblink约10M左右的体积，只需一个dll<br>
+				通过纯C接口，数行代码即可集成到各种软件，并支持windows xp、npapi。</p>
+				<br>
+				
+				<p class="small text-muted">Powered by weolar@qq.com</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div id="illustration">
+					<img src="assets/images/ap.png" alt="" >
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<!-- /Header -->
+	
+
+<!-- Content -->
+<main class="content">
+
+	<!-- Lead -->
+	<section class="container space-before space-after">
+		<div class="row">
+			<div class="col-sm-10 col-sm-push-1">
+				<h1 class="text-center">What it's all about</h1>
+				<p class="lead text-center">
+					使用Miniblink构建您的软件界面、以及浏览网页
+				</p> 
+			</div>
+		</div>
+	</section>
+	<!-- /Lead -->
+
+
+
+	<!-- Features -->
+	<section class="container space-before">
+		
+		<div class="row featurelist space-after">
+			<div class="col-md-5 col-sm-6 col-md-push-1 ">
+				<img class="img-feature img-responsive" src="assets/images/img0.png" alt="Sample image">
+			</div>
+			<div class="col-md-5 col-md-push-1 col-sm-6">
+				<h2 class="space-before">为什么要做miniblink？<br> <span class="text-muted">因为几乎没有别的选择了！</span></h2>
+				<p>市面上作为嵌入组件的几款浏览器内核，如CEF，几乎都有100多M。如果您只想在几M的小软件里显示网页，
+				展示几个简单图表，您会用到chromium里的pdf、天城语支持、多进程架构吗？<br/>
+				Miniblink为您解决这种尴尬。10余M的体积包含了chromium完整的网页排版渲染能力。
+				</p>
+			</div>
+		</div>
+
+		<div class="row featurelist space-after">
+			<div class="col-md-5 col-sm-6 col-sm-push-6">
+				<img class="img-feature img-responsive" src="assets/images/img1.png" alt="Sample image">
+			</div>
+			<div class="col-md-5 col-sm-6 col-md-pull-4 col-sm-pull-6">
+				<h2 class="space-before">Miniblink使用简单吗？<br><span class="text-muted">简直不要太简单！</span></h2>
+				<p>Miniblink导出的是纯C接口，任何语言都可以嵌入</p>
+				如果你使用过cef，你也许会被它接口的繁琐震惊。单纯的一个退出流程，cef都有N个回调，处理N个流程。</p>
+				这一切，在Miniblink里不复存在。
+			</div>
+		</div>
+
+		<div class="row featurelist space-after">
+			<div class="col-md-5 col-sm-6 col-md-push-1 col-sm-6">
+				<img class="img-feature img-responsive" src="assets/images/img2.png" alt="Sample image">
+			</div>
+			<div class="col-md-5 col-md-push-1 col-sm-6">
+				<h2 class="space-before">启动速度、内存占用？<br><span class="text-muted">比chrome更快，更小</span></h2>
+				<p>Miniblink仅使用了chroium的排版引擎，保持了排版能力的同时，提升了130%左右启动速度，40%左右内存占用</p>
+			</div>
+		</div>
+		
+		<div class="row featurelist space-after">
+			<div class="col-md-5 col-sm-6 col-sm-push-6">
+				<img class="img-feature img-responsive" src="assets/images/img3.png" alt="Sample image">
+			</div>
+			<div class="col-md-5 col-sm-6 col-md-pull-4 col-sm-pull-6">
+				<h2 class="space-before">支持electron模式了！<br></h2>
+				Miniblink衍生的mini_electron项目提供了electron模式，您只需将Miniblink的dll改名成node.dll，
+				再放入mini_electron.exe，并将miniblink.asar放入resources目录，即可无缝兼容原版electron应用
+			</div>
+		</div>
+	</section>
+	<!-- /Features -->
+
+</main>
+
+
+<footer id="footer" class="jumbotron">
+	<section class="container">
+		<div class="row">
+				<div class="col-md-5 col-md-push-1">
+					<h2>Got your interest?</h2>
+					<p>Please tell your friends about Miniblink!</p>
+					<!-- AddThis Button BEGIN -->
+					<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+					<a class="addthis_button_facebook"></a>
+					<a class="addthis_button_twitter"></a>
+					<a class="addthis_button_linkedin"></a>
+					<a class="addthis_button_google_plusone_share"></a>
+					<a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+					</div>
+					<!-- AddThis Button END -->
+					
+				</div>
+				<div class="col-md-5 col-md-push-1">
+					<h2>Need help?</h2>
+					<p>please email me at weolar@qq.com </p>
+					<p>If you'd like to report a bug or suggest an improvement, please post and issue on <a href="https://github.com/weolar/miniblink49/issues">GitHub</a> </p>
+				</div>
+		</div>	
+	</section>
+</footer>
+
+<p class="small text-muted text-center">Copyright &copy; 2018, github.com/weolar/miniblink49/ <a href="http://github.com/weolar/miniblink49/" target="_blank" title="miniblink">weolar</a></p>
+<br>
+
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="assets/js/template.js"></script>
+
+</body>
 </html>

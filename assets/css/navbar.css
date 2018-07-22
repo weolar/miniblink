@@ -1,0 +1,150 @@
+
+.top-bar {
+    text-align: left;
+    padding: 5px 0;
+    background-color: #9c393ed6;
+    color: #efeae1;
+    font-size: 14px;
+    height: 43px
+}
+
+.top-bar h1 {
+    font-size: inherit;
+    display: inline-block;
+    line-height: 0;
+    margin: 0
+}
+
+.top-bar a {
+    color: #efeae1
+}
+
+.top-bar a:hover {
+    color: #81c08b;
+    text-decoration: none
+}
+
+.top-bar a.is-selected {
+    color: #a29f99
+}
+
+.top-bar .navigation {
+    display: inline-block
+}
+
+.top-bar .top-bar-right {
+    float: right;
+    line-height: 33px
+}
+
+.top-bar .top-bar-right .octicon {
+    position: relative;
+    top: 1px;
+    padding: 5px
+}
+
+.top-bar .top-bar-right .tooltipped {
+    padding-bottom: 2px;
+    margin-left: 10px
+}
+
+.top-bar .top-bar-right .gravatar {
+    height: 22px;
+    width: 22px;
+    vertical-align: -7px;
+    margin-right: 5px
+}
+
+.top-bar .minibutton {
+    margin: 4px 0
+}
+
+
+@media (max-width: 900px) {
+    .is-responsive .top-bar {
+        height:auto;
+        padding: 15px 10px
+    }
+
+    .is-responsive .top-bar>.wrapper {
+        width: 100%;
+        text-align: center;
+        padding-left: 5px;
+        padding-right: 5px
+    }
+
+    .is-responsive .top-bar .navigation {
+        vertical-align: middle
+    }
+
+    .is-responsive .top-bar-right {
+        float: none;
+        margin: 0 5px;
+        display: inline-block;
+        vertical-align: middle
+    }
+
+    .is-responsive .footer {
+        height: auto;
+        padding: 20px 10px
+    }
+
+    .is-responsive .footer>.wrapper {
+        width: 100%;
+        text-align: center
+    }
+
+    .is-responsive .footer-left,.is-responsive .footer-right {
+        float: none
+    }
+
+    .is-responsive .footer-right {
+        margin-top: 15px
+    }
+}
+
+
+
+.navigation {
+    list-style-type: none;
+    margin: 0;
+    padding: 0
+}
+
+.navigation li {
+    display: inline-block;
+    padding-right: 5px;
+    height: 33px;
+    vertical-align: top
+}
+
+.navigation li:last-child {
+    padding-right: 0
+}
+
+.navigation a {
+    padding: 5px;
+    display: inline-block;
+    transition: color 0.2s;
+    -o-transform: color 0.2s;
+    -moz-transform: color 0.2s;
+    -webkit-transition: color 0.2s
+}
+
+.navigation a:hover {
+    text-decoration: none
+}
+
+.wrapper.no-pad {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.wrapper {
+    width: 860px;
+    margin: 0 auto;
+    padding-left: 40px;
+    padding-right: 40px;
+    overflow: hidden;
+}
+

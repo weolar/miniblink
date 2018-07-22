@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Miniblink by weolar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Miniblink</h1>
+      <h2 class="project-tagline">史上最小巧的chromium内核：miniblink</h2>
+      <a href="https://github.com/weolar/miniblink49" class="btn">View on GitHub</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="miniblink是什么" class="anchor" href="#miniblink%E6%98%AF%E4%BB%80%E4%B9%88" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>miniblink是什么？</h3>
+
+<p>Miniblink是一个全新的、追求极致小巧的浏览器内核项目，
+其基于chromium最新版内核，去除了chromium所有多余的部件，只保留最基本的排版引擎blink。
+Miniblink保持了10M左右的极简大小，是所有同类产品最小的体积，同时支持windows xp、npapi。</p>
+
+<h3>
+<a id="为什么要做miniblink" class="anchor" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9Aminiblink" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>为什么要做miniblink？</h3>
+
+<p>市面上作为嵌入的组件的可用的浏览器内核，不外乎这几个：webkit、cef、nwjs、electron。</p>
+
+<p>cef：优点是由于集成的chromium内核，所以对H5支持的很全，同时因为使用的人也多，各种教程、示例，资源很多。但缺点很明显，太大了。最新的cef已经夸张到了100多M，还要带一堆的文件。同时新的cef已经不支持xp了（chromium对应版本是M49）。而且由于是多进程架构，对资源的消耗也很夸张。如果只是想做个小软件，一坨文件需要带上、超大的安装包，显然不能忍受。</p>
+
+<p>nwjs，或者最近大火的electron：和cef内核类似，都是chromium内核。缺点和cef一模一样。优点是由于可以使用nodejs的资源，同时又自带了各种api的绑定，所以可以用的周边资源非常丰富；而基于js的开发方案，使得前端很容易上手。所以最近N多项目都是基于nwjs或electron来实现。例如vscode，atom等等。</p>
+
+<p>原版webkit：现在官网还在更新windows port，但显然漫不在心，而且最新的webkit也很大了，超过20几M。最关键的是，周边资源很少，几乎没人再基于webkit来做开发。同时由于windows版的safari已经停止开发了，所以用webkit就用不了他的dev tools了。这是个大遗憾。</p>
+
+<p>WKE：这是个很老的webkit内核的裁剪版了。小是小，但bug太多了。</p>
+
+<h3>
+<a id="那么关键点来了使用miniblink有啥好处呢" class="anchor" href="#%E9%82%A3%E4%B9%88%E5%85%B3%E9%94%AE%E7%82%B9%E6%9D%A5%E4%BA%86%E4%BD%BF%E7%94%A8miniblink%E6%9C%89%E5%95%A5%E5%A5%BD%E5%A4%84%E5%91%A2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>那么关键点来了，使用miniblink有啥好处呢？？</h3>
+
+<p>首先，miniblink对大小要求非常严格。原版chromium、blink里对排版渲染没啥大用的如音视频全都被砍了，只专注于网页的排版和渲染。甚至为了裁剪大小，我不惜使用vc6的crt来跑mininblink(见我上篇文章)。这个也算前无古人后无来者了。</p>
+
+<p>其次，miniblink紧跟最新chromium，这意味着chromium相关的资源都可以利用。在未来的规划里，我是打算把electron的接口也加上的，这样可以无缝替换electron。使用miniblink的话，开发调试时用原版electron，发布的时候再替换掉那些dll，直接可以无缝切换，非常方便。</p>
+
+<h3>
+<a id="miniblink如何使用" class="anchor" href="#miniblink%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>miniblink如何使用？</h3>
+
+<p>Miniblink导出了CEF、WKE的接口，可以直接无缝替换现有的CEF、WKE项目。
+同时，正在开发electron的接口，大家拭目以待。</p>
+
+<p>目前miniblink放出了一个小demo，从demo里可以看到，brackct这个基于cef的开源编辑器，已经顺利由miniblink跑起来了。未来如果electron的接口做好，把vscode跑起来，那就屌炸天了。</p>
+
+<h3>
+<a id="miniblink如何裁剪到这么小" class="anchor" href="#miniblink%E5%A6%82%E4%BD%95%E8%A3%81%E5%89%AA%E5%88%B0%E8%BF%99%E4%B9%88%E5%B0%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>miniblink如何裁剪到这么小？</h3>
+
+<p>这个比较复杂了。主要就是把blink从chromium抽离了出来，同时补上了cc层（硬件渲染层）。现在的blink，已经不是当年的那个webkit了，渲染部分全走cc层，复杂无比。我这大半年都在重写他那个蛋疼又复杂的cc层。</p>
+
+<h3>
+<a id="和webkit比miniblink架构有什么优势" class="anchor" href="#%E5%92%8Cwebkit%E6%AF%94miniblink%E6%9E%B6%E6%9E%84%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E5%8A%BF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>和webkit比，miniblink架构有什么优势</h3>
+
+<p>现在的webkit版本，已经比miniblink落后太多了。blink一直在加入各种极富创造力和想象力的功能、组件。例如，blink早就加入多线程解析html token、blink gc回收器、多线程录制回放渲染机制。这些能让blink的解析渲染速度极大提升。下一次，我会先开源出blink gc组件，这东西很有意思，在c++里硬是搞出了一个垃圾回收机制，能让你像写java一样写c++。</p>
+
+<h3>
+<a id="miniblink是开源的吗" class="anchor" href="#miniblink%E6%98%AF%E5%BC%80%E6%BA%90%E7%9A%84%E5%90%97" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>miniblink是开源的吗？</h3>
+
+<p>是的，已经开源在github了。见<a href="https://github.com/weolar/miniblink49">https://github.com/weolar/miniblink49</a>。
+一个成熟的产品，需要更多人去测试和使用，虽然我完全不指望会有人给我提代码。。</p>
+
+<p>miniblink还在开发中，目前还是内测版。我会持续维护这个项目的，我相信，这个才是此项目最有价值的地方</p>
+
+<p>博客地址：<a href="http://blog.csdn.net/weolar/article/details/51447704">http://blog.csdn.net/weolar/article/details/51447704</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/weolar/miniblink">Miniblink</a> is maintained by <a href="https://github.com/weolar">weolar</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
