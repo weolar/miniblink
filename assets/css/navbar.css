@@ -141,7 +141,7 @@
 }
 
 .wrapper {
-    width: 860px;
+    width: auto;
     margin: 0 auto;
     padding-left: 40px;
     padding-right: 40px;
