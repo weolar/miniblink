@@ -3,7 +3,7 @@
     text-align: left;
     padding: 5px 0;
     background-color: #9c393ed6;
-    color: #efeae1;
+    color: #9c393ed6;
     font-size: 14px;
     height: 43px
 }
@@ -34,76 +34,13 @@
 
 .top-bar .top-bar-right {
     float: right;
-    line-height: 33px
-}
-
-.top-bar .top-bar-right .octicon {
-    position: relative;
-    top: 1px;
-    padding: 5px
-}
-
-.top-bar .top-bar-right .tooltipped {
-    padding-bottom: 2px;
-    margin-left: 10px
-}
-
-.top-bar .top-bar-right .gravatar {
-    height: 22px;
-    width: 22px;
-    vertical-align: -7px;
-    margin-right: 5px
+    line-height: 33px;
+    margin-right: 30px    
 }
 
 .top-bar .minibutton {
     margin: 4px 0
 }
-
-
-@media (max-width: 900px) {
-    .is-responsive .top-bar {
-        height:auto;
-        padding: 15px 10px
-    }
-
-    .is-responsive .top-bar>.wrapper {
-        width: 100%;
-        text-align: center;
-        padding-left: 5px;
-        padding-right: 5px
-    }
-
-    .is-responsive .top-bar .navigation {
-        vertical-align: middle
-    }
-
-    .is-responsive .top-bar-right {
-        float: none;
-        margin: 0 5px;
-        display: inline-block;
-        vertical-align: middle
-    }
-
-    .is-responsive .footer {
-        height: auto;
-        padding: 20px 10px
-    }
-
-    .is-responsive .footer>.wrapper {
-        width: 100%;
-        text-align: center
-    }
-
-    .is-responsive .footer-left,.is-responsive .footer-right {
-        float: none
-    }
-
-    .is-responsive .footer-right {
-        margin-top: 15px
-    }
-}
-
-
 
 .navigation {
     list-style-type: none;
