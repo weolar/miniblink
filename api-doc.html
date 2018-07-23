@@ -212,7 +212,7 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
 		xDst、yDst：绘制到bits的哪个坐标。</p>
 		w、h、xSrc、ySrc：mb需要取的画面的起始坐标</p>
 		bCopyAlpha：是否拷贝画面的透明度值</p>
-	</div>
+	</div></p>
 	<span class="api-remark">注意：此函数一般给3d游戏使用。另外频繁使用此接口并拷贝像素有性能问题。最好用wkeGetViewDC再去拷贝dc。</span></p>
 	<div class="sep-line"></div></p>
 	<!---->
@@ -222,7 +222,7 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
 	<div class="api-param">
 		bits：外部申请并传递给mb的buffer，大小是webview宽度 * 高度 * 4 字节。</p>
 		pitch：填0即可。这个参数玩过directX的人应该懂</p>
-	</div>
+	</div></p>
 	<!---->
 	<span class="api-def">void wkeRepaintIfNeeded(wkeWebView webView)</span>
     <div>（被废弃）强制重绘页面</div>
@@ -328,7 +328,7 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
 		wkeCookieCommandFlushCookiesToFile: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "FLUSH");</p>
 		wkeCookieCommandReloadCookiesFromFile: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "RELOAD");</p>
 		</div>
-	</div>
+	</div></p>
 	<span class="api-remark">注意：这个接口只是调用curl设置命令，并不会去修改js里的内容</span></p>
 	<div class="sep-line"></div></p>
 	<!---->
@@ -409,7 +409,7 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
     <div class="api-params">参数：</div>
 	<div class="api-param">
 		charCode：WM_CHAR消息的The character code of the key.见https://msdn.microsoft.com/en-us/library/windows/desktop/ms646276(v=vs.85).aspx
-	</div>
+	</div></p>
 	<div class="sep-line"></div></p>
 	<!---->
 	<span class="api-def">bool wkeFireWindowsMessage(wkeWebView webView, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, LRESULT* result)</span>
@@ -643,6 +643,11 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
 	</div></p>
 	<div class="sep-line"></div></p>
 	<!---->
+	<span class="api-def">void wkeOnLoadUrlEnd(wkeWebView webView, wkeLoadUrlEndCallback callback, void* callbackParam)</span>
+    <div>见wkeOnLoadUrlBegin的描述</div>
+    <div class="api-params">参数：略</div>
+	<div class="sep-line"></div></p>
+	<!---->
 	<span class="api-def">void wkeOnDidCreateScriptContext(wkeWebView webView, wkeDidCreateScriptContextCallback callback, void* callbackParam)</span>
     <div>javascript的v8执行环境被创建时触发此回调</div>
     <div class="api-params">参数：略</div>
@@ -684,7 +689,7 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
     <div class="api-params">参数：略</div>
 	<div class="sep-line"></div></p>
 	<!---->
-	<span class="api-def">>const wchar_t* wkeGetStringW(const wkeString string)const wchar_t* wkeGetStringW(const wkeString string)</span>
+	<span class="api-def">const wchar_t* wkeGetStringW(const wkeString string)const wchar_t* wkeGetStringW(const wkeString string)</span>
     <div>获取wkeString结构体对应的字符串，utf16编码</div>
     <div class="api-params">参数：略</div>
 	<div class="sep-line"></div></p>
