@@ -4,16 +4,15 @@ body {
     margin: 0;
     padding: 0;
     border: 0;
-    line-height: 1.428571429;
 }
 
 .sep-line {
-	border-bottom:1px solid #ddddddff;
+	border-bottom:1px solid #ddddff;
 }
 
 .api-def {
-	border:/*1px solid*/ #2020206f;
-	background:#ddddddff;
+	border:/*1px solid*/ #20206f;
+	background:#E0E2D7;
 	padding:7px;
 	border-radius:5px;
 }
@@ -26,7 +25,7 @@ body {
 	margin-left:30px;
 	line-height:50px;
 	padding:7px;
-	border:1px solid #2020206f;
+	border:1px solid #20206f;
 	border-radius:0px;
 }
 
@@ -37,7 +36,7 @@ body {
 }
 
 .api-remark {
-	border-left:5px solid #ddddddff;
+	border-left:5px solid #ddddff;
 	background:#f4f4f4ff;
 	padding:5px;
 	border-radius:0px;
@@ -50,6 +49,7 @@ body {
 <title>API doc of the Miniblink</title>
 <body>
 
+<!--
 <nav class="top-bar" aria-label="Primary">
 	<div class="wrapper no-pad">
 		<ul class="navigation">
@@ -58,7 +58,7 @@ body {
 			<li><a href="https://blog.csdn.net/weolar" target="_blank">Blog</a></li>
 			<li><a href="https://github.com/weolar/miniblink49/issues" target="_blank">Discuss</a></li>
 		</ul>
-		<!---->
+
 		<div class="top-bar-right">
         	<a href="https://github.com/weolar/miniblink49/">
 				<span class="octicon octicon-log-in"></span> Github
@@ -66,8 +66,10 @@ body {
 		</div>    
 	</div>
 </nav>
+-->
 
 <h1 style="text-align:center;background:#a43222;margin:0;line-height:450px"><font color="#FFffffff">API文档</font></h1>
+
 <h2 style="margin-left:20px;">前言</h2>
 <div class="sep-line"></div><!--分割线-->
 </p>
@@ -77,7 +79,7 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
 接口使用__cdecl调用约定。</p>
 </div>
 
-<ul style="border-radius:5px; border:1px solid #ffdddddd; line-height:35px; background:#dddddddd; margin-left:30px; margin-right:30px">
+<ul style="border-radius:5px; border:1px solid #dddddd; line-height:35px; background:#dddddd; margin-left:30px; margin-right:30px">
     <li>另外，请勿跨线程调用所有接口（除非接口有特殊申明）</li>
     <li>所有接口如果返回的是const utf8*，const wchar_t*类型的字符串，均不需要手动释放</li>
     <li>miniblink暂时只支持windows系统</li>
@@ -139,7 +141,7 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
     <div class="api-params">参数：略</div>
 	<div class="sep-line"></div></p>
 	<!---->
-	<span class="api-def">bool wkeStopLoading(wkeWebView webView)</span>
+	<span class="api-def">void wkeStopLoading(wkeWebView webView)</span>
     <div>停止加载页面</div>
     <div class="api-params">参数：略</div>
 	<div class="sep-line"></div></p>
@@ -439,7 +441,7 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
 	<div class="sep-line"></div></p>
 	<!---->
 	<span class="api-def">jsValue wkeRunJSW(wkeWebView webView, const wchar_t* script)</span>
-    <div>略</div>
+    <div>同上。注意，此函数以及wkeRunJS，执行的js，也就是script，是在一个闭包中</div>
     <div class="api-params">参数：略</div>
 	<div class="sep-line"></div></p>
 	<!---->
@@ -1000,9 +1002,9 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
     <div class="api-params">参数：略</div>
 	<div class="sep-line"></div></p>
 	<!---->
-	<span class="api-def">void wkeNetGetMIMEType(void* jobPtr, wkeString mime)</span>
+	<span class="api-def">const char* wkeNetGetMIMEType(void* jobPtr, wkeString mime)</span>
     <div>略</div>
-    <div class="api-params">参数：略</div>
+    <div class="api-params">参数：第2个参数可以传nullptr</div>
 	<div class="sep-line"></div></p>
 	<!---->
 	<span class="api-def">void wkeNetSetData(void* jobPtr, void* buf, int len)</span>
@@ -1275,8 +1277,9 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
 	<div class="sep-line"></div></p>
 	<!---->
 	<span class="api-def">void jsBindGetter(const char* name, jsNativeFunction fn)</span>
-    <div>对js winows绑定一个属性访问器，在js里http://windows.XXX这种形式调用时，fn会被调用</div>
+    <div>对js winows绑定一个属性访问器，在js里windows.XXX这种形式调用时，fn会被调用</div>
     <div class="api-params">参数：略</div>
+    <div class="api-remark">示例：jsBindGetter("XXX")</div>
 	<div class="sep-line"></div></p>
 	<!---->
 	<span class="api-def">void jsBindSetter(const char* name, jsNativeFunction fn)</span>

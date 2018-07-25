@@ -1,0 +1,115 @@
+﻿<html>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    line-height: 1.5;
+}
+
+a {
+    color: #34495e;
+    text-decoration: none;
+}
+
+.content {
+	position: absolute;
+	top: 40px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: auto;
+	width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color:#fbefef;
+}
+
+.sidebar-heading {
+	
+	text-align: center;
+	padding: 17px 0px 17px 0px;
+	border-bottom:1px solid #b0b0b0;
+}
+
+.sidebar-headings {
+    list-style: none;
+	font-weight: 800;
+	line-height: 1;
+    float: left;
+    width: 200;
+    margin: 0;
+    border: 0;
+    /*padding: 0;*/
+    padding: 0px 0px 7px 0px;
+    
+}
+
+.doc-right {
+	background-color:#ffffff;
+	margin-left: 210;
+	display: block;
+	padding:0;
+	border-left:0px dotted #20206f;
+	border-top:0px;
+	border-right:0px;
+	border-bottom:0px;
+}
+
+#doc-right-frame {
+	
+	display:block;
+	width:100%;
+	height:100%;
+	margin: 0;
+	padding: 0;
+    border: 0;
+}
+
+</style>
+<link href="assets/css/navbar.css" rel="stylesheet">
+<title>API doc of the Miniblink</title>
+<body>
+
+<nav class="top-bar">
+	<div class="wrapper no-pad">
+		<ul class="navigation">
+			<li><a class="" href="index.html" target="_blank">首页</a></li>
+			<li><a class="" href="https://github.com/weolar/miniblink49/releases" target="_blank">下载</a></li>
+			<li><a class="" href="doc-main.html" target="_blank">文档</a></li>
+			<li><a href="https://blog.csdn.net/weolar" target="_blank">Blog</a></li>
+			<li><a href="https://github.com/weolar/miniblink49/" target="_blank">Github</a></li>
+		</ul>
+	</div>
+</nav>
+
+<div class="content">
+	<ul class="sidebar-headings">
+		<li class="sidebar-heading visible">
+			<a onclick="onSidebarClick('api-doc.html')" class="sidebar-heading-anchor" href="javascript:void(0)">Api文档</a>
+		</li>
+		<li class="sidebar-heading visible">
+			<a onclick="onSidebarClick('user-guides.html')" class="sidebar-heading-anchor" href="javascript:void(0)">入门文档</a>
+		</li>
+	</ul><!--	-->
+	<div class="doc-right">
+		<iframe id="doc-right-frame" src="api-doc.html"></iframe>
+	</div>
+
+</div>
+
+<script>
+
+function $(id) {
+	return document.getElementById(id);
+}
+
+function onSidebarClick(url) {
+	$("doc-right-frame").src = url;
+}
+
+</script>
+
+</body>
+</html>
