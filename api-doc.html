@@ -1255,11 +1255,12 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
     <div class="api-params">参数：略</div>
 	<div class="sep-line"></div></p>
 	<!---->
-	<span class="api-def">void jsBindFunction(const char* name, jsNativeFunction fn, unsigned int argCount)</span>
+	<span class="api-def">void fastcall jsBindFunction(const char* name, jsNativeFunction fn, unsigned int argCount)</span>
     <div>绑定一个全局函数到主frame的window上。</div>
     <div class="api-params">参数：略</div>
     <div class="api-remark">注意：此接口只能绑定主frame</p>
-    	并且特别需要注意的是，因为历史原因，此接口是fastcall调用约定！
+    	并且特别需要注意的是，因为历史原因，此接口是fastcall调用约定！（但wkeJsBindFunction不是）</p>
+    	另外此接口和wkeJsBindFunction必须在webview创建前调用</p>
 		使用示例：</p>
 		c++里：</p>
 		--------</p>
@@ -1290,6 +1291,7 @@ miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
 	<span class="api-def">void wkeJsBindFunction(const char* name, wkeJsNativeFunction fn, void* param, unsigned int argCount)</span>
     <div>和jsBindFunction功能类似，但更方便一点，可以传一个param做自定义数据。</div>
     <div class="api-params">参数：略</div>
+    <div class="api-remark">此接口和wkeJsBindFunction必须在webview创建前调用</div></p>
 	<div class="sep-line"></div></p>
 	<!---->
 	<span class="api-def">jsValue jsObject(jsExecState es, jsData* data)</span>
