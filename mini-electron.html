@@ -1,0 +1,110 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>mini-electron模式</title>
+</head>
+
+<body>
+
+<p align="center"><b><font face="微软雅黑" size="5">mini-electron<span lang="zh-cn">模式</span></font></b></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+目前miniblink已支持mini-eletcron模式。electron是目前最流行的跨平台PC开发框架，相当于把nodejs和chromium结合起来，可以同时使用两者的功能。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+（如果不想看废话，需要了解怎么使用的人，可以拉到文末）</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+nodejs使用了v8，而miniblink因为本身就是chromium的blink+v8，所以某天我大胆的猜测，只要加上nodejs的功能，再补上electron为了撮合这几个部件的代码，就可以实现超级精简的electron了。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+事实证明这样完全没问题，mini-eletcron目前已实现原版electron大约90%的接口。绝大部分electron app已能跑起。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+mini-eletcron的实现方式很简单，由两部分组成：</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+1，mini-eletcron.exe；</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+2，nodejs.dll；</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+先看mini-electron.exe部分。这是个只有几百K的小exe（原版的electron.exe有大约5-60m）。其目的是调用nodejs.dll导出的接口，以模拟electron的功能。由于原版electron是开源的，所以我直接挪用了很多代码。当然，需要做大量改动。原因有二：一是因为原版代码大量依赖chromium的base、net等基础库，所以不得不对这些代码进行重写；</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">
+二是将原版使用了chromium的web相关功能，通过调用nodejs.dll提供的接口来实现。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+其中web相关功能，我巧妙的通过miniblink导出的C接口来实现，而其nodejs相关，我是直接将nodejs的代码完整的编译进了nodejs.dll。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+所以，这里说到的第二个nodejs.dll部分，其实已经不是网上原版的nodejs.dll了，而是我将miniblink的代码和nodej.dll的代码简单的编译在一个dll中所产生的文件。其中v8部分是共用的。所以仅仅在miniblink的基础上，增加了几M而已。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+所以，这也解释了为什么每次发出来的编译好的miniblink的包，主dll都叫node.dll。因为需要伪装成nodejs。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+但mini-electron和原版并不是完全一样。有个最大的不同在于，原版因为chromium的限制，必须使用多进程架构。了解electron使用方式的人都知道，</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">
+electron分成主进程和渲染进程。其中主进程跑了一个nodejs上下文环境，而每个渲染进程又跑了一个nodejs环境。 
+主进程同时也是chromium的主进程。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">主进程的nodejs环境用来调用chromium的content 
+api来实现操纵chromium的web能力。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+而mini-electron不同， 因为miniblink的架构本身就是单进程，所以为了简单起见，我使用单进程多线程来模拟electron多进程。其中，主线程一个nodejs环境，渲染线程跑一个miniblink的webview。注意，这里只有一个渲染线程，不管有多少个webview。这是blink的架构限制的。同时主线程通过</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">异步的调用miniblink的webview接口（又称为wke接口）来实现操纵web能力。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+这也就造成了一个技术上的限制：mini-electron不能实现同时加载多个同样的原生dll（在nodejs里，这部分是以&quot;.node&quot;结尾的文件）。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+这是windows的dll加载机制限制。所以对于那些同时在主进程和渲染进程都加载了原生dll的应用，mini-electron会报错。例如vscode就在主进程和渲染</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">进程里都加载了keymap.node。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+但这个限制是可以通过简单的改造js来绕过的。electron实现了remote功能，可以通过remote.require来指挥主进程去加载dll，并远程使用dll的接口。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">我就稍微改了下keymap的js，便完美的跑起了vscode。事实上，应该不会有人真的需要两个进程同时使用一个dll。绝大部分情况可以通过remote来规避。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;
+</font></span></p>
+<p align="center"><b><font face="微软雅黑" size="5">如何mini-electron<span lang="zh-cn">模式</span></font></b></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+使用方式很简单。以vsocde为例。vscode的目录结构大概是这样的：</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp;&nbsp; 
++VSCode-win32-ia32-1.23.1</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp;&nbsp; |</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp; +----Code.exe</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp;&nbsp; |</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp; +----node.dll</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp;&nbsp; |</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp; +----resources</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+|</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
++---app</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+|</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
++---electron.asar</font></span></p>
+<p align="left">　</p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">其中code.exe是主程序，node.dll是nodejs的dll。resoures的app文件夹里存放了vscode的所有资源。electron.asar是electron的资源文件。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">
+改造成使用mini-electron很简单，从https://github.com/weolar/miniblink49/releases里下载到最新包解压到miniblink-package文件夹后，取出mini-electron.exe、node.dll文件放入VSCode-win32-ia32-1.23.1目录下（其中node.dll会被覆盖），miniblink.asar放入resources目录下即可。此时运行mini-electron.exe即可看到效果。</font></span></p>
+<p align="left"><b><span lang="zh-cn"><font face="微软雅黑">当然，还有种更简单的方法，就是直接把vscode的resources\app文件夹拷入miniblink-package\app。再运行mini-electron.exe即可。</font></span></b></p>
+<p align="left"><b><span lang="zh-cn"><font face="微软雅黑">其他electron app同样的使用方式。</font></span></b></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp;&nbsp; 当然，这里使用vscode举例其实不妥。因为vscode因为上述使用了多进程加载dll的缘故，直接跑是跑不起来的。需要将我修改后的node_modules.asar.unpacked文件夹覆盖掉原版的VSCode-win32-ia32-1.23.1\resources\app\node_modules.asar.unpacked文件夹。我这里有个已经打包好的精简版vscode可以直接运行看到效果：<a href="https://pan.baidu.com/s/1hUu8DXcmK6y9OzmjJUS9LA">https://pan.baidu.com/s/1hUu8DXcmK6y9OzmjJUS9LA</a></font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑">&nbsp;&nbsp;&nbsp; 
+另外，如果运行过程中发现没有效果，可以打开dbgview（网上随处可下），再运行，看有什么log输出，再直接反馈给我（https://github.com/weolar/miniblink49/issues）</font></span></p>
+<p align="left">　</p>
+<p align="center"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp;
+</font></span><b><font face="微软雅黑" size="5">mini-electron<span lang="zh-cn">有哪些优势</span></font></b></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+先看electron有哪些劣势：</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+1，安装包的大小难以优化，除非你搞明白vscode团队是如何做到的。<br>
+&nbsp;&nbsp;&nbsp; 2，Electron因为需要一份chromium库的拷贝，因此再小的app，内存开销都不少。<br>
+&nbsp;&nbsp;&nbsp; 3，多个Electron运行，是不能共享主进程资源的，也无法做关联性的优化，浏览器是有一套IPC进程做所有调度的。能有开销上的优化。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+所以，electron的劣势正好就是mini-electron的优势。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+此外，刚看到PWA也打算进军桌面市场。据我对PWA的了解，它在和mini-electron在上面几个点上并没任何优势，所以，你懂的……</font></span></p>
+<p align="left">　</p>
+<p align="center"><b><font face="微软雅黑" size="5">mini-electron<span lang="zh-cn">有哪些劣势</span></font></b></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+1，目前还有几个模块没支持上，主要是session那块。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+2，单进程架构限制了无法多次加载同个dll。</font></span></p>
+<p align="left">　</p>
+<p align="left">　</p>
+<p align="left">　</p>
+<p align="left">　</p>
+
+</body>
+
+</html>
