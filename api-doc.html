@@ -29,20 +29,6 @@ body{margin:0;padding:0;border:0}
 </head>
 <body>
 
-<nav class="top-bar" aria-label="Primary">
-	<div class="wrapper no-pad">
-		<ul class="navigation">
-			<li><a class="" href="https://github.com/weolar/miniblink49/releases" target="_blank">Packages</a></li>
-			<li><a class="" href="https://weolar.github.io/miniblink/api-doc.html" target="_blank">Documentation</a></li>
-			<li><a href="https://blog.csdn.net/weolar" target="_blank">Blog</a></li>
-			<li><a href="https://github.com/weolar/miniblink49/issues" target="_blank">Discuss</a></li>
-		</ul>
-		<div class="top-bar-right">
-			<a href="https://github.com/weolar/miniblink49/">Github</a>
-		</div>
-	</div>
-</nav>
-
 <h1 style="text-align:center;background:#a43222;margin:0;line-height: 150px;"><font color="#FFffffff">API文档</font></h1>
 
 <h2 style="margin-left:20px;">前言</h2>
@@ -1319,24 +1305,29 @@ body{margin:0;padding:0;border:0}
 /* auth lzp 2018/07/27
 * 自动生成索引功能
 */
-window.onload=function(){
-var ul=document.querySelector(".api-floatbar ul");
-//api index
-document.querySelectorAll(".api-def").forEach(h=>{
-s=h.textContent;
-s=s.substr(0,s.indexOf('('));
-s=s.substr(s.lastIndexOf(' ')+1)
-h.innerHTML='<a name="'+s+'"></a>'+h.innerHTML;
-ul.innerHTML+='<li><a href="#'+s+'">'+s+'</a></li>';
-});
-//api show/hidden
-var u=document.querySelector(".api-floatbar");
-u.onmouseover=function(e){
-document.querySelector('.api-floatbar').style.opacity="1";
+
+function createIndex() {
+    var ul = document.querySelector(".api-floatbar ul");
+    //api index
+    document.querySelectorAll(".api-def").forEach(function (h) {
+        s = h.textContent;
+        s = s.substr(0, s.indexOf('('));
+        s = s.substr(s.lastIndexOf(' ') + 1);
+        h.innerHTML = '<a name="' + s + '"></a>' + h.innerHTML;
+        ul.innerHTML += '<li><a href="#' + s + '">' + s + '</a></li>';
+    });
+    //api show/hidden
+    var u = document.querySelector(".api-floatbar");
+    u.onmouseover = function(e) {
+        document.querySelector('.api-floatbar').style.opacity = "1";
+    }
+    u.onmouseout = function(e) {
+        document.querySelector('.api-floatbar').style.opacity = "0.1";
+    }
 }
-u.onmouseout=function(e){
-document.querySelector('.api-floatbar').style.opacity="0.1";
-}
+
+window.onload = function() {
+	createIndex();
 }
 </script>
 </div></div></body></html>

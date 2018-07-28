@@ -12,13 +12,26 @@
 <p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
 </font></span></p>
 <p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
-使用方式很简单，和electron一样。从<a href="https://github.com/weolar/miniblink49/releases">https://github.com/weolar/miniblink49/releases</a> 
-下载最新的包，解压到任意目录，例如miniblink-package，再直接把</font></span></p>
-<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">你的资源文件resources/app文件夹拷入miniblink-package/resources/app，再运行mini-electron.exe即可。</font></span></p>
-<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">其他electron app同样的使用方式。</font></span></p>
-<p align="left">&nbsp;</p>
+使用方式非常简单，和electron一样。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;<b>&nbsp;&nbsp; 
+1，从<a href="https://github.com/weolar/miniblink49/releases">https://github.com/weolar/miniblink49/releases</a> 
+下载最新的包，解压到任意目录，例如miniblink-package</b></font></span></p>
+<p align="left"><b><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+2，直接把你的资源文件resources/app文件夹拷入miniblink-package/resources/app</font></span></b></p>
+<p align="left"><span lang="zh-cn"><b><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+3，</font></b></span><b><span lang="zh-cn"><font face="微软雅黑" size="4">运行mini-electron.exe即可</font></span></b></p>
+<p align="left"><span lang="zh-cn"><b><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+4，如果不需要，可以包里的demo_src，node_v8_4_8.dll删掉</font></b></span></p>
 <p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
-说复杂点的话，以vsocde为例。vscode的目录结构大概是这样的：</font></span></p>
+另外，如果运行过程中发现没有效果，可以打开dbgview（网上随处可下），再运行，看有什么log输出，再反馈给<a href="https://github.com/weolar/miniblink49/issues">https://github.com/weolar/miniblink49/issues</a> 
+。</font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+这里有个已经打包好的精简版vscode可以直接运行看到效果：<a href="https://pan.baidu.com/s/1hUu8DXcmK6y9OzmjJUS9LA">https://pan.baidu.com/s/1hUu8DXcmK6y9OzmjJUS9LA</a> 
+。</font></span></p>
+<p align="left">&nbsp;&nbsp;&nbsp; </p>
+<p align="left"><font face="微软雅黑">&nbsp;&nbsp;&nbsp; （以下内容可以忽略）</font></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
+要复杂点的说的话，以vsocde为例。vscode的目录结构大概是这样的：</font></span></p>
 <p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
 +VSCode-win32-ia32-1.23.1</font></span></p>
 <p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; |</font></span></p>
@@ -39,9 +52,9 @@
 <p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">其中code.exe是主程序，node.dll是nodejs的dll。resoures的app文件夹里存放了vscode的所有资源。electron.asar是electron的资源文件。</font></span></p>
 <p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">
 改造成使用mini-electron很简单，从https://github.com/weolar/miniblink49/releases里下载到最新包解压到miniblink-package文件夹后，取出mini-electron.exe、node.dll文件放入VSCode-win32-ia32-1.23.1目录下（其中node.dll会被覆盖），miniblink.asar放入resources目录下即可。此时运行mini-electron.exe即可看到效果。</font></span></p>
-<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 当然，这里使用vscode举例其实不妥。因为vscode因为上述使用了多进程加载dll的缘故，直接跑是跑不起来的。需要将我修改后的node_modules.asar.unpacked文件夹覆盖掉原版的VSCode-win32-ia32-1.23.1\resources\app\node_modules.asar.unpacked文件夹。我这里有个已经打包好的精简版vscode可以直接运行看到效果：<a href="https://pan.baidu.com/s/1hUu8DXcmK6y9OzmjJUS9LA">https://pan.baidu.com/s/1hUu8DXcmK6y9OzmjJUS9LA</a></font></span></p>
+<p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 当然，这里使用vscode举例其实不妥。因为vscode因为上述使用了多进程加载dll的缘故，直接跑是跑不起来的。需要将我修改后的node_modules.asar.unpacked文件夹覆盖掉原版的VSCode-win32-ia32-1.23.1\resources\app\node_modules.asar.unpacked文件夹。</font></span></p>
 <p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp; 
-另外，如果运行过程中发现没有效果，可以打开dbgview（网上随处可下），再运行，看有什么log输出，再直接反馈给我（https://github.com/weolar/miniblink49/issues）</font></span></p>
+</font></span></p>
 <p align="left"><span lang="zh-cn"><font face="微软雅黑" size="4">&nbsp;&nbsp;&nbsp;</font></span></p>
 <p align="left">　</p>
 <p align="left">　</p>

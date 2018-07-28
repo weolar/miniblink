@@ -121,6 +121,20 @@ function onSidebarClick(url) {
 	$("doc-right-frame").src = url;
 }
 
+// doc-main.html?goto=api-doc
+function onGotoLocation() {
+	var href = (window.location.href);
+	var separtorPos = href.indexOf('?goto=');
+	if (-1 === separtorPos)
+		return;
+	var gotoUrl = href.substr(separtorPos + 6, href.length);
+	gotoUrl += ".html"
+	if ("doc-main.html" === gotoUrl)
+		return;
+	onSidebarClick(gotoUrl);
+}
+onGotoLocation();
+
 </script>
 
 </body>
