@@ -638,7 +638,8 @@ body{margin:0;padding:0;border:0}
 	<!---->
 	<h3 class="api-def">jsValue wkeRunJsByFrame(wkeWebView webView, wkeWebFrameHandle frameId, const utf8* script, bool isInClosure)</h3>
     <div>运行js在指定的frame上，通过frameId</div>
-    <div class="api-params">参数：略</div>
+    <div class="api-params">参数：isInClosure表示是否在外层包个function() {}形式的闭包</div>
+    <div class="api-remark">注意：如果需要返回值，在isInClosure为true时，需要写return，为false则不用</div>
 	<div class="sep-line"></div>
 	<!---->
 	<h3 class="api-def">const utf8* wkeGetFrameUrl(wkeWebView webView, wkeWebFrameHandle frameId)</h3>
@@ -1158,6 +1159,7 @@ body{margin:0;padding:0;border:0}
 	<h3 class="api-def">jsValue jsEvalExW(jsExecState es, const wchar_t* str, bool isInClosure)</h3>
     <div>和上述接口的区别是，isInClosure表示是否要包裹一层function(){}。jsEvalW相当于jsEvalExW(es, str, false)</div>
     <div class="api-params">参数：略</div>
+    <div class="api-remark">注意：如果需要返回值，在isInClosure为true时，需要写return，为false则不用</div>
 	<div class="sep-line"></div>
 	<!---->
 	<h3 class="api-def">jsValue jsCall(jsExecState es, jsValue func, jsValue thisValue, jsValue* args, int argCount)</h3>
