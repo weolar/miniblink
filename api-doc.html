@@ -988,11 +988,12 @@ body{margin:0;padding:0;border:0}
     <div>获取favicon。</div>
     <div class="api-params">参数：略</div>
     <div class="api-remark">注意：此接口必须在wkeOnLoadingFinish回调里调用。可以用下面方式来判断是否是主frame的LoadingFinish:
-<pre>    wkeTemdivCallbackInfo* temdivInfo = wkeGetTemdivCallbackInfo(webView);
-    if (::wkeIsMainFrame(webView, temdivInfo-&gt;frame)) {
-    &nbsp;&nbsp;&nbsp;&nbsp;::wkeNetGetFavicon(webView, HandleFaviconReceived, divaram);
-    }
-</pre>
+	<pre>
+		wkeTempCallbackInfo* temInfo = wkeGetTempCallbackInfo(webView);
+	    if (::wkeIsMainFrame(webView, temInfo-&gt;frame)) {
+	    &nbsp;&nbsp;&nbsp;&nbsp;::wkeNetGetFavicon(webView, HandleFaviconReceived, divaram);
+	    }
+	</pre>
     </div>
 	<div class="sep-line"></div>
 
