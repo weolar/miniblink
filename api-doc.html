@@ -1,1341 +1,1349 @@
-﻿<html><head><style>
-body{margin:0;padding:0;border:0}
-.top-bar{text-align:left;padding:5px 0;background-color:#d42d2d;font-size:14px;height:40px}
-.top-bar h1{font-size:inherit;display:inline-block;line-height:0;margin:0}
-.top-bar a{color:#efeae1}
-.top-bar a:hover{color:#81c08b;text-decoration:none}
-.top-bar a.is-selected{color:#a29f99}
-.top-bar .navigation{display:inline-block}
-.top-bar .top-bar-right{float:right;line-height:33px;margin-right:30px}
-.top-bar .minibutton{margin:4px 0}
-.navigation{list-style-type:none;margin:0;padding:0}
-.navigation li{display:inline-block;padding-right:5px;height:33px;vertical-align:top}
-.navigation li:last-child{padding-right:0}
-.navigation a{padding:5px;display:inline-block;transition:color .2s;-o-transform:color .2s;-moz-transform:color .2s;-webkit-transition:color .2s}
-.navigation a:hover{text-decoration:none}
-.wrapper{padding-left:0;padding-right:0}
-.wrapper{width:auto;margin:0 auto;padding-left:40px;padding-right:40px;overflow:hidden}
-.sep-line{border-bottom:1px solid #ddf;margin:10px 0;}
-.api-def{border:#20206f;background:#E0E2D7;padding:7px;border-radius:5px;margin: 4px 0;}
-.api-deprecated{background: antiquewhite;color: #d60027;text-decoration: line-through}
-.api-params{margin-left:12px}
-.api-param{margin-left:55px;border:1px solid #20206f;padding: 0 6px;}
-.api-param-value{margin-left:55px;}
-.api-remark{border-left:5px solid #8585fb;background:#f4f4f4;margin:10px;font-weight:bold;margin-left:12px;line-height:25px}
-.api-remark pre{font-weight: normal;}
-.api-floatbar{right: 5px;position: fixed;top: 5px;background: mintcream;height: 99%;overflow: auto;opacity: 0.4;}
-</style>
-<title>API doc of the Miniblink</title>
-</head>
-<body>
-
-<h1 style="text-align:center;background:#a43222;margin:0;line-height: 150px;"><font color="#FFffffff">API文档</font></h1>
-
-<h2 style="margin-left:20px;">前言</h2>
-<div class="sep-line"></div><!--分割线-->
-
-<div style="margin-left:15px;">
-<p>miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
-<p>总的来说，miniblink的接口是纯C导出，只要使用wke.h即可加载。无需.lib。</p>
-<p>接口使用 __cdecl 调用约定。</p>
-</div>
-
-<ul style="border-radius:5px; border:1px solid #dddddd; line-height:35px; background:#dddddd; margin-left:30px; margin-right:30px">
-    <li>另外，请勿跨线程调用所有接口（除非接口有特殊申明）</li>
-    <li>所有接口如果返回的是const utf8*，const wchar_t*类型的字符串，均不需要手动释放</li>
-    <li>miniblink暂时只支持windows系统</li>
-</ul>
-<div class="sep-line"></div><!--分割线-->
-
-<h2 style="margin-left:20px;">API</h2>
-<div style="margin: 0px 6px;line-height: 26px;">
-    <h3 class="api-def">unsigned int wkeVersion();</h3>
-    <div>获取目前api版本号</div>
-    <div class="api-params">参数：无</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const utf8* wkeVersionString();</h3>
-    <div>获取版本字符串</div>
-    <div class="api-params">参数：无</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetWkeDllPath(const wchar_t* dllPath)</h3>
-    <div>设置miniblink的全路径+文件名</div>
-    <div class="api-params">参数：</div>
-    <div class="api-param">dllPath：dll的全路径，注意是全路径</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeGC(wkeWebView webView, long delayMs);</h3>
-    <div>延迟让miniblink垃圾回收</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetFileSystem(WKE_FILE_OPEN pfnOpen, WKE_FILE_CLOSE pfnClose, WKE_FILE_SIZE pfnSize, WKE_FILE_READ pfnRead, WKE_FILE_SEEK pfnSeek)</h3>
-    <div>wke遗留的接口，设置文件相关的hook函数。可以作为拦截对文件的操作。现在已被更先进的函数取代</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def api-deprecated">bool wkeIsLoaded(wkeWebView webView);</h3>
-    <div>（被废弃）获取webView是否处于加载状态，还是加载完成。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def api-deprecated">bool wkeIsLoadingSucceeded(wkeWebView webView)</h3>
-    <div>（被废弃）判断webview是否加载成功</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def api-deprecated">bool wkeIsLoadFailed(wkeWebView webView)</h3>
-    <div>（被废弃）判断webview是否加载失败</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def api-deprecated">bool wkeIsLoadComplete(wkeWebView webView)</h3>
-    <div>（被废弃）判断webview是否加载完成</div>
-    <div class="api-params">参数：略</div>
-	<div class="api-remark">注意：wkeIsLoadComdivlete等效于wkeIsLoadFailed、wkeIsLoadingSucceeded其中任何一个返回true</div>
-
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeIsDocumentReady(wkeWebView webView)</h3>
-    <div>DOM文档结构是否加载完成。和上述几个接口不同，上述几个接口是网络相关的判断。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeStopLoading(wkeWebView webView)</h3>
-    <div>停止加载页面</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeReload(wkeWebView webView)</h3>
-    <div>重新加载页面</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const utf8* wkeGetTitle(wkeWebView webView)</h3>
-    <div>获取页面标题</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const wchar_t* wkeGetTitleW(wkeWebView webView)</h3>
-    <div>获取页面标题的宽字节版本</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeResize(wkeWebView webView, int w, int h)</h3>
-    <div>重新设置页面的宽高。如果webView是带窗口模式的，会设置真窗口的宽高。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">int wkeGetWidth(wkeWebView webView)</h3>
-    <div>获取页面宽度</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">int wkeGetHeight(wkeWebView webView)</h3>
-    <div>获取页面高度</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">int wkeGetContentWidth(wkeWebView webView)</h3>
-    <div>获取网页排版出来的宽度</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">int wkeGetContentHeight(wkeWebView webView)</h3>
-    <div>获取网页排版出来的高度</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def api-deprecated">void wkeSetDirty(wkeWebView webView, bool dirty)</h3>
-    <div>（被废弃）设置页面为脏状态，在下一帧将强制重绘页面</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def api-deprecated">bool wkeIsDirty(wkeWebView webView)</h3>
-    <div>（被废弃）获取页面脏状态</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def api-deprecated">void wkeAddDirtyArea(wkeWebView webView, int x, int y, int w, int h)</h3>
-    <div>（被废弃）添加页面脏矩形</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def api-deprecated">void wkeLayoutIfNeeded(wkeWebView webView)</h3>
-    <div>（被废弃）强制让页面重新排版</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkePaint2(wkeWebView webView, void* bits, int bufWid, int bufHei, int xDst, int yDst, int w, int h, int xSrc, int ySrc, bool bCopyAlpha)</h3>
-    <div class="api-params">参数：</div>
-	<table class="api-param">
-        <tbody><tr><td>bits</td><td>外部申请并传递给mb的buffer，大小是bufWid * bufHei * 4 字节</td></tr>
-        <tr><td>bufWid、bufHei</td><td>bits的宽高</td></tr>
-        <tr><td>xDst、yDst</td><td>绘制到bits的哪个坐标</td></tr>
-        <tr><td>w、h、xSrc、ySrc</td><td>mb需要取的画面的起始坐标</td></tr>
-        <tr><td>bCopyAlpha</td><td>是否拷贝画面的透明度值</td></tr>
-    </tbody></table>
-	<div class="api-remark">注意：此函数一般给3d游戏使用。另外频繁使用此接口并拷贝像素有性能问题。最好用wkeGetViewDC再去拷贝dc。</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkePaint(wkeWebView webView, void* bits, int pitch)</h3>
-    <div>获取页面的像素的简化版函数。</div>
-    <div class="api-params">参数：</div>
-	<div class="api-param">
-		bits：外部申请并传递给mb的buffer，大小是webview宽度 * 高度 * 4 字节。<br>
-		pitch：填0即可。这个参数玩过directX的人应该懂
-	</div>
-	<!---->
-	<h3 class="api-def api-deprecated">void wkeRepaintIfNeeded(wkeWebView webView)</h3>
-    <div>（被废弃）强制重绘页面</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">HDC wkeGetViewDC(wkeWebView webView)</h3>
-    <div>获取webview的DC</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">HWND wkeGetHostHWND(wkeWebView webView)</h3>
-    <div>获取webveiw对应的窗口句柄。实现和wkeGetWindowHandle完全相同</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeCanGoBack(wkeWebView webView)</h3>
-    <div>页面是否可以后退</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeGoBack(wkeWebView webView)</h3>
-    <div>强制让页面后退</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeCanGoForward(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeGoForward(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeEditorSelectAll(wkeWebView webView)</h3>
-    <div>给webview发送全选命令</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeEditorUnSelect(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeEditorCopy(wkeWebView webView)</h3>
-    <div>拷贝页面里被选中的字符串</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeEditorCut(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeEditorDelete(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeEditorUndo(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeEditorRedo(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const wchar_t * wkeGetCookieW(wkeWebView webView)</h3>
-    <div>获取页面的cookie</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const utf8* wkeGetCookie(wkeWebView webView)</h3>
-    <div>获取页面的cookie</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetCookie(wkeWebView webView, const utf8* url, const utf8* cookie)</h3>
-    <div>设置页面cookie。</div>
-    <div class="api-params">参数：略</div>
-	<div class="api-remark">
-		注意：cookie必须符合curl的cookie写法。至于curl的cookie怎么写，请自行搜索
-	</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeVisitAllCookie(void* params, wkeCookieVisitor visitor)</h3>
-    <div>通过访问器visitor访问所有cookie。</div>
-    <div class="api-params">参数：</div>
-	<div class="sep-param">visitor：访问器。</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkePerformCookieCommand(wkeCookieCommand command)</h3>
-    <div>通过设置mb内置的curl来操作cookie。</div>
-    <div class="api-params">参数：</div>
-	<div class="api-param">command：
-		<div class="api-param-value">
-		wkeCookieCommandClearAllCookies: 内部实际执行了curl_easy_setopt(curl, CURLOPT_COOKIELIST, "ALL");<br>
-		wkeCookieCommandClearSessionCookies: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "SESS");<br>
-		wkeCookieCommandFlushCookiesToFile: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "FLUSH");<br>
-		wkeCookieCommandReloadCookiesFromFile: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "RELOAD");
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>API DOC</title>
+		<style type="text/css">
+			body{margin: 0px;}
+			.title{text-align: center;background: #d4d4d4;line-height: 150px;margin: 0px;color: #fff;font-weight: 500}
+			.sub-title{margin-left: 20px;font-weight: 400;}
+			.sep-line{border-bottom: 1px solid #ddf;margin: 10px 0;}
+			.content{margin-left: 15px;;font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;font-size: 14px;}
+			.content .api-def{font-size: 19px;border:1px solid #e1e1e8;padding: 2px 8px;border-left-color: #ce4844;border-left-width: 5px;font-weight: 500;background: #d5cfcf;}
+			.content .api-deprecated{color: #d60027;text-decoration: line-through;}
+			.content .api-param{border: 1px solid #20206f;margin: 12px 0px;}
+			.content table.api-param {border-collapse: collapse;border: 1px solid #e1e1e8;font-size: 14px;}
+			.content table.api-param tr {padding: 0px}
+			.content table.api-param tr td:first-child{background: #f7f7f9;}
+			.content table.api-param tr td{padding: 2px 8px;}
+			.list{margin:0px;padding: 8px 46px;}
+			.list li{margin-bottom: 8px;}
+			.list-warning{background-color: #f0ad4e;color: #fff;}
+			.search{position: fixed;height: 320px; width: 400px;background: #F7F7F7;left: 40%;top:25%;transform: translate(-25%,-25%);padding: 8px 16px;text-align: center;display: none;}
+			.search input{margin-top:25px;width: 320px;height: 32px;border: solid 1px #d7d7d9;}
+			.search .search-result{list-style: none;margin: 0px;padding: 0px;text-align: left;margin-left: 10%;margin-top: 10px;overflow:auto;height: 220px;}
+			.search .search-result li{border-bottom: solid 1px #ddd;font-size: 12px;overflow: hidden;    height: 18px;}
+			.search .search-result li:hover{background-color: #ddd;}
+			
+		</style>
+	</head>
+	<body>
+		<div>
+			<h1 class="title">
+				API文档
+			</h1>
 		</div>
-	</div>
-	<div class="api-remark">注意：这个接口只是调用curl设置命令，并不会去修改js里的内容</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetCookieEnabled(wkeWebView webView, bool enable)</h3>
-    <div>开启或关闭cookie</div>
-    <div class="api-params">参数：略</div>
-	<div class="api-remark">注意：这个接口只是影响blink，并不会设置curl。所以还是会生成curl的cookie文件</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeIsCookieEnabled(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetCookieJarPath(wkeWebView webView, const WCHAR* path)</h3>
-    <div>设置cookie的本地文件目录。默认是当前目录。cookies存在当前目录的“cookie.dat”里</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetCookieJarFullPath(wkeWebView webView, const WCHAR* path)</h3>
-    <div>设置cookie的全路径+文件名，如“c:\mb\cookie.dat”</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetLocalStorageFullPath(wkeWebView webView, const WCHAR* path)</h3>
-    <div>设置local storage的全路径。如“c:\mb\LocalStorage\”</div>
-    <div class="api-params">参数：略</div>
-	<div class="api-remark">注意：这个接口只能接受目录。</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetMediaVolume(wkeWebView webView, float volume)</h3>
-    <div>设置音量，未实现</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">float wkeGetMediaVolume(wkeWebView webView)</h3>
-    <div>获取音量，未实现</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeFireMouseEvent(wkeWebView webView, unsigned int message, int x, int y, unsigned int flags)</h3>
-    <div>向mb发送鼠标消息</div>
-    <div class="api-params">参数：</div>
-	<div class="api-param">
-		message：可取WM_MOUSELEAVE等Windows相关鼠标消息<br>
-		x、y：坐标<br>
-		flags：可取值有WKE_CONTROL、WKE_SHIFT、WKE_LBUTTON、WKE_MBUTTON、WKE_RBUTTON，可通过“或”操作并联。
-	</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeFireContextMenuEvent(wkeWebView webView, int x, int y, unsigned int flags)</h3>
-    <div>向mb发送菜单消息（未实现）</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeFireMouseWheelEvent(wkeWebView webView, int x, int y, int delta, unsigned int flags)</h3>
-    <div>向mb发送滚轮消息，用法和参数类似wkeFireMouseEvent。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeFireKeyUpEvent(wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey)</h3>
-    <div>向mb发送WM_KEYUP消息，</div>
-    <div class="api-params">参数：</div>
-	<div class="api-param">
-		virtualKeyCode：见https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
-		flags：可取值有WKE_REPEAT、WKE_EXTENDED，可通过“或”操作并联。
-		systemKey：暂时没用
-	</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeFireKeyDownEvent(wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeFireKeyPressEvent(wkeWebView webView, unsigned int charCode, unsigned int flags, bool systemKey)</h3>
-    <div>略</div>
-    <div class="api-params">参数：</div>
-	<div class="api-param">
-		charCode：WM_CHAR消息的The character code of the key.见https://msdn.microsoft.com/en-us/library/windows/desktop/ms646276(v=vs.85).aspx
-	</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeFireWindowsMessage(wkeWebView webView, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, LRESULT* result)</h3>
-    <div>向mb发送任意windows消息。不过目前mb主要用来处理光标相关。mb在无窗口模式下，要响应光标事件，需要通过本函数手动发送光标消息</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetFocus(wkeWebView webView)</h3>
-    <div>设置webview是焦点态。如果webveiw关联了窗口，窗口也会有焦点</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeKillFocus(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-
-	<h3 class="api-def">wkeRect wkeGetCaretRect(wkeWebView webView)</h3>
-    <div>获取编辑框的那个游标的位置</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue wkeRunJS(wkeWebView webView, const utf8* script)</h3>
-    <div>运行一段js。返回js的值jsValue。jsValue是个封装了内部v8各种类型的类，如果需要获取详细信息，有jsXXX相关接口可以调用。见下述。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue wkeRunJSW(wkeWebView webView, const wchar_t* script)</h3>
-    <div>同上。注意，此函数以及wkeRunJS，执行的js，也就是script，是在一个闭包中</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsExecState wkeGlobalExec(wkeWebView webView)</h3>
-    <div>获取页面主frame的jsExecState。jsExecState是什么，见下述。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSleep(wkeWebView webView)</h3>
-    <div>暂未实现</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeWake(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeIsAwake(wkeWebView webView)</h3>
-    <div>暂未实现</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetZoomFactor(wkeWebView webView, float factor)</h3>
-    <div>设置页面缩放系数，默认是1</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">float wkeGetZoomFactor(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetEditable(wkeWebView webView, bool editable)</h3>
-    <div>未实现</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnTitleChanged(wkeWebView webView, wkeTitleChangedCallback callback, void* callbackParam)</h3>
-    <div>设置标题变化的通知回调</div>
-    <div class="api-params">参数：typedef void(*wkeTitleChangedCallback)(wkeWebView webView, void* param, const wkeString title);</div>
-	<div class="api-param">
-		title：标题的字符串封装。wkeString怎么用，见相关接口。
-		param：通过wkeOnTitleChanged的callbackParam设置
-	</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnMouseOverUrlChanged(wkeWebView webView, wkeTitleChangedCallback callback, void* callbackParam)</h3>
-    <div>鼠标划过的元素，如果是<a>，则调用此回调，并发送a标签的url</a></div>    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnURLChanged(wkeWebView webView, wkeURLChangedCallback callback, void* callbackParam)</h3>
-    <div>url改变回调</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnURLChanged2(wkeWebView webView, wkeURLChangedCallback2 callback, void* callbackParam)</h3>
-    <div>和上个接口不同的是，回调多了个参数</div>
-    <div class="api-params">参数：typedef void(*wkeURLChangedCallback2)(wkeWebView webView, void* param, wkeWebFrameHandle frameId, const wkeString url)</div>
-	<div class="api-param">
-		frameId：表示frame的id。有相关接口可以判断这个frameId是否是主frame
-	</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnPaintUpdated(wkeWebView webView, wkePaintUpdatedCallback callback, void* callbackParam)</h3>
-    <div>页面有任何需要刷新的地方，将调用此回调</div>
-    <div class="api-params">参数：typedef void(*wkePaintUpdatedCallback)(wkeWebView webView, void* param, const HDC hdc, int x, int y, int cx, int cy) </div>
-	<div class="api-param">x、y、cx、cy表示刷新的区域矩形</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnPaintBitUpdated(wkeWebView webView, wkePaintBitUpdatedCallback callback, void* callbackParam)</h3>
-    <div>同上。不同的是回调过来的是填充好像素的buffer，而不是DC。方便嵌入到游戏中做离屏渲染</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnAlertBox(wkeWebView webView, wkeAlertBoxCallback callback, void* callbackParam)</h3>
-    <div>网页调用alert会走到这个接口填入的回调</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnConfirmBox(wkeWebView webView, wkeConfirmBoxCallback callback, void* callbackParam)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnPromptBox(wkeWebView webView, wkePromptBoxCallback callback, void* callbackParam)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnNavigation(wkeWebView webView, wkeNavigationCallback callback, void* param)</h3>
-    <div>网页开始浏览将触发回调</div>
-    <div class="api-params">参数：typedef bool(*wkeNavigationCallback)(wkeWebView webView, void* param, wkeNavigationType navigationType, const wkeString url);</div>
-    <div class="api-param">wkeNavigationType: 表示浏览触发的原因。可以取的值有：
-		<div class="api-param-value">
-		    WKE_NAVIGATION_TYPE_LINKCLICK：点击a标签触发<br>
-			WKE_NAVIGATION_TYPE_FORMSUBMITTE：点击form触发<br>
-			WKE_NAVIGATION_TYPE_BACKFORWARD：前进后退触发<br>
-			WKE_NAVIGATION_TYPE_RELOAD：重新加载触发
+		<h2 class="sub-title">前言</h2>
+		<div class="sep-line"></div>
+		<div class="content">
+			<p>miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
+			<p>总的来说，miniblink的接口是纯C导出，只要使用wke.h即可加载。无需.lib。</p>
 		</div>
-    </div>
-    <div class="api-remark">注意：wkeNavigationCallback回调的返回值，如果是true，表示可以继续进行浏览，false表示阻止本次浏览。</div>
-
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnCreateView(wkeWebView webView, wkeCreateViewCallback callback, void* param)</h3>
-    <div>网页点击a标签创建新窗口时将触发回调</div>
-    <div class="api-params">参数：typedef wkeWebView(*wkeCreateViewCallback)(wkeWebView webView, void* param, wkeNavigationType navigationType, const wkeString url, const wkeWindowFeatures* windowFeatures);</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnDocumentReady(wkeWebView webView, wkeDocumentReadyCallback callback, void* param)</h3>
-    <div>对应js里的body onload事件</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnDocumentReady2(wkeWebView webView, wkeDocumentReady2Callback callback, void* param)</h3>
-    <div>同上。区别是wkeDocumentReady2Callback多了wkeWebFrameHandle frameId参数。可以判断是否是主frame</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnDownload(wkeWebView webView, wkeDownloadCallback callback, void* param)</h3>
-    <div>页面下载事件回调。点击某些链接，触发下载会调用</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeNetOnResponse(wkeWebView webView, wkeNetResponseCallback callback, void* param)</h3>
-    <div>一个网络请求发送后，收到服务器response触发回调</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnConsole(wkeWebView webView, wkeConsoleCallback callback, void* param)</h3>
-    <div>网页调用console触发</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetUIThreadCallback(wkeWebView webView, wkeCallUiThread callback, void* param)</h3>
-    <div>暂时未实现</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnLoadUrlBegin(wkeWebView webView, wkeLoadUrlBeginCallback callback, void* callbackParam)</h3>
-    <div>任何网络请求发起前会触发此回调</div>
-    <div class="api-params">参数：typedef bool(*wkeLoadUrlBeginCallback)(wkeWebView webView, void* param, const char *url, void *job)</div>
-	<div class="api-remark">注意：<br>
-		1，此回调功能强大，在回调里，如果对job设置了wkeNetHookRequest，则表示mb会缓存获取到的网络数据，并在这次网络请求
-		结束后调用wkeOnLoadUrlEnd设置的回调，同时传递缓存的数据。在此期间，mb不会处理网络数据。<br>
-		2，如果在wkeLoadUrlBeginCallback里没设置wkeNetHookRequest，则不会触发wkeOnLoadUrlEnd回调。<br>
-		3，如果wkeLoadUrlBeginCallback回调里返回true，表示mb不处理此网络请求（既不会发送网络请求）。返回false，表示mb依然会发送网络请求。<br>
-		用法举例：<br>
-		假如需要hook百度某个url（如httdiv://baidu.com/a.js）,替换为本地c:\b.js，则可以这样实现：<br>
-<pre>	void readJsFile(const wchar_t* divath, std::vector<char>* buffer) {
-	    HANDLE hFile = CreateFileW(divath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	    if (INVALID_HANDLE_VALUE == hFile) {
-	        DebugBreak();
-	        return;
-	    }
-
-	    DWORD fileSizeHigh;
-	    const DWORD bufferSize = ::GetFileSize(hFile, &amp;amdiv;fileSizeHigh);
-
-	    DWORD numberOfBytesRead = 0;
-	    buffer-&gt;resize(bufferSize);
-	    BOOL b = ::ReadFile(hFile, &amp;amdiv;buffer-&gt;at(0), bufferSize, &amp;amdiv;numberOfBytesRead, nulldivtr);
-	    ::CloseHandle(hFile);
-
-	}
-
-	static bool HookUrl(void* job, const char* url, const char* hookUrl, const wchar_t* localFile, const char* mime) {
-	    if (0 != strstr(url, hookUrl)) {
-	        wkeNetSetMIMETydive(job, (char*)mime); // "text/html" "text/javascridivt"
-	        std::vector<char> buffer;
-	        ReadJsFile(localFile, &amp;amdiv;buffer);
-	        wkeNetSetData(job, &amp;amdiv;buffer[0], buffer.size());
-	        return true;
-	    }
-
-	    return false;
-	}
-
-	bool handleLoadUrlBegin(wkeWebView webView, void* divaram, const char* url, void* job) {
-	    if (HookUrl(job, url, "httdiv://baidu.com/a.js", L"c:\\b.js", "text/javascridivt"))
-	        return true;
-
-	    return false;
-	}
-	如果需要拿到httdiv://baidu.com/a.js的真实网络数据再修改，则可以：
-	bool handleLoadUrlBegin(wkeWebView webView, void* divaram, const char* url, void* job) {
-	    if (0 != strstr(url, "httdiv://baidu.com/a.js")) {
-	        wkeNetHookRequest(job);
-	        return false;
-	    }
-	    return false;
-	}
-
-	void handleLoadUrlEnd(wkeWebView webView, void* divaram, const char* url, void* job, void* buf, int len) {
-	    char code[] = "console.log('test')";
-	    wkeNetSetData(job, code, sizeof(code));
-	}
- </char></char></pre>
-    </div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnLoadUrlEnd(wkeWebView webView, wkeLoadUrlEndCallback callback, void* callbackParam)</h3>
-    <div>见wkeOnLoadUrlBegin的描述</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnDidCreateScriptContext(wkeWebView webView, wkeDidCreateScriptContextCallback callback, void* callbackParam)</h3>
-    <div>javascript的v8执行环境被创建时触发此回调</div>
-    <div class="api-params">参数：略</div>
-    <div class="api-remark">注意：每个frame创建时都会触发此回调</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnWillReleaseScriptContext(wkeWebView webView, wkeWillReleaseScriptContextCallback callback, void* callbackParam)</h3>
-    <div>每个frame的javascript的v8执行环境被关闭时触发此回调</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnWillMediaLoad(wkeWebView webView, wkeWillMediaLoadCallback callback, void* callbackParam)</h3>
-    <div>video等多媒体标签创建时触发此回调</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeIsMainFrame(wkeWebView webView, wkeWebFrameHandle frameId)</h3>
-    <div>判断frameId是否是主frame</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">wkeWebFrameHandle wkeWebFrameGetMainFrame(wkeWebView webView)</h3>
-    <div>获取主frame的句柄</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue wkeRunJsByFrame(wkeWebView webView, wkeWebFrameHandle frameId, const utf8* script, bool isInClosure)</h3>
-    <div>运行js在指定的frame上，通过frameId</div>
-    <div class="api-params">参数：isInClosure表示是否在外层包个function() {}形式的闭包</div>
-    <div class="api-remark">注意：如果需要返回值，在isInClosure为true时，需要写return，为false则不用</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const utf8* wkeGetFrameUrl(wkeWebView webView, wkeWebFrameHandle frameId)</h3>
-    <div>获取frame对应的url</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const utf8* wkeGetString(const wkeString s)</h3>
-    <div>获取wkeString结构体对应的字符串，utf8编码</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const wchar_t* wkeGetStringW(const wkeString string)const wchar_t* wkeGetStringW(const wkeString string)</h3>
-    <div>获取wkeString结构体对应的字符串，utf16编码</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetString(wkeString string, const utf8* str, size_t len)</h3>
-    <div>设置wkeString结构体对应的字符串，utf8编码</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetStringW(wkeString string, const wchar_t* str, size_t len)</h3>
-    <div>设置wkeString结构体对应的字符串，utf16编码</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">wkeString wkeCreateStringW(const wchar_t* str, size_t len)</h3>
-    <div>通过utf16编码的字符串，创建一个wkeString</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeDeleteString(wkeString str)</h3>
-    <div>析构这个wkeString</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetUserKeyValue(wkeWebView webView, const char* key, void* value)</h3>
-    <div>对webView设置一个key value键值对。可以用来保存用户自己定义的任何指针</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void* wkeGetUserKeyValue(wkeWebView webView, const char* key)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">int wkeGetCursorInfoType(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">wkeWebView wkeCreateWebView()</h3>
-    <div>创建一个webview，但不创建真窗口。一般用在离屏渲染里，如游戏</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeDestroyWebView(wkeWebView webView)</h3>
-    <div>效果同wkeDestroyWebWindow</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">wkeWebView wkeCreateWebWindow(wkeWindowType type, HWND parent, int x, int y, int width, int height)</h3>
-    <div>创建一个带真实窗口的wkeWebView</div>
-    <div class="api-params">参数：wkeWindowType </div>
-    <div class="api-param">WKE_WINDOW_TYPE_POPUP：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;普通窗口<br>
-		WKE_WINDOW_TYPE_TRANSPARENT：透明窗口。mb内部通过layer window实现<br>
-		WKE_WINDOW_TYPE_CONTROL：&nbsp;&nbsp;&nbsp;&nbsp;嵌入在父窗口里的子窗口。此时parent需要被设置</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeDestroyWebWindow(wkeWebView webWindow)</h3>
-    <div>销毁wkeWebView对应的所有数据结构，包括真实窗口等</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">HWND wkeGetWindowHandle(wkeWebView webWindow)</h3>
-    <div>获取窗口对应的真实句柄。和wkeGetHostHWND的实现完全相同</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnWindowClosing(wkeWebView webWindow, wkeWindowClosingCallback callback, void* param)</h3>
-    <div>wkeWebView如果是真窗口模式，则在收到WM_CLODE消息时触发此回调。可以通过在回调中返回false拒绝关闭窗口</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeOnWindowDestroy(wkeWebView webWindow, wkeWindowDestroyCallback callback, void* param)</h3>
-    <div>窗口即将被销毁时触发回调。不像wkeOnWindowClosing，这个操作无法取消</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeShowWindow(wkeWebView webWindow, bool showFlag)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeEnableWindow(wkeWebView webWindow, bool enableFlag)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeMoveWindow(wkeWebView webWindow, int x, int y, int width, int height)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeMoveToCenter(wkeWebView webWindow)</h3>
-    <div>窗口在父窗口或屏幕里居中</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeResizeWindow(wkeWebView webWindow, int width, int height)</h3>
-    <div>resize窗口，和wkeResize效果一样</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetWindowTitle(wkeWebView webWindow, const utf8* title)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetWindowTitle(wkeWebView webWindow, const wchar_t* title)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetDeviceParameter(wkeWebView webView, const char* device, const char* paramStr, int paramInt, float paramFloat)</h3>
-    <div>设置mb模拟的硬件设备环境。主要用在伪装手机设备场景</div>
-    <div class="api-params">参数：</div>
-    <div class="api-param">device：设备的字符串。可取值有：
-    	<table class="api-param-value">
-    	<tbody><tr><td>"navigator.maxTouchPoints"</td><td>此时 paramInt 需要被设置，表示 touch 的点数</td></tr>
-			<tr><td>"navigator.platform"</td><td>此时 paramStr 需要被设置，表示js里获取的 navigator.platform字符串</td></tr>
-			<tr><td>"navigator.hardwareConcurrency"</td><td>此时 paramInt 需要被设置，表示js里获取的 navigator.hardwareConcurrency 整数值</td></tr>
-			<tr><td>"screen.width"</td><td>此时 paramInt 需要被设置，表示js里获取的 screen.width 整数值</td></tr>
-			<tr><td>"screen.height"</td><td>此时 paramInt 需要被设置，表示js里获取的 screen.height 整数值</td></tr>
-			<tr><td>"screen.availWidth"</td><td>此时 paramInt 需要被设置，表示js里获取的 screen.availWidth 整数值</td></tr>
-			<tr><td>"screen.availHeight"</td><td>此时 paramInt 需要被设置，表示js里获取的 screen.availHeight 整数值</td></tr>
-			<tr><td>"screen.pixelDepth"</td><td>此时 paramInt 需要被设置，表示js里获取的 screen.pixelDepth 整数值</td></tr>
-			<tr><td>"screen.pixelDepth"</td><td>目前等价于"screen.pixelDepth"</td></tr>
-			<tr><td>"window.devicePixelRatio"</td><td>同上</td></tr>
-		</tbody></table>
-    </div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeInit()</h3>
-    <div>初始化整个mb。此句必须在所有mb api前最先调用。并且所有mb api必须和调用wkeInit的线程为同个线程</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeShutdown()</h3>
-    <div>关闭整个mb。调用后，所有mb api将不能再被调用，否则会有崩溃</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeInitialize()</h3>
-    <div>效果和wkeInit一模一样</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetProxy(const wkeProxy* proxy)</h3>
-    <div>设置整个mb的代码。此句是全局生效</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetViewProxy(wkeWebView webView, wkeProxy* proxy)</h3>
-    <div>设置整个mb的代码。此句是针对特定webview生效</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeConfigure(const wkeSettings* settings)</h3>
-    <div>设置一些配置项</div>
-    <div class="api-params">参数：
-		<div class="api-param">
-			typedef struct { wkeProxy proxy; unsigned int mask; } wkeSettings;
-			mask可以取：
-			<div class="api-param-value">
-				WKE_SETTING_PROXY：效果和wkeSetProxy一样，通过proxy设置<br>
-				WKE_SETTING_PAINTCALLBACK_IN_OTHER_THREAD：这是个高级用法，开启时，on paint回调会在另外个线程（其实就是渲染线程）。<br>
-				这个是用来实现多线程上屏功能，性能更快。<br>
-			</div>
+		<div class="content">
+			<ul class="list list-warning">
+				<li>另外，请勿跨线程调用所有接口（除非接口有特殊申明）</li>
+				<li>所有接口如果返回的是const utf8*，const wchar_t*类型的字符串，均不需要手动释放</li>
+				<li>miniblink暂时只支持windows系统</li>
+			</ul>
 		</div>
-	</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeIsInitialize()</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeFinalize()</h3>
-    <div>效果和wkeShutdown一样</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetMemoryCacheEnable(wkeWebView webView, bool b)</h3>
-    <div>开启内存缓存。网页的图片等都会在内存缓存里。关闭后，内存使用会降低一些，但容易引起一些问题，如果不懂怎么用，最好别开</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetTouchEnabled(wkeWebView webView, bool b)</h3>
-    <div>开启触屏模式。开启后，鼠标消息将自动转换成触屏消息</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetMouseEnabled(wkeWebView webView, bool b)</h3>
-    <div>开启关闭鼠标消息，可以在开启触屏后，关闭鼠标消息</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetNavigationToNewWindowEnable(wkeWebView webView, bool b)</h3>
-    <div>关闭后，点a标签将不会弹出新窗口，而是在本窗口跳转</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetCspCheckEnable(wkeWebView webView, bool b)</h3>
-    <div>关闭后，跨域检查将被禁止，此时可以做任何跨域操作，如跨域ajax，跨域设置iframe</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetNpapiPluginsEnabled(wkeWebView webView, bool b)</h3>
-    <div>开启关闭npapi插件，如flash</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetHeadlessEnabled(wkeWebView webView, bool b)</h3>
-    <div>开启无头模式。开启后，将不会渲染页面，提升了网页性能。此功能方便用来实现一些爬虫，或者刷单工具</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetDebugConfig(wkeWebView webView, const char* debugString, const char* param)</h3>
-    <div>开启一些实验性选项。</div>
-    <div class="api-params">参数：
-    	<div class="api-param">debugString：
-	    	<table class="api-param-value">
-		    	<tbody><tr><td>"showDevTools"</td><td>开启开发者工具，此时param要填写开发者工具的资源路径，如file:///c:/miniblink-release/front_end/inspector.html。注意param此时必须是utf8编码</td></tr>
-				<tr><td>"wakeMinInterval"</td><td>设置帧率，默认值是10，值越大帧率越低</td></tr>
-				<tr><td>"drawMinInterval"</td><td>设置帧率，默认值是3，值越大帧率越低</td></tr>
-				<tr><td>"antiAlias"</td><td>设置抗锯齿渲染。param必须设置为"1"</td></tr>
-				<tr><td>"minimumFontSize"</td><td>最小字体</td></tr>
-				<tr><td>"minimumLogicalFontSize"</td><td>最小逻辑字体</td></tr>
-				<tr><td>"defaultFontSize"</td><td>默认字体</td></tr>
-				<tr><td>"defaultFixedFontSize"</td><td>默认fixed字体</td></tr>
+		<div class="sep-line"></div>
+		<h2 class="sub-title">API</h2>
+		<div class="content">
+			<h3 class="api-def"><a name="wkeVersion"></a>unsigned int wkeVersion();</h3>
+			<div>获取目前api版本号</div>
+			<div class="api-params">参数：无</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeVersionString"></a>const utf8* wkeVersionString();</h3>
+			<div>获取版本字符串</div>
+			<div class="api-params">参数：无</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetWkeDllPath"></a>void wkeSetWkeDllPath(const wchar_t* dllPath)</h3>
+			<div>设置miniblink的全路径+文件名</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">dllPath：dll的全路径，注意是全路径</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGC"></a>void wkeGC(wkeWebView webView, long delayMs);</h3>
+			<div>延迟让miniblink垃圾回收</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetFileSystem"></a>void wkeSetFileSystem(WKE_FILE_OPEN pfnOpen, WKE_FILE_CLOSE pfnClose, WKE_FILE_SIZE pfnSize, WKE_FILE_READ pfnRead, WKE_FILE_SEEK pfnSeek)</h3>
+			<div>wke遗留的接口，设置文件相关的hook函数。可以作为拦截对文件的操作。现在已被更先进的函数取代</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def api-deprecated"><a name="wkeIsLoaded"></a>bool wkeIsLoaded(wkeWebView webView);</h3>
+			<div>（被废弃）获取webView是否处于加载状态，还是加载完成。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def api-deprecated"><a name="wkeIsLoadingSucceeded"></a>bool wkeIsLoadingSucceeded(wkeWebView webView)</h3>
+			<div>（被废弃）判断webview是否加载成功</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def api-deprecated"><a name="wkeIsLoadFailed"></a>bool wkeIsLoadFailed(wkeWebView webView)</h3>
+			<div>（被废弃）判断webview是否加载失败</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def api-deprecated"><a name="wkeIsLoadComplete"></a>bool wkeIsLoadComplete(wkeWebView webView)</h3>
+			<div>（被废弃）判断webview是否加载完成</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：wkeIsLoadComdivlete等效于wkeIsLoadFailed、wkeIsLoadingSucceeded其中任何一个返回true</div>
+			
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeIsDocumentReady"></a>bool wkeIsDocumentReady(wkeWebView webView)</h3>
+			<div>DOM文档结构是否加载完成。和上述几个接口不同，上述几个接口是网络相关的判断。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeStopLoading"></a>void wkeStopLoading(wkeWebView webView)</h3>
+			<div>停止加载页面</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeReload"></a>bool wkeReload(wkeWebView webView)</h3>
+			<div>重新加载页面</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetTitle"></a>const utf8* wkeGetTitle(wkeWebView webView)</h3>
+			<div>获取页面标题</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetTitleW"></a>const wchar_t* wkeGetTitleW(wkeWebView webView)</h3>
+			<div>获取页面标题的宽字节版本</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeResize"></a>void wkeResize(wkeWebView webView, int w, int h)</h3>
+			<div>重新设置页面的宽高。如果webView是带窗口模式的，会设置真窗口的宽高。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetWidth"></a>int wkeGetWidth(wkeWebView webView)</h3>
+			<div>获取页面宽度</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetHeight"></a>int wkeGetHeight(wkeWebView webView)</h3>
+			<div>获取页面高度</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetContentWidth"></a>int wkeGetContentWidth(wkeWebView webView)</h3>
+			<div>获取网页排版出来的宽度</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetContentHeight"></a>int wkeGetContentHeight(wkeWebView webView)</h3>
+			<div>获取网页排版出来的高度</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def api-deprecated"><a name="wkeSetDirty"></a>void wkeSetDirty(wkeWebView webView, bool dirty)</h3>
+			<div>（被废弃）设置页面为脏状态，在下一帧将强制重绘页面</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def api-deprecated"><a name="wkeIsDirty"></a>bool wkeIsDirty(wkeWebView webView)</h3>
+			<div>（被废弃）获取页面脏状态</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def api-deprecated"><a name="wkeAddDirtyArea"></a>void wkeAddDirtyArea(wkeWebView webView, int x, int y, int w, int h)</h3>
+			<div>（被废弃）添加页面脏矩形</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def api-deprecated"><a name="wkeLayoutIfNeeded"></a>void wkeLayoutIfNeeded(wkeWebView webView)</h3>
+			<div>（被废弃）强制让页面重新排版</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkePaint2"></a>void wkePaint2(wkeWebView webView, void* bits, int bufWid, int bufHei, int xDst, int yDst, int w, int h, int xSrc, int ySrc, bool bCopyAlpha)</h3>
+			<div class="api-params">参数：</div>
+			<table class="api-param">
+			    <tbody><tr><td>bits</td><td>外部申请并传递给mb的buffer，大小是bufWid * bufHei * 4 字节</td></tr>
+			    <tr><td>bufWid、bufHei</td><td>bits的宽高</td></tr>
+			    <tr><td>xDst、yDst</td><td>绘制到bits的哪个坐标</td></tr>
+			    <tr><td>w、h、xSrc、ySrc</td><td>mb需要取的画面的起始坐标</td></tr>
+			    <tr><td>bCopyAlpha</td><td>是否拷贝画面的透明度值</td></tr>
 			</tbody></table>
+			<div class="api-remark">注意：此函数一般给3d游戏使用。另外频繁使用此接口并拷贝像素有性能问题。最好用wkeGetViewDC再去拷贝dc。</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkePaint"></a>void wkePaint(wkeWebView webView, void* bits, int pitch)</h3>
+			<div>获取页面的像素的简化版函数。</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">
+				bits：外部申请并传递给mb的buffer，大小是webview宽度 * 高度 * 4 字节。<br>
+				pitch：填0即可。这个参数玩过directX的人应该懂
+			</div>
+			<!---->
+			<h3 class="api-def api-deprecated"><a name="wkeRepaintIfNeeded"></a>void wkeRepaintIfNeeded(wkeWebView webView)</h3>
+			<div>（被废弃）强制重绘页面</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetViewDC"></a>HDC wkeGetViewDC(wkeWebView webView)</h3>
+			<div>获取webview的DC</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetHostHWND"></a>HWND wkeGetHostHWND(wkeWebView webView)</h3>
+			<div>获取webveiw对应的窗口句柄。实现和wkeGetWindowHandle完全相同</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeCanGoBack"></a>bool wkeCanGoBack(wkeWebView webView)</h3>
+			<div>页面是否可以后退</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGoBack"></a>bool wkeGoBack(wkeWebView webView)</h3>
+			<div>强制让页面后退</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeCanGoForward"></a>bool wkeCanGoForward(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGoForward"></a>bool wkeGoForward(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeEditorSelectAll"></a>void wkeEditorSelectAll(wkeWebView webView)</h3>
+			<div>给webview发送全选命令</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeEditorUnSelect"></a>void wkeEditorUnSelect(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeEditorCopy"></a>void wkeEditorCopy(wkeWebView webView)</h3>
+			<div>拷贝页面里被选中的字符串</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeEditorCut"></a>void wkeEditorCut(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeEditorDelete"></a>void wkeEditorDelete(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeEditorUndo"></a>void wkeEditorUndo(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeEditorRedo"></a>void wkeEditorRedo(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetCookieW"></a>const wchar_t * wkeGetCookieW(wkeWebView webView)</h3>
+			<div>获取页面的cookie</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetCookie"></a>const utf8* wkeGetCookie(wkeWebView webView)</h3>
+			<div>获取页面的cookie</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetCookie"></a>void wkeSetCookie(wkeWebView webView, const utf8* url, const utf8* cookie)</h3>
+			<div>设置页面cookie。</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">
+				注意：cookie必须符合curl的cookie写法。至于curl的cookie怎么写，请自行搜索
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeVisitAllCookie"></a>void wkeVisitAllCookie(void* params, wkeCookieVisitor visitor)</h3>
+			<div>通过访问器visitor访问所有cookie。</div>
+			<div class="api-params">参数：</div>
+			<div class="sep-param">visitor：访问器。</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkePerformCookieCommand"></a>void wkePerformCookieCommand(wkeCookieCommand command)</h3>
+			<div>通过设置mb内置的curl来操作cookie。</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">command：
+				<div class="api-param-value">
+				wkeCookieCommandClearAllCookies: 内部实际执行了curl_easy_setopt(curl, CURLOPT_COOKIELIST, "ALL");<br>
+				wkeCookieCommandClearSessionCookies: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "SESS");<br>
+				wkeCookieCommandFlushCookiesToFile: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "FLUSH");<br>
+				wkeCookieCommandReloadCookiesFromFile: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "RELOAD");
+				</div>
+			</div>
+			<div class="api-remark">注意：这个接口只是调用curl设置命令，并不会去修改js里的内容</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetCookieEnabled"></a>void wkeSetCookieEnabled(wkeWebView webView, bool enable)</h3>
+			<div>开启或关闭cookie</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：这个接口只是影响blink，并不会设置curl。所以还是会生成curl的cookie文件</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeIsCookieEnabled"></a>bool wkeIsCookieEnabled(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetCookieJarPath"></a>void wkeSetCookieJarPath(wkeWebView webView, const WCHAR* path)</h3>
+			<div>设置cookie的本地文件目录。默认是当前目录。cookies存在当前目录的“cookie.dat”里</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetCookieJarFullPath"></a>void wkeSetCookieJarFullPath(wkeWebView webView, const WCHAR* path)</h3>
+			<div>设置cookie的全路径+文件名，如“c:\mb\cookie.dat”</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetLocalStorageFullPath"></a>void wkeSetLocalStorageFullPath(wkeWebView webView, const WCHAR* path)</h3>
+			<div>设置local storage的全路径。如“c:\mb\LocalStorage\”</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：这个接口只能接受目录。</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetMediaVolume"></a>void wkeSetMediaVolume(wkeWebView webView, float volume)</h3>
+			<div>设置音量，未实现</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetMediaVolume"></a>float wkeGetMediaVolume(wkeWebView webView)</h3>
+			<div>获取音量，未实现</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeFireMouseEvent"></a>bool wkeFireMouseEvent(wkeWebView webView, unsigned int message, int x, int y, unsigned int flags)</h3>
+			<div>向mb发送鼠标消息</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">
+				message：可取WM_MOUSELEAVE等Windows相关鼠标消息<br>
+				x、y：坐标<br>
+				flags：可取值有WKE_CONTROL、WKE_SHIFT、WKE_LBUTTON、WKE_MBUTTON、WKE_RBUTTON，可通过“或”操作并联。
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeFireContextMenuEvent"></a>bool wkeFireContextMenuEvent(wkeWebView webView, int x, int y, unsigned int flags)</h3>
+			<div>向mb发送菜单消息（未实现）</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeFireMouseWheelEvent"></a>bool wkeFireMouseWheelEvent(wkeWebView webView, int x, int y, int delta, unsigned int flags)</h3>
+			<div>向mb发送滚轮消息，用法和参数类似wkeFireMouseEvent。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeFireKeyUpEvent"></a>bool wkeFireKeyUpEvent(wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey)</h3>
+			<div>向mb发送WM_KEYUP消息，</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">
+				virtualKeyCode：见https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
+				flags：可取值有WKE_REPEAT、WKE_EXTENDED，可通过“或”操作并联。
+				systemKey：暂时没用
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeFireKeyDownEvent"></a>bool wkeFireKeyDownEvent(wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeFireKeyPressEvent"></a>bool wkeFireKeyPressEvent(wkeWebView webView, unsigned int charCode, unsigned int flags, bool systemKey)</h3>
+			<div>略</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">
+				charCode：WM_CHAR消息的The character code of the key.见https://msdn.microsoft.com/en-us/library/windows/desktop/ms646276(v=vs.85).aspx
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeFireWindowsMessage"></a>bool wkeFireWindowsMessage(wkeWebView webView, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, LRESULT* result)</h3>
+			<div>向mb发送任意windows消息。不过目前mb主要用来处理光标相关。mb在无窗口模式下，要响应光标事件，需要通过本函数手动发送光标消息</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetFocus"></a>void wkeSetFocus(wkeWebView webView)</h3>
+			<div>设置webview是焦点态。如果webveiw关联了窗口，窗口也会有焦点</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeKillFocus"></a>void wkeKillFocus(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			
+			<h3 class="api-def"><a name="wkeGetCaretRect"></a>wkeRect wkeGetCaretRect(wkeWebView webView)</h3>
+			<div>获取编辑框的那个游标的位置</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeRunJS"></a>jsValue wkeRunJS(wkeWebView webView, const utf8* script)</h3>
+			<div>运行一段js。返回js的值jsValue。jsValue是个封装了内部v8各种类型的类，如果需要获取详细信息，有jsXXX相关接口可以调用。见下述。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeRunJSW"></a>jsValue wkeRunJSW(wkeWebView webView, const wchar_t* script)</h3>
+			<div>同上。注意，此函数以及wkeRunJS，执行的js，也就是script，是在一个闭包中</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGlobalExec"></a>jsExecState wkeGlobalExec(wkeWebView webView)</h3>
+			<div>获取页面主frame的jsExecState。jsExecState是什么，见下述。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSleep"></a>void wkeSleep(wkeWebView webView)</h3>
+			<div>暂未实现</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeWake"></a>void wkeWake(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeIsAwake"></a>bool wkeIsAwake(wkeWebView webView)</h3>
+			<div>暂未实现</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetZoomFactor"></a>void wkeSetZoomFactor(wkeWebView webView, float factor)</h3>
+			<div>设置页面缩放系数，默认是1</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetZoomFactor"></a>float wkeGetZoomFactor(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetEditable"></a>void wkeSetEditable(wkeWebView webView, bool editable)</h3>
+			<div>未实现</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnTitleChanged"></a>void wkeOnTitleChanged(wkeWebView webView, wkeTitleChangedCallback callback, void* callbackParam)</h3>
+			<div>设置标题变化的通知回调</div>
+			<div class="api-params">参数：typedef void(*wkeTitleChangedCallback)(wkeWebView webView, void* param, const wkeString title);</div>
+			<div class="api-param">
+				title：标题的字符串封装。wkeString怎么用，见相关接口。
+				param：通过wkeOnTitleChanged的callbackParam设置
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnMouseOverUrlChanged"></a>void wkeOnMouseOverUrlChanged(wkeWebView webView, wkeTitleChangedCallback callback, void* callbackParam)</h3>
+			<div>鼠标划过的元素，如果是<a>，则调用此回调，并发送a标签的url</a></div>    <div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnURLChanged"></a>void wkeOnURLChanged(wkeWebView webView, wkeURLChangedCallback callback, void* callbackParam)</h3>
+			<div>url改变回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnURLChanged2"></a>void wkeOnURLChanged2(wkeWebView webView, wkeURLChangedCallback2 callback, void* callbackParam)</h3>
+			<div>和上个接口不同的是，回调多了个参数</div>
+			<div class="api-params">参数：typedef void(*wkeURLChangedCallback2)(wkeWebView webView, void* param, wkeWebFrameHandle frameId, const wkeString url)</div>
+			<div class="api-param">
+				frameId：表示frame的id。有相关接口可以判断这个frameId是否是主frame
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnPaintUpdated"></a>void wkeOnPaintUpdated(wkeWebView webView, wkePaintUpdatedCallback callback, void* callbackParam)</h3>
+			<div>页面有任何需要刷新的地方，将调用此回调</div>
+			<div class="api-params">参数：typedef void(*wkePaintUpdatedCallback)(wkeWebView webView, void* param, const HDC hdc, int x, int y, int cx, int cy) </div>
+			<div class="api-param">x、y、cx、cy表示刷新的区域矩形</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnPaintBitUpdated"></a>void wkeOnPaintBitUpdated(wkeWebView webView, wkePaintBitUpdatedCallback callback, void* callbackParam)</h3>
+			<div>同上。不同的是回调过来的是填充好像素的buffer，而不是DC。方便嵌入到游戏中做离屏渲染</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnAlertBox"></a>void wkeOnAlertBox(wkeWebView webView, wkeAlertBoxCallback callback, void* callbackParam)</h3>
+			<div>网页调用alert会走到这个接口填入的回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnConfirmBox"></a>void wkeOnConfirmBox(wkeWebView webView, wkeConfirmBoxCallback callback, void* callbackParam)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnPromptBox"></a>void wkeOnPromptBox(wkeWebView webView, wkePromptBoxCallback callback, void* callbackParam)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnNavigation"></a>void wkeOnNavigation(wkeWebView webView, wkeNavigationCallback callback, void* param)</h3>
+			<div>网页开始浏览将触发回调</div>
+			<div class="api-params">参数：typedef bool(*wkeNavigationCallback)(wkeWebView webView, void* param, wkeNavigationType navigationType, const wkeString url);</div>
+			<div class="api-param">wkeNavigationType: 表示浏览触发的原因。可以取的值有：
+				<div class="api-param-value">
+				    WKE_NAVIGATION_TYPE_LINKCLICK：点击a标签触发<br>
+					WKE_NAVIGATION_TYPE_FORMSUBMITTE：点击form触发<br>
+					WKE_NAVIGATION_TYPE_BACKFORWARD：前进后退触发<br>
+					WKE_NAVIGATION_TYPE_RELOAD：重新加载触发
+				</div>
+			</div>
+			<div class="api-remark">注意：wkeNavigationCallback回调的返回值，如果是true，表示可以继续进行浏览，false表示阻止本次浏览。</div>
+			
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnCreateView"></a>void wkeOnCreateView(wkeWebView webView, wkeCreateViewCallback callback, void* param)</h3>
+			<div>网页点击a标签创建新窗口时将触发回调</div>
+			<div class="api-params">参数：typedef wkeWebView(*wkeCreateViewCallback)(wkeWebView webView, void* param, wkeNavigationType navigationType, const wkeString url, const wkeWindowFeatures* windowFeatures);</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnDocumentReady"></a>void wkeOnDocumentReady(wkeWebView webView, wkeDocumentReadyCallback callback, void* param)</h3>
+			<div>对应js里的body onload事件</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnDocumentReady2"></a>void wkeOnDocumentReady2(wkeWebView webView, wkeDocumentReady2Callback callback, void* param)</h3>
+			<div>同上。区别是wkeDocumentReady2Callback多了wkeWebFrameHandle frameId参数。可以判断是否是主frame</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnDownload"></a>void wkeOnDownload(wkeWebView webView, wkeDownloadCallback callback, void* param)</h3>
+			<div>页面下载事件回调。点击某些链接，触发下载会调用</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetOnResponse"></a>void wkeNetOnResponse(wkeWebView webView, wkeNetResponseCallback callback, void* param)</h3>
+			<div>一个网络请求发送后，收到服务器response触发回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnConsole"></a>void wkeOnConsole(wkeWebView webView, wkeConsoleCallback callback, void* param)</h3>
+			<div>网页调用console触发</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetUIThreadCallback"></a>void wkeSetUIThreadCallback(wkeWebView webView, wkeCallUiThread callback, void* param)</h3>
+			<div>暂时未实现</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnLoadUrlBegin"></a>void wkeOnLoadUrlBegin(wkeWebView webView, wkeLoadUrlBeginCallback callback, void* callbackParam)</h3>
+			<div>任何网络请求发起前会触发此回调</div>
+			<div class="api-params">参数：typedef bool(*wkeLoadUrlBeginCallback)(wkeWebView webView, void* param, const char *url, void *job)</div>
+			<div class="api-remark">注意：<br>
+				1，此回调功能强大，在回调里，如果对job设置了wkeNetHookRequest，则表示mb会缓存获取到的网络数据，并在这次网络请求
+				结束后调用wkeOnLoadUrlEnd设置的回调，同时传递缓存的数据。在此期间，mb不会处理网络数据。<br>
+				2，如果在wkeLoadUrlBeginCallback里没设置wkeNetHookRequest，则不会触发wkeOnLoadUrlEnd回调。<br>
+				3，如果wkeLoadUrlBeginCallback回调里返回true，表示mb不处理此网络请求（既不会发送网络请求）。返回false，表示mb依然会发送网络请求。<br>
+				用法举例：<br>
+				假如需要hook百度某个url（如httdiv://baidu.com/a.js）,替换为本地c:\b.js，则可以这样实现：<br>
+			<pre>	void readJsFile(const wchar_t* divath, std::vector<char>* buffer) {
+			    HANDLE hFile = CreateFileW(divath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+			    if (INVALID_HANDLE_VALUE == hFile) {
+			        DebugBreak();
+			        return;
+			    }
+			
+			    DWORD fileSizeHigh;
+			    const DWORD bufferSize = ::GetFileSize(hFile, &amp;amdiv;fileSizeHigh);
+			
+			    DWORD numberOfBytesRead = 0;
+			    buffer-&gt;resize(bufferSize);
+			    BOOL b = ::ReadFile(hFile, &amp;amdiv;buffer-&gt;at(0), bufferSize, &amp;amdiv;numberOfBytesRead, nulldivtr);
+			    ::CloseHandle(hFile);
+			
+			}
+			
+			static bool HookUrl(void* job, const char* url, const char* hookUrl, const wchar_t* localFile, const char* mime) {
+			    if (0 != strstr(url, hookUrl)) {
+			        wkeNetSetMIMETydive(job, (char*)mime); // "text/html" "text/javascridivt"
+			        std::vector<char> buffer;
+				        ReadJsFile(localFile, &amp;amdiv;buffer);
+				        wkeNetSetData(job, &amp;amdiv;buffer[0], buffer.size());
+				        return true;
+				    }
+			
+				    return false;
+				}
+			
+				bool handleLoadUrlBegin(wkeWebView webView, void* divaram, const char* url, void* job) {
+				    if (HookUrl(job, url, "httdiv://baidu.com/a.js", L"c:\\b.js", "text/javascridivt"))
+				        return true;
+			
+				    return false;
+				}
+				如果需要拿到httdiv://baidu.com/a.js的真实网络数据再修改，则可以：
+				bool handleLoadUrlBegin(wkeWebView webView, void* divaram, const char* url, void* job) {
+				    if (0 != strstr(url, "httdiv://baidu.com/a.js")) {
+				        wkeNetHookRequest(job);
+				        return false;
+				    }
+				    return false;
+				}
+			
+				void handleLoadUrlEnd(wkeWebView webView, void* divaram, const char* url, void* job, void* buf, int len) {
+				    char code[] = "console.log('test')";
+				    wkeNetSetData(job, code, sizeof(code));
+				}
+			 </char></char></pre>
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnLoadUrlEnd"></a>void wkeOnLoadUrlEnd(wkeWebView webView, wkeLoadUrlEndCallback callback, void* callbackParam)</h3>
+			<div>见wkeOnLoadUrlBegin的描述</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnDidCreateScriptContext"></a>void wkeOnDidCreateScriptContext(wkeWebView webView, wkeDidCreateScriptContextCallback callback, void* callbackParam)</h3>
+			<div>javascript的v8执行环境被创建时触发此回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：每个frame创建时都会触发此回调</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnWillReleaseScriptContext"></a>void wkeOnWillReleaseScriptContext(wkeWebView webView, wkeWillReleaseScriptContextCallback callback, void* callbackParam)</h3>
+			<div>每个frame的javascript的v8执行环境被关闭时触发此回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnWillMediaLoad"></a>void wkeOnWillMediaLoad(wkeWebView webView, wkeWillMediaLoadCallback callback, void* callbackParam)</h3>
+			<div>video等多媒体标签创建时触发此回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeIsMainFrame"></a>bool wkeIsMainFrame(wkeWebView webView, wkeWebFrameHandle frameId)</h3>
+			<div>判断frameId是否是主frame</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeWebFrameGetMainFrame"></a>wkeWebFrameHandle wkeWebFrameGetMainFrame(wkeWebView webView)</h3>
+			<div>获取主frame的句柄</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeRunJsByFrame"></a>jsValue wkeRunJsByFrame(wkeWebView webView, wkeWebFrameHandle frameId, const utf8* script, bool isInClosure)</h3>
+			<div>运行js在指定的frame上，通过frameId</div>
+			<div class="api-params">参数：isInClosure表示是否在外层包个function() {}形式的闭包</div>
+			<div class="api-remark">注意：如果需要返回值，在isInClosure为true时，需要写return，为false则不用</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetFrameUrl"></a>const utf8* wkeGetFrameUrl(wkeWebView webView, wkeWebFrameHandle frameId)</h3>
+			<div>获取frame对应的url</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetString"></a>const utf8* wkeGetString(const wkeString s)</h3>
+			<div>获取wkeString结构体对应的字符串，utf8编码</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetStringW"></a>const wchar_t* wkeGetStringW(const wkeString string)const wchar_t* wkeGetStringW(const wkeString string)</h3>
+			<div>获取wkeString结构体对应的字符串，utf16编码</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetString"></a>void wkeSetString(wkeString string, const utf8* str, size_t len)</h3>
+			<div>设置wkeString结构体对应的字符串，utf8编码</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetStringW"></a>void wkeSetStringW(wkeString string, const wchar_t* str, size_t len)</h3>
+			<div>设置wkeString结构体对应的字符串，utf16编码</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeCreateStringW"></a>wkeString wkeCreateStringW(const wchar_t* str, size_t len)</h3>
+			<div>通过utf16编码的字符串，创建一个wkeString</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeDeleteString"></a>void wkeDeleteString(wkeString str)</h3>
+			<div>析构这个wkeString</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetUserKeyValue"></a>void wkeSetUserKeyValue(wkeWebView webView, const char* key, void* value)</h3>
+			<div>对webView设置一个key value键值对。可以用来保存用户自己定义的任何指针</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetUserKeyValue"></a>void* wkeGetUserKeyValue(wkeWebView webView, const char* key)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetCursorInfoType"></a>int wkeGetCursorInfoType(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeCreateWebView"></a>wkeWebView wkeCreateWebView()</h3>
+			<div>创建一个webview，但不创建真窗口。一般用在离屏渲染里，如游戏</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeDestroyWebView"></a>void wkeDestroyWebView(wkeWebView webView)</h3>
+			<div>效果同wkeDestroyWebWindow</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeCreateWebWindow"></a>wkeWebView wkeCreateWebWindow(wkeWindowType type, HWND parent, int x, int y, int width, int height)</h3>
+			<div>创建一个带真实窗口的wkeWebView</div>
+			<div class="api-params">参数：wkeWindowType </div>
+			<div class="api-param">WKE_WINDOW_TYPE_POPUP：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;普通窗口<br>
+				WKE_WINDOW_TYPE_TRANSPARENT：透明窗口。mb内部通过layer window实现<br>
+				WKE_WINDOW_TYPE_CONTROL：&nbsp;&nbsp;&nbsp;&nbsp;嵌入在父窗口里的子窗口。此时parent需要被设置</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeDestroyWebWindow"></a>void wkeDestroyWebWindow(wkeWebView webWindow)</h3>
+			<div>销毁wkeWebView对应的所有数据结构，包括真实窗口等</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetWindowHandle"></a>HWND wkeGetWindowHandle(wkeWebView webWindow)</h3>
+			<div>获取窗口对应的真实句柄。和wkeGetHostHWND的实现完全相同</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnWindowClosing"></a>void wkeOnWindowClosing(wkeWebView webWindow, wkeWindowClosingCallback callback, void* param)</h3>
+			<div>wkeWebView如果是真窗口模式，则在收到WM_CLODE消息时触发此回调。可以通过在回调中返回false拒绝关闭窗口</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeOnWindowDestroy"></a>void wkeOnWindowDestroy(wkeWebView webWindow, wkeWindowDestroyCallback callback, void* param)</h3>
+			<div>窗口即将被销毁时触发回调。不像wkeOnWindowClosing，这个操作无法取消</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeShowWindow"></a>void wkeShowWindow(wkeWebView webWindow, bool showFlag)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeEnableWindow"></a>void wkeEnableWindow(wkeWebView webWindow, bool enableFlag)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeMoveWindow"></a>void wkeMoveWindow(wkeWebView webWindow, int x, int y, int width, int height)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeMoveToCenter"></a>void wkeMoveToCenter(wkeWebView webWindow)</h3>
+			<div>窗口在父窗口或屏幕里居中</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeResizeWindow"></a>void wkeResizeWindow(wkeWebView webWindow, int width, int height)</h3>
+			<div>resize窗口，和wkeResize效果一样</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetWindowTitle"></a>void wkeSetWindowTitle(wkeWebView webWindow, const utf8* title)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetWindowTitle"></a>void wkeSetWindowTitle(wkeWebView webWindow, const wchar_t* title)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetDeviceParameter"></a>void wkeSetDeviceParameter(wkeWebView webView, const char* device, const char* paramStr, int paramInt, float paramFloat)</h3>
+			<div>设置mb模拟的硬件设备环境。主要用在伪装手机设备场景</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">device：设备的字符串。可取值有：
+				<table class="api-param-value">
+				<tbody><tr><td>"navigator.maxTouchPoints"</td><td>此时 paramInt 需要被设置，表示 touch 的点数</td></tr>
+					<tr><td>"navigator.platform"</td><td>此时 paramStr 需要被设置，表示js里获取的 navigator.platform字符串</td></tr>
+					<tr><td>"navigator.hardwareConcurrency"</td><td>此时 paramInt 需要被设置，表示js里获取的 navigator.hardwareConcurrency 整数值</td></tr>
+					<tr><td>"screen.width"</td><td>此时 paramInt 需要被设置，表示js里获取的 screen.width 整数值</td></tr>
+					<tr><td>"screen.height"</td><td>此时 paramInt 需要被设置，表示js里获取的 screen.height 整数值</td></tr>
+					<tr><td>"screen.availWidth"</td><td>此时 paramInt 需要被设置，表示js里获取的 screen.availWidth 整数值</td></tr>
+					<tr><td>"screen.availHeight"</td><td>此时 paramInt 需要被设置，表示js里获取的 screen.availHeight 整数值</td></tr>
+					<tr><td>"screen.pixelDepth"</td><td>此时 paramInt 需要被设置，表示js里获取的 screen.pixelDepth 整数值</td></tr>
+					<tr><td>"screen.pixelDepth"</td><td>目前等价于"screen.pixelDepth"</td></tr>
+					<tr><td>"window.devicePixelRatio"</td><td>同上</td></tr>
+				</tbody></table>
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeInit"></a>void wkeInit()</h3>
+			<div>初始化整个mb。此句必须在所有mb api前最先调用。并且所有mb api必须和调用wkeInit的线程为同个线程</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeShutdown"></a>void wkeShutdown()</h3>
+			<div>关闭整个mb。调用后，所有mb api将不能再被调用，否则会有崩溃</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeInitialize"></a>void wkeInitialize()</h3>
+			<div>效果和wkeInit一模一样</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetProxy"></a>void wkeSetProxy(const wkeProxy* proxy)</h3>
+			<div>设置整个mb的代码。此句是全局生效</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetViewProxy"></a>void wkeSetViewProxy(wkeWebView webView, wkeProxy* proxy)</h3>
+			<div>设置整个mb的代码。此句是针对特定webview生效</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeConfigure"></a>void wkeConfigure(const wkeSettings* settings)</h3>
+			<div>设置一些配置项</div>
+			<div class="api-params">参数：
+				<div class="api-param">
+					typedef struct { wkeProxy proxy; unsigned int mask; } wkeSettings;
+					mask可以取：
+					<div class="api-param-value">
+						WKE_SETTING_PROXY：效果和wkeSetProxy一样，通过proxy设置<br>
+						WKE_SETTING_PAINTCALLBACK_IN_OTHER_THREAD：这是个高级用法，开启时，on paint回调会在另外个线程（其实就是渲染线程）。<br>
+						这个是用来实现多线程上屏功能，性能更快。<br>
+					</div>
+				</div>
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeIsInitialize"></a>bool wkeIsInitialize()</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeFinalize"></a>void wkeFinalize()</h3>
+			<div>效果和wkeShutdown一样</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetMemoryCacheEnable"></a>void wkeSetMemoryCacheEnable(wkeWebView webView, bool b)</h3>
+			<div>开启内存缓存。网页的图片等都会在内存缓存里。关闭后，内存使用会降低一些，但容易引起一些问题，如果不懂怎么用，最好别开</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetTouchEnabled"></a>void wkeSetTouchEnabled(wkeWebView webView, bool b)</h3>
+			<div>开启触屏模式。开启后，鼠标消息将自动转换成触屏消息</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetMouseEnabled"></a>void wkeSetMouseEnabled(wkeWebView webView, bool b)</h3>
+			<div>开启关闭鼠标消息，可以在开启触屏后，关闭鼠标消息</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetNavigationToNewWindowEnable"></a>void wkeSetNavigationToNewWindowEnable(wkeWebView webView, bool b)</h3>
+			<div>关闭后，点a标签将不会弹出新窗口，而是在本窗口跳转</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetCspCheckEnable"></a>void wkeSetCspCheckEnable(wkeWebView webView, bool b)</h3>
+			<div>关闭后，跨域检查将被禁止，此时可以做任何跨域操作，如跨域ajax，跨域设置iframe</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetNpapiPluginsEnabled"></a>void wkeSetNpapiPluginsEnabled(wkeWebView webView, bool b)</h3>
+			<div>开启关闭npapi插件，如flash</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetHeadlessEnabled"></a>void wkeSetHeadlessEnabled(wkeWebView webView, bool b)</h3>
+			<div>开启无头模式。开启后，将不会渲染页面，提升了网页性能。此功能方便用来实现一些爬虫，或者刷单工具</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetDebugConfig"></a>void wkeSetDebugConfig(wkeWebView webView, const char* debugString, const char* param)</h3>
+			<div>开启一些实验性选项。</div>
+			<div class="api-params">参数：
+				<div class="api-param">debugString：
+			    	<table class="api-param-value">
+				    	<tbody><tr><td>"showDevTools"</td><td>开启开发者工具，此时param要填写开发者工具的资源路径，如file:///c:/miniblink-release/front_end/inspector.html。注意param此时必须是utf8编码</td></tr>
+						<tr><td>"wakeMinInterval"</td><td>设置帧率，默认值是10，值越大帧率越低</td></tr>
+						<tr><td>"drawMinInterval"</td><td>设置帧率，默认值是3，值越大帧率越低</td></tr>
+						<tr><td>"antiAlias"</td><td>设置抗锯齿渲染。param必须设置为"1"</td></tr>
+						<tr><td>"minimumFontSize"</td><td>最小字体</td></tr>
+						<tr><td>"minimumLogicalFontSize"</td><td>最小逻辑字体</td></tr>
+						<tr><td>"defaultFontSize"</td><td>默认字体</td></tr>
+						<tr><td>"defaultFixedFontSize"</td><td>默认fixed字体</td></tr>
+					</tbody></table>
+				</div>
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetHandle"></a>void wkeSetHandle(wkeWebView webView, HWND wnd)</h3>
+			<div>设置wkeWebView对应的窗口句柄。</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：只有在无窗口模式下才能使用。如果是用wkeCreateWebWindow创建的webview，已经自带窗口句柄了。</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetHandleOffset"></a>void wkeSetHandleOffset(wkeWebView webView, int x, int y)</h3>
+			<div>设置无窗口模式下的绘制偏移。在某些情况下（主要是离屏模式），绘制的地方不在真窗口的(0, 0)处，就需要手动调用此接口</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetViewSettings"></a>void wkeSetViewSettings(wkeWebView webView, const wkeViewSettings* settings)</h3>
+			<div>设置一些webview相关的设置.目前只有背景颜色可以设置</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetTransparent"></a>void wkeSetTransparent(wkeWebView webView, bool transparent)</h3>
+			<div>通知无窗口模式下，webview开启透明模式。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeIsTransparent"></a>bool wkeIsTransparent(wkeWebView webView)</h3>
+			<div>判断窗口是否是分层窗口（layer window）</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetUserAgent"></a>void wkeSetUserAgent(wkeWebView webView, const utf8* userAgent)</h3>
+			<div>设置webview的UA</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeSetUserAgentW"></a>void wkeSetUserAgentW(wkeWebView webView, const wchar_t* userAgent)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetUserAgent"></a>const utf8* wkeGetUserAgent(wkeWebView webView)</h3>
+			<div>获取webview的UA</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeLoadURL"></a>void wkeLoadURL(wkeWebView webView, const utf8* url)</h3>
+			<div>加载url。url必须是网络路径，如"http://qq.com/"</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeLoadW"></a>void wkeLoadW(wkeWebView webView, const wchar_t* url)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeLoadHTML"></a>void wkeLoadHTML(wkeWebView webView, const utf8* html)</h3>
+			<div>加载一段html</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：如果html里有相对路径，则是相对exe所在目录的路径</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeLoadHtmlWithBaseUrl"></a>void wkeLoadHtmlWithBaseUrl(wkeWebView webView, const utf8* html, const utf8* baseUrl)</h3>
+			<div>加载一段html，但可以指定baseURL，也就是相对于哪个目录的url</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeLoadFile"></a>void wkeLoadFile(wkeWebView webView, const utf8* filename)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeGetURL"></a>const utf8* wkeGetURL(wkeWebView webView)</h3>
+			<div>获取webview主frame的url</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetSetHTTPHeaderField"></a>void wkeNetSetHTTPHeaderField(void* jobPtr, wchar_t* key, wchar_t* value, bool response)</h3>
+			<div>在wkeOnLoadUrlBegin回调里调用，表示设置http请求（或者file:///协议）的 http header field。response一直要被设置成false</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetSetMIMEType"></a>void wkeNetSetMIMEType(void* jobPtr, char* type)</h3>
+			<div>在wkeOnLoadUrlBegin回调里调用，表示设置http请求的MIME type</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetGetMIMEType"></a>const char* wkeNetGetMIMEType(void* jobPtr, wkeString mime)</h3>
+			<div>略</div>
+			<div class="api-params">参数：第2个参数可以传nullptr</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetSetData"></a>void wkeNetSetData(void* jobPtr, void* buf, int len)</h3>
+			<div>在wkeOnLoadUrlEnd里被调用，表示设置hook后缓存的数据</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetCancelRequest"></a>void wkeNetCancelRequest(void* jobPtr)</h3>
+			<div>在wkeOnLoadUrlBegin回调里调用，设置后，此请求将被取消。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetGetFavicon"></a>int wkeNetGetFavicon(wkeWebView webView, wkeOnNetGetFavicon callback, void* param)</h3>
+			<div>获取favicon。</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：此接口必须在wkeOnLoadingFinish回调里调用。可以用下面方式来判断是否是主frame的LoadingFinish:
+			<pre>		wkeTempCallbackInfo* temInfo = wkeGetTempCallbackInfo(webView);
+			    if (::wkeIsMainFrame(webView, temInfo-&gt;frame)) {
+			    &nbsp;&nbsp;&nbsp;&nbsp;::wkeNetGetFavicon(webView, HandleFaviconReceived, divaram);
+			    }
+			</pre>
+			</div>
+			<div class="sep-line"></div>
+			
+			<!---->
+			<h3 class="api-def"><a name="wkeNetHoldJobToAsynCommit"></a>void wkeNetHoldJobToAsynCommit(void* jobPtr)</h3>
+			<div>高级用法。在wkeOnLoadUrlBegin回调里调用。
+				有时候，wkeOnLoadUrlBegin里拦截到一个请求后，不能马上判断出结果。此时可以调用本接口，然后在
+				异步的某个时刻，调用wkeNetContinueJob来让此请求继续进行</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetGetRequestMethod"></a>wkeRequestType wkeNetGetRequestMethod(void *jobPtr)</h3>
+			<div>获取此请求的method，如post还是get</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetGetPostBody"></a>wkePostBodyElements* wkeNetGetPostBody(void *jobPtr)</h3>
+			<div>获取此请求中的post数据。只有当请求是post时才有效果</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetCreatePostBodyElements"></a>wkePostBodyElements* wkeNetCreatePostBodyElements(wkeWebView webView, size_t length)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetFreePostBodyElements"></a>void wkeNetFreePostBodyElements(wkePostBodyElements* elements)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetFreePostBodyElements"></a>void wkeNetFreePostBodyElements(wkePostBodyElements* elements)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetCreatePostBodyElement"></a>wkePostBodyElement* wkeNetCreatePostBodyElement(wkeWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetFreePostBodyElement"></a>void wkeNetFreePostBodyElement(wkePostBodyElement* element)</h3>
+			<div>这四个接口要结合起来使用。
+				当wkeOnLoadUrlBegin里判断是post时，可以通过wkeNetCreatePostBodyElements来创建一个新的post数据包。
+				然后wkeNetFreePostBodyElements来释放原post数据。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsArgCount"></a>int jsArgCount(jsExecState es)</h3>
+			<div>获取es里存的参数个数。一般是在绑定的js调用c++回调里使用，判断js传递了多少参数给c++</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsArgType"></a>jsType jsArgType(jsExecState es, int argIdx)</h3>
+			<div>判断第argIdx个参数的参数类型。argIdx从是个0开始计数的值。如果超出jsArgCount返回的值，将发生崩溃</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsArg"></a>jsValue jsArg(jsExecState es, int argIdx)</h3>
+			<div>获取第argIdx对应的参数的jsValue值。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsTypeOf"></a>jsType jsTypeOf(jsValue v)</h3>
+			<div>获取v对应的类型。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsIsNumber"></a>bool jsIsNumber(jsValue v)</h3>
+			<div>判断v是否为数字</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsIsString"></a>bool jsIsString(jsValue v)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsIsBoolean"></a>bool jsIsBoolean(jsValue v)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsIsObject"></a>bool jsIsObject(jsValue v)</h3>
+			<div>当v不是数字、字符串、undefined、null、函数的时候，此接口返回true</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsIsTrue"></a>bool jsIsTrue(jsValue v)</h3>
+			<div>如果v本身是个布尔值，返回对应的true或者false；如果是个对象（JSTYPE_OBJECT），返回false（这里注意）</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsIsFalse"></a>bool jsIsFalse(jsValue v)</h3>
+			<div>等价于!jsIsTrue(v)</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsToInt"></a>int jsToInt(jsExecState es, jsValue v)</h3>
+			<div>如果v是个整形或者浮点，返回相应值（如果是浮点，返回取整后的值）。如果是其他类型，返回0（这里注意）</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsToDouble"></a>double jsToDouble(jsExecState es, jsValue v)</h3>
+			<div>如果v是个浮点形，返回相应值。如果是其他类型，返回0.0（这里注意）</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsToTempStringW"></a>const wchar_t* jsToTempStringW(jsExecState es, jsValue v)</h3>
+			<div>
+				如果v是个字符串，返回相应值。如果是其他类型，返回L""（这里注意）
+				另外，返回的字符串不需要外部释放。mb会在下一帧自动释放</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsToTempString"></a>const utf8* jsToTempString(jsExecState es, jsValue v)</h3>
+			<div>同上</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsToString"></a>const utf8* jsToString(jsExecState es, jsValue v)</h3>
+			<div>同上，只是返回的是utf8编码</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsToStringW"></a>const wchar_t* jsToStringW(jsExecState es, jsValue v)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsInt"></a>jsValue jsInt(int n)</h3>
+			<div>创建建一个int型的jsValue，注意是创建</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsString"></a>jsValue jsString(jsExecState es, const utf8* str)</h3>
+			<div>构建一个utf8编码的字符串的的jsValue。str会在内部拷贝保存，注意是创建</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsArrayBuffer"></a>jsValue jsArrayBuffer(jsExecState es, char * buffer, size_t size)</h3>
+			<div>构建一个js的arraybuffer类型的jaValue。主要用来处理一些二进制数据，注意是创建</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsGetArrayBuffer"></a>wkeMemBuf* jsGetArrayBuffer(jsExecState es, jsValue value)</h3>
+			<div>获取一个js的arraybuffer类型的数据。主要用来处理一些二进制数据</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsEmptyObject"></a>jsValue jsEmptyObject(jsExecState es)</h3>
+			<div>构建一个临时js object的jsValue，注意是创建</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsEvalW"></a>jsValue jsEvalW(jsExecState es, const wchar_t* str)</h3>
+			<div>执行一段js，并返回值。</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">
+				注意：str的代码会在mb内部自动被包裹在一个function(){}中。所以使用的变量会被隔离
+				注意：要获取返回值，请写return。这和wke不太一样。wke不需要写retrun</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsEvalExW"></a>jsValue jsEvalExW(jsExecState es, const wchar_t* str, bool isInClosure)</h3>
+			<div>和上述接口的区别是，isInClosure表示是否要包裹一层function(){}。jsEvalW相当于jsEvalExW(es, str, false)</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：如果需要返回值，在isInClosure为true时，需要写return，为false则不用</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsCall"></a>jsValue jsCall(jsExecState es, jsValue func, jsValue thisValue, jsValue* args, int argCount)</h3>
+			<div>调用一个func对应的js函数。如果此js函数是成员函数，则需要填thisValue。
+				否则可以传jsUndefined。args是个数组，个数由argCount控制。
+				func可以是从js里取的，也可以是自行构造的。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsCallGlobal"></a>jsValue jsCallGlobal(jsExecState es, jsValue func, jsValue* args, int argCount)</h3>
+			<div>调用window上的全局函数</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsGet"></a>jsValue jsGet(jsExecState es, jsValue object, const char* prop)</h3>
+			<div>如果object是个js的object，则获取prop指定的属性。如果object不是js object类型，则返回jsUndefined</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsSet"></a>void jsSet(jsExecState es, jsValue object, const char* prop, jsValue value)</h3>
+			<div>设置object的属性</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsGetGlobal"></a>jsValue jsGetGlobal(jsExecState es, const char* prop)</h3>
+			<div>获取window上的属性</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsSetGlobal"></a>void jsSetGlobal(jsExecState es, const char* prop, jsValue v)</h3>
+			<div>设置window上的属性</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsGetAt"></a>jsValue jsGetAt(jsExecState es, jsValue object, int index)</h3>
+			<div>设置js arrary的第index个成员的值，object必须是js array才有用，否则会返回jsUndefined</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsSetAt"></a>void jsSetAt(jsExecState es, jsValue object, int index, jsValue value)</h3>
+			<div>设置js arrary的第index个成员的值，object必须是js array才有用。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsGetKeys"></a>jsKeys* jsGetKeys(jsExecState es, jsValue object)</h3>
+			<div>获取object有哪些key</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsGetLength"></a>int jsGetLength(jsExecState es, jsValue object)</h3>
+			<div>获取js arrary的长度，object必须是js array才有用。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsSetLength"></a>void jsSetLength(jsExecState es, jsValue object, int length)</h3>
+			<div>设置js arrary的长度，object必须是js array才有用。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsGetWebView"></a>wkeWebView jsGetWebView(jsExecState es)</h3>
+			<div>获取es对应的webview</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsGC"></a>void jsGC()</h3>
+			<div>强制垃圾回收</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsBindFunction"></a>void fastcall jsBindFunction(const char* name, jsNativeFunction fn, unsigned int argCount)</h3>
+			<div>绑定一个全局函数到主frame的window上。</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：此接口只能绑定主frame，并且特别需要注意的是，因为历史原因，此接口是fastcall调用约定！（但wkeJsBindFunction不是）<br>
+				另外此接口和wkeJsBindFunction必须在webview创建前调用<br>
+				使用示例：<br>
+			<pre>    c++里：
+			--------
+			jsValue JS_CALL onNativeFunction(jsExecState es) {
+			&nbsp;&nbsp;&nbsp;&nbsp;jsValue v = jsArg(es, 0);
+			&nbsp;&nbsp;&nbsp;&nbsp;const wchar_t* str = jsToTemdivStringW(es, v);
+			&nbsp;&nbsp;&nbsp;&nbsp;OutdivutdebugStringW(str);
+			}
+			jsBindFunction("testCall", onNativeFunction， 1);
+			
+			js里：
+			--------
+			window.testCall('testStrt');
+			</pre>
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsBindGetter"></a>void jsBindGetter(const char* name, jsNativeFunction fn)</h3>
+			<div>对js winows绑定一个属性访问器，在js里windows.XXX这种形式调用时，fn会被调用</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">示例：jsBindGetter("XXX")</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsBindSetter"></a>void jsBindSetter(const char* name, jsNativeFunction fn)</h3>
+			<div>对js winows绑定一个属性设置器。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeJsBindFunction"></a>void wkeJsBindFunction(const char* name, wkeJsNativeFunction fn, void* param, unsigned int argCount)</h3>
+			<div>和jsBindFunction功能类似，但更方便一点，可以传一个param做自定义数据。</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">此接口和wkeJsBindFunction必须在webview创建前调用</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsObject"></a>jsValue jsObject(jsExecState es, jsData* data)</h3>
+			<div>构建一个js Objcet，可以传递给js使用。</div>
+			<div class="api-params">参数：
+				<div class="api-param">
+			    	typedef jsValue(*jsGetPropertyCallback)(jsExecState es, jsValue object, const char* propertyName);<br>
+					&nbsp;&nbsp;属性访问器。在js里XXX.yyy这样调用时，jsGetPropertyCallback会被触发，并且propertyName的值为yyy<br>
+					typedef bool(*jsSetPropertyCallback)(jsExecState es, jsValue object, const char* propertyName, jsValue value);<br>
+					&nbsp;&nbsp;属性设置器。在js里XXX.yyy=1这样调用时，jsSetPropertyCallback会被触发，并且propertyName的值为yyy，value的值是字符串类型。可以通过之前提到的字符串操作接口来获取<br>
+					typedef jsValue(*jsCallAsFunctionCallback)(jsExecState es, jsValue object, jsValue* args, int argCount);<br>
+					&nbsp;&nbsp;在js里XXX()这样调用时会触发。<br>
+					typedef void(*jsFinalizeCallback)(struct tagjsData* data);<br>
+					&nbsp;&nbsp;在js里没人引用，且垃圾回收时会触发
+				</div>
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsFunction"></a>jsValue jsFunction(jsExecState es, jsData* data)</h3>
+			<div>创建一个主frame的全局函数。jsData的用法如上。js调用：XXX()
+				此时jsData的callAsFunction触发。
+				其实jsFunction和jsObject功能基本类似。且jsObject的功能更强大一些
+			</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsGetData"></a>jsData* jsGetData(jsExecState es, jsValue value)</h3>
+			<div>获取jsObject或jsFunction创建的jsValue对应的jsData指针。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="jsGetLastErrorIfException"></a>jsExceptionInfo* jsGetLastErrorIfException(jsExecState es);</h3>
+			<div>当wkeRunJs、jsCall等接口调用时，如果执行的js代码有异常，此接口将获取到异常信息。否则返回nullptr。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
 		</div>
-    </div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetHandle(wkeWebView webView, HWND wnd)</h3>
-    <div>设置wkeWebView对应的窗口句柄。</div>
-    <div class="api-params">参数：略</div>
-    <div class="api-remark">注意：只有在无窗口模式下才能使用。如果是用wkeCreateWebWindow创建的webview，已经自带窗口句柄了。</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetHandleOffset(wkeWebView webView, int x, int y)</h3>
-    <div>设置无窗口模式下的绘制偏移。在某些情况下（主要是离屏模式），绘制的地方不在真窗口的(0, 0)处，就需要手动调用此接口</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetViewSettings(wkeWebView webView, const wkeViewSettings* settings)</h3>
-    <div>设置一些webview相关的设置.目前只有背景颜色可以设置</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetTransparent(wkeWebView webView, bool transparent)</h3>
-    <div>通知无窗口模式下，webview开启透明模式。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool wkeIsTransparent(wkeWebView webView)</h3>
-    <div>判断窗口是否是分层窗口（layer window）</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetUserAgent(wkeWebView webView, const utf8* userAgent)</h3>
-    <div>设置webview的UA</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeSetUserAgentW(wkeWebView webView, const wchar_t* userAgent)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const utf8* wkeGetUserAgent(wkeWebView webView)</h3>
-    <div>获取webview的UA</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeLoadURL(wkeWebView webView, const utf8* url)</h3>
-    <div>加载url。url必须是网络路径，如"http://qq.com/"</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeLoadW(wkeWebView webView, const wchar_t* url)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeLoadHTML(wkeWebView webView, const utf8* html)</h3>
-    <div>加载一段html</div>
-    <div class="api-params">参数：略</div>
-    <div class="api-remark">注意：如果html里有相对路径，则是相对exe所在目录的路径</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeLoadHtmlWithBaseUrl(wkeWebView webView, const utf8* html, const utf8* baseUrl)</h3>
-    <div>加载一段html，但可以指定baseURL，也就是相对于哪个目录的url</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeLoadFile(wkeWebView webView, const utf8* filename)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const utf8* wkeGetURL(wkeWebView webView)</h3>
-    <div>获取webview主frame的url</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeNetSetHTTPHeaderField(void* jobPtr, wchar_t* key, wchar_t* value, bool response)</h3>
-    <div>在wkeOnLoadUrlBegin回调里调用，表示设置http请求（或者file:///协议）的 http header field。response一直要被设置成false</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeNetSetMIMEType(void* jobPtr, char* type)</h3>
-    <div>在wkeOnLoadUrlBegin回调里调用，表示设置http请求的MIME type</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const char* wkeNetGetMIMEType(void* jobPtr, wkeString mime)</h3>
-    <div>略</div>
-    <div class="api-params">参数：第2个参数可以传nullptr</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeNetSetData(void* jobPtr, void* buf, int len)</h3>
-    <div>在wkeOnLoadUrlEnd里被调用，表示设置hook后缓存的数据</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeNetCancelRequest(void* jobPtr)</h3>
-    <div>在wkeOnLoadUrlBegin回调里调用，设置后，此请求将被取消。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">int wkeNetGetFavicon(wkeWebView webView, wkeOnNetGetFavicon callback, void* param)</h3>
-    <div>获取favicon。</div>
-    <div class="api-params">参数：略</div>
-    <div class="api-remark">注意：此接口必须在wkeOnLoadingFinish回调里调用。可以用下面方式来判断是否是主frame的LoadingFinish:
-	<pre>
-		wkeTempCallbackInfo* temInfo = wkeGetTempCallbackInfo(webView);
-	    if (::wkeIsMainFrame(webView, temInfo-&gt;frame)) {
-	    &nbsp;&nbsp;&nbsp;&nbsp;::wkeNetGetFavicon(webView, HandleFaviconReceived, divaram);
-	    }
-	</pre>
-    </div>
-	<div class="sep-line"></div>
-
-	<!---->
-	<h3 class="api-def">void wkeNetHoldJobToAsynCommit(void* jobPtr)</h3>
-    <div>高级用法。在wkeOnLoadUrlBegin回调里调用。
-    	有时候，wkeOnLoadUrlBegin里拦截到一个请求后，不能马上判断出结果。此时可以调用本接口，然后在
-		异步的某个时刻，调用wkeNetContinueJob来让此请求继续进行</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">wkeRequestType wkeNetGetRequestMethod(void *jobPtr)</h3>
-    <div>获取此请求的method，如post还是get</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">wkePostBodyElements* wkeNetGetPostBody(void *jobPtr)</h3>
-    <div>获取此请求中的post数据。只有当请求是post时才有效果</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">wkePostBodyElements* wkeNetCreatePostBodyElements(wkeWebView webView, size_t length)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeNetFreePostBodyElements(wkePostBodyElements* elements)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeNetFreePostBodyElements(wkePostBodyElements* elements)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">wkePostBodyElement* wkeNetCreatePostBodyElement(wkeWebView webView)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeNetFreePostBodyElement(wkePostBodyElement* element)</h3>
-    <div>这四个接口要结合起来使用。
-		当wkeOnLoadUrlBegin里判断是post时，可以通过wkeNetCreatePostBodyElements来创建一个新的post数据包。
-		然后wkeNetFreePostBodyElements来释放原post数据。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">int jsArgCount(jsExecState es)</h3>
-    <div>获取es里存的参数个数。一般是在绑定的js调用c++回调里使用，判断js传递了多少参数给c++</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsType jsArgType(jsExecState es, int argIdx)</h3>
-    <div>判断第argIdx个参数的参数类型。argIdx从是个0开始计数的值。如果超出jsArgCount返回的值，将发生崩溃</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsArg(jsExecState es, int argIdx)</h3>
-    <div>获取第argIdx对应的参数的jsValue值。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsType jsTypeOf(jsValue v)</h3>
-    <div>获取v对应的类型。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool jsIsNumber(jsValue v)</h3>
-    <div>判断v是否为数字</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool jsIsString(jsValue v)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool jsIsBoolean(jsValue v)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool jsIsObject(jsValue v)</h3>
-    <div>当v不是数字、字符串、undefined、null、函数的时候，此接口返回true</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool jsIsTrue(jsValue v)</h3>
-    <div>如果v本身是个布尔值，返回对应的true或者false；如果是个对象（JSTYPE_OBJECT），返回false（这里注意）</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">bool jsIsFalse(jsValue v)</h3>
-    <div>等价于!jsIsTrue(v)</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">int jsToInt(jsExecState es, jsValue v)</h3>
-    <div>如果v是个整形或者浮点，返回相应值（如果是浮点，返回取整后的值）。如果是其他类型，返回0（这里注意）</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">double jsToDouble(jsExecState es, jsValue v)</h3>
-    <div>如果v是个浮点形，返回相应值。如果是其他类型，返回0.0（这里注意）</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const wchar_t* jsToTempStringW(jsExecState es, jsValue v)</h3>
-    <div>
-    	如果v是个字符串，返回相应值。如果是其他类型，返回L""（这里注意）
-		另外，返回的字符串不需要外部释放。mb会在下一帧自动释放</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const utf8* jsToTempString(jsExecState es, jsValue v)</h3>
-    <div>同上</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const utf8* jsToString(jsExecState es, jsValue v)</h3>
-    <div>同上，只是返回的是utf8编码</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">const wchar_t* jsToStringW(jsExecState es, jsValue v)</h3>
-    <div>略</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsInt(int n)</h3>
-    <div>创建建一个int型的jsValue，注意是创建</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsString(jsExecState es, const utf8* str)</h3>
-    <div>构建一个utf8编码的字符串的的jsValue。str会在内部拷贝保存，注意是创建</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsArrayBuffer(jsExecState es, char * buffer, size_t size)</h3>
-    <div>构建一个js的arraybuffer类型的jaValue。主要用来处理一些二进制数据，注意是创建</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">wkeMemBuf* jsGetArrayBuffer(jsExecState es, jsValue value)</h3>
-    <div>获取一个js的arraybuffer类型的数据。主要用来处理一些二进制数据</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsEmptyObject(jsExecState es)</h3>
-    <div>构建一个临时js object的jsValue，注意是创建</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsEvalW(jsExecState es, const wchar_t* str)</h3>
-    <div>执行一段js，并返回值。</div>
-    <div class="api-params">参数：略</div>
-    <div class="api-remark">
-    	注意：str的代码会在mb内部自动被包裹在一个function(){}中。所以使用的变量会被隔离
-		注意：要获取返回值，请写return。这和wke不太一样。wke不需要写retrun</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsEvalExW(jsExecState es, const wchar_t* str, bool isInClosure)</h3>
-    <div>和上述接口的区别是，isInClosure表示是否要包裹一层function(){}。jsEvalW相当于jsEvalExW(es, str, false)</div>
-    <div class="api-params">参数：略</div>
-    <div class="api-remark">注意：如果需要返回值，在isInClosure为true时，需要写return，为false则不用</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsCall(jsExecState es, jsValue func, jsValue thisValue, jsValue* args, int argCount)</h3>
-    <div>调用一个func对应的js函数。如果此js函数是成员函数，则需要填thisValue。
-    	否则可以传jsUndefined。args是个数组，个数由argCount控制。
-		func可以是从js里取的，也可以是自行构造的。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsCallGlobal(jsExecState es, jsValue func, jsValue* args, int argCount)</h3>
-    <div>调用window上的全局函数</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsGet(jsExecState es, jsValue object, const char* prop)</h3>
-    <div>如果object是个js的object，则获取prop指定的属性。如果object不是js object类型，则返回jsUndefined</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void jsSet(jsExecState es, jsValue object, const char* prop, jsValue value)</h3>
-    <div>设置object的属性</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsGetGlobal(jsExecState es, const char* prop)</h3>
-    <div>获取window上的属性</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void jsSetGlobal(jsExecState es, const char* prop, jsValue v)</h3>
-    <div>设置window上的属性</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsGetAt(jsExecState es, jsValue object, int index)</h3>
-    <div>设置js arrary的第index个成员的值，object必须是js array才有用，否则会返回jsUndefined</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void jsSetAt(jsExecState es, jsValue object, int index, jsValue value)</h3>
-    <div>设置js arrary的第index个成员的值，object必须是js array才有用。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsKeys* jsGetKeys(jsExecState es, jsValue object)</h3>
-    <div>获取object有哪些key</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">int jsGetLength(jsExecState es, jsValue object)</h3>
-    <div>获取js arrary的长度，object必须是js array才有用。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void jsSetLength(jsExecState es, jsValue object, int length)</h3>
-    <div>设置js arrary的长度，object必须是js array才有用。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">wkeWebView jsGetWebView(jsExecState es)</h3>
-    <div>获取es对应的webview</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void jsGC()</h3>
-    <div>强制垃圾回收</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void fastcall jsBindFunction(const char* name, jsNativeFunction fn, unsigned int argCount)</h3>
-    <div>绑定一个全局函数到主frame的window上。</div>
-    <div class="api-params">参数：略</div>
-    <div class="api-remark">注意：此接口只能绑定主frame，并且特别需要注意的是，因为历史原因，此接口是fastcall调用约定！（但wkeJsBindFunction不是）<br>
-    	另外此接口和wkeJsBindFunction必须在webview创建前调用<br>
-		使用示例：<br>
-<pre>    c++里：
-    --------
-    jsValue JS_CALL onNativeFunction(jsExecState es) {
-    &nbsp;&nbsp;&nbsp;&nbsp;jsValue v = jsArg(es, 0);
-    &nbsp;&nbsp;&nbsp;&nbsp;const wchar_t* str = jsToTemdivStringW(es, v);
-    &nbsp;&nbsp;&nbsp;&nbsp;OutdivutdebugStringW(str);
-    }
-    jsBindFunction("testCall", onNativeFunction， 1);
-
-    js里：
-    --------
-    window.testCall('testStrt');
-</pre>
-    </div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void jsBindGetter(const char* name, jsNativeFunction fn)</h3>
-    <div>对js winows绑定一个属性访问器，在js里windows.XXX这种形式调用时，fn会被调用</div>
-    <div class="api-params">参数：略</div>
-    <div class="api-remark">示例：jsBindGetter("XXX")</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void jsBindSetter(const char* name, jsNativeFunction fn)</h3>
-    <div>对js winows绑定一个属性设置器。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">void wkeJsBindFunction(const char* name, wkeJsNativeFunction fn, void* param, unsigned int argCount)</h3>
-    <div>和jsBindFunction功能类似，但更方便一点，可以传一个param做自定义数据。</div>
-    <div class="api-params">参数：略</div>
-    <div class="api-remark">此接口和wkeJsBindFunction必须在webview创建前调用</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsObject(jsExecState es, jsData* data)</h3>
-    <div>构建一个js Objcet，可以传递给js使用。</div>
-    <div class="api-params">参数：
-    	<div class="api-param">
-	    	typedef jsValue(*jsGetPropertyCallback)(jsExecState es, jsValue object, const char* propertyName);<br>
-			&nbsp;&nbsp;属性访问器。在js里XXX.yyy这样调用时，jsGetPropertyCallback会被触发，并且propertyName的值为yyy<br>
-			typedef bool(*jsSetPropertyCallback)(jsExecState es, jsValue object, const char* propertyName, jsValue value);<br>
-			&nbsp;&nbsp;属性设置器。在js里XXX.yyy=1这样调用时，jsSetPropertyCallback会被触发，并且propertyName的值为yyy，value的值是字符串类型。可以通过之前提到的字符串操作接口来获取<br>
-			typedef jsValue(*jsCallAsFunctionCallback)(jsExecState es, jsValue object, jsValue* args, int argCount);<br>
-			&nbsp;&nbsp;在js里XXX()这样调用时会触发。<br>
-			typedef void(*jsFinalizeCallback)(struct tagjsData* data);<br>
-			&nbsp;&nbsp;在js里没人引用，且垃圾回收时会触发
+		<div class="search">
+			<input type="text" name="" id="" value="" />
+			<ul class="search-result">
+			</ul>
 		</div>
-	</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsValue jsFunction(jsExecState es, jsData* data)</h3>
-    <div>创建一个主frame的全局函数。jsData的用法如上。js调用：XXX()
-		此时jsData的callAsFunction触发。
-		其实jsFunction和jsObject功能基本类似。且jsObject的功能更强大一些
- 	</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsData* jsGetData(jsExecState es, jsValue value)</h3>
-    <div>获取jsObject或jsFunction创建的jsValue对应的jsData指针。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-	<h3 class="api-def">jsExceptionInfo* jsGetLastErrorIfException(jsExecState es);</h3>
-    <div>当wkeRunJs、jsCall等接口调用时，如果执行的js代码有异常，此接口将获取到异常信息。否则返回nullptr。</div>
-    <div class="api-params">参数：略</div>
-	<div class="sep-line"></div>
-	<!---->
-</div>
-
-<div class="api-floatbar" title="API索引">
-<ul>
-</ul>
-<div>
-<script>
-/* auth lzp 2018/07/27
-* 自动生成索引功能
-*/
-
-function createIndex() {
-    var ul = document.querySelector(".api-floatbar ul");
-    //api index
-    document.querySelectorAll(".api-def").forEach(function (h) {
-        s = h.textContent;
-        s = s.substr(0, s.indexOf('('));
-        s = s.substr(s.lastIndexOf(' ') + 1);
-        h.innerHTML = '<a name="' + s + '"></a>' + h.innerHTML;
-        ul.innerHTML += '<li><a href="#' + s + '">' + s + '</a></li>';
-    });
-    //api show/hidden
-    var u = document.querySelector(".api-floatbar");
-    u.onmouseover = function(e) {
-        document.querySelector('.api-floatbar').style.opacity = "1";
-    }
-    u.onmouseout = function(e) {
-        document.querySelector('.api-floatbar').style.opacity = "0.1";
-    }
-}
-
-window.onload = function() {
-	createIndex();
-}
+<script src="http://lib.sinaapp.com/js/jquery/1.10/jquery-1.10.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	function scrollSpeed(location){
+		var location = parseFloat(location,2);
+		$('html,body').animate({scrollTop: location.toString()+'px'}, 400);
+	}
+	function search(keywords){
+		console.log('start------------');
+		$('.search-result').empty();
+		var num = 1;
+		$('.api-def').each(function(){
+			if($(this).text().toLowerCase().indexOf(keywords.toLowerCase()) != -1){
+				$('.search-result').append('<li data-top="'+$(this).offset().top+'" title="'+$(this).text()+'">['+num.toString()+'] '+$(this).text()+'</li>');
+				if(num == 1){
+					scrollSpeed($(this).offset().top);					
+				}
+				num++;
+			}
+		});
+		console.log('end------------');
+	}
+	$(".search").bind("input propertychange",function(event){
+	    var keyword = $(this).children('input').val();
+	    search(keyword);
+	});
+	$(".search ul").on('click','li',function(){
+		scrollSpeed($(this).data('top'));	
+	});
+	document.onkeydown = function(e){
+		var keyCode = e.keyCode || e.which || e.charCode;
+		var ctrlKey = e.ctrlKey || e.metaKey;
+		if(ctrlKey && keyCode == 70) {
+			$('.search').fadeToggle('fast');
+			e.preventDefault();
+		}
+		return true;
+	}
 </script>
-</div></div></body></html>
+	</body>
+</html>
