@@ -1,4 +1,4 @@
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+﻿html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -20,13 +20,16 @@ article, aside, details, figcaption, figure, footer, header, menu, nav, section 
 	transition: all 0.4s linear;
 	-webkit-transition: all 0.4s linear;
 }*/
+
 body {
 	cursor: default;
 	/*padding-top: 56px;*/
 }
+
 section {
 	text-align: center;
 }
+
 ol, ul {
 	list-style: none;
 }
@@ -57,6 +60,75 @@ a:link, a:visited, a:hover, a:active {
 .clearfix {
  *zoom:1;
 }
+
+
+.why-uesr-mb-title {
+	text-align: center;
+	color: #606c6e;
+	padding-top: 60px;
+	font-size: 50px;
+    line-height: 60px;
+}
+
+.why-uesr-mb-title2 {
+
+}
+
+.why-uesr-mb-container {
+	background-color: #f5f6f6;
+}
+.why-mb-row {
+	color: #606c6e;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.why-mb-col {
+    background-color: #f5f6f6;
+    max-width: 350px;
+    min-width: 350px;
+    height: 120px;
+    margin: 40px;
+}
+
+.howto-mb-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.howto-mb-col {
+    background-color: #f5f6f6;
+    width: 175px;
+    margin: 40px;
+}
+
+.why-mb-row-icon {
+    padding: 15px;
+    left: 0;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    background: url(../images/benefits-icon.png) 0 0 no-repeat;
+}
+.why-mb-col-title {
+	display: inline-block;
+	font-size: 20px;
+    font-weight: 500;
+    line-height: 1.1;
+    margin-top: 0px;
+}
+.why-mb-col-des {
+	font-size: 13px;
+	margin-top: 14px;
+	line-height: 1.1;
+}
+
+.howto-mb-strong {
+	color: #3498db;
+}
+/**/
+
 /* 水平分隔线 begin */
 fieldset {
 	border: 0;
@@ -290,7 +362,7 @@ html {
     justify-content: center;
     flex-wrap: wrap;
     padding: 1px 0 0 9%;
-	margin-top: -2%;
+	margin-top: 0%;
 	margin-bottom: 6%;
 }
 .bannerUl li{
@@ -490,7 +562,8 @@ html {
 	color: #333;
 }
 .banner_box {
-	background: url(../images/header-bg.jpg ) top center;
+	background: url(../images/header-bg.jpg ) no-repeat;
+	background-size:100% 100%;
 	position: relative;
 }
 /*banner over*/
@@ -1410,10 +1483,11 @@ h2.title {
 
 @media (max-width: 992px) {
 .banner-wrap {
-    width: 98%;
+    width: 100%;
+    height: 800px;
 }
 .bannerUl {
-	margin-top: -2%;
+	margin-top: -10%;
 }
 .bannerUl li:nth-child(1) {
 	width: 35%;
@@ -2017,8 +2091,6 @@ p.group_oriented {
 	height: 50px;
 	line-height: 50px;
 	font-size: 20px;
-	margin-right: 50px;
-	padding-left: 40px;
 }
 .banner-wrap .text_box {
 }
@@ -2145,5 +2217,6 @@ h3.title_en {
 .feature_face_box_left {
 	width: 100%;
 }
+
 
 
