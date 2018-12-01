@@ -2013,8 +2013,8 @@ p.group_oriented {
 .feature_easy_box_right {
 	width: 100%;
 	float: left;
-	padding-right: 15px;
-	padding-left: 15px;
+	/*padding-right: 15px;
+	padding-left: 15px;*/
 	position: relative;
 }
 .mobile_show {
