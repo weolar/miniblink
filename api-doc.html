@@ -997,11 +997,12 @@
 			<div class="sep-line"></div>
 			
 			<!---->
-			<h3 class="api-def"><a name="wkeNetHoldJobToAsynCommit"></a>void wkeNetHoldJobToAsynCommit(void* jobPtr)</h3>
+			<h3 class="api-def"><a name="wkeNetHoldJobToAsynCommit"></a>BOOL wkeNetHoldJobToAsynCommit(void* jobPtr)</h3>
 			<div>高级用法。在wkeOnLoadUrlBegin回调里调用。
 				有时候，wkeOnLoadUrlBegin里拦截到一个请求后，不能马上判断出结果。此时可以调用本接口，然后在
 				异步的某个时刻，调用wkeNetContinueJob来让此请求继续进行</div>
 			<div class="api-params">参数：略</div>
+			<div class="api-params">返回值：TRUE代表成功，FALSE代表调用失败，不能再调用wkeNetContinueJob了</div>
 			<div class="sep-line"></div>
 			<!---->
 			<h3 class="api-def"><a name="wkeNetGetRequestMethod"></a>wkeRequestType wkeNetGetRequestMethod(void *jobPtr)</h3>
