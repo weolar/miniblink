@@ -19,6 +19,7 @@
 			.list{margin:0px;padding: 8px 46px;}
 			.list li{margin-bottom: 8px;}
 			.list-warning{background-color: #f0ad4e;color: #fff;}
+			.list-warning2{background-color: #9a5656;color: #fff;}
 			.search{position: fixed;height: 320px; width: 400px;background: #F7F7F7;left: 40%;top:25%;transform: translate(-25%,-25%);padding: 8px 16px;text-align: center;display: none;}
 			.search input{margin-top:25px;width: 320px;height: 32px;border: solid 1px #d7d7d9;}
 			.search .search-result{list-style: none;margin: 0px;padding: 0px;text-align: left;margin-left: 10%;margin-top: 10px;overflow:auto;height: 220px;}
@@ -37,8 +38,41 @@
 		<div class="sep-line"></div>
 		<div class="content">
 			<p>miniblink的接口是纯C导出，只要使用mb.h、mb.dll、node.dll即可加载。无需.lib。</p>
+			mb.dll是基于mb的主dll（通常为node.dll）之上的一个封装层，在拥有原版主dll的所有能力之外，<p/>
+额外增加了：<p/>
+<ul class="">
+<li>高性能多线程渲染</li>
+<li>不同页面独立cookie支持</li>
+<li>MP3\MP4支持</li>
+<li>加载ActiveX控件</li>
+<li>网页内开启nodejs能力</li>
+<li>打印（正在实现中，未来将提供）</li>
+<li>资源打包（正在实现中，未来将提供）</li>
+<li>硬件加速（正在实现中，未来将提供）</li>
+</ul>
+等功能。<p/>
+
+若要使用mb.dll，可以向weolar@qq.com 购买，详情可见：http://miniblink.net/pricing/pricing.htm<p/>
+另外mb.dll必须依赖node.dll。<p/>
+
 		</div>
 		<div class="content">
+			升级到新接口注意事项：<p/>
+			
+			<ul class="list list-warning2">
+				<li>所有申明改成了stdcall</li>
+				<li>其他接口和回调都是在窗口ui线程（以下称主线程）调用，<p/>
+				唯独mbOnLoadUrlBegin、mbOnLoadUrlEnd、onDownloadCallback是在另外个线程被回调，请注意保护变量</li>
+				<li>老js相关接口全部被移除，现在统一改成mbRunJs和mbOnJsQuery。</li>
+				<li>打开mtmb.sln后，mtmb\mb.h是mb.dll的导出头文件，Testdll工程是测试工程，需要翻译成c#的代码可以参考这里的代码</li>
+				<li>mbGetLockedViewDC后需要调用mbUnlockViewDC</li>
+				<li>WM_IME_STARTCOMPOSITION消息直接调用mbFireWindowsMessage派发过去即可</li>
+				<li>wkeString等相关结构全部删除</li>
+				<li>W相关接口全部删除</li>
+				<li>mbOnURLChanged默认就是主frame的url</li>
+				<li>URLChanged 回调增加了几个参数</li>
+			</ul>
+			<p/>
 			<ul class="list list-warning">
 				<li>另外，请勿跨线程调用所有接口（除非接口有特殊申明）</li>
 				<li>所有接口如果返回的是const utf8*，const wchar_t*类型的字符串，均不需要手动释放</li>
@@ -58,6 +92,21 @@
 			<div>设置node.dll的全路径+文件名</div>
 			<div class="api-params">参数：</div>
 			<div class="api-param">dllPath：dll的全路径，注意是全路径</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbInit"></a>void mbInit(const mbSettings* settings)</h3>
+			<div>初始化整个mb。此句必须在所有mb api前最先调用。并且所有mb api必须和调用mbInit的线程为同个线程</div>
+			<div class="api-params">参数：
+				<div class="api-param">
+					typedef struct { mbProxy proxy; unsigned int mask; } mbSettings;
+					mask可以取：
+					<div class="api-param-value">
+						WKE_SETTING_PROXY：效果和mbSetProxy一样，通过proxy设置<br>
+						WKE_SETTING_PAINTCALLBACK_IN_OTHER_THREAD：这是个高级用法，开启时，on paint回调会在另外个线程（其实就是渲染线程）。<br>
+						这个是用来实现多线程上屏功能，性能更快。<br>
+					</div>
+				</div>
+			</div>
 			<div class="sep-line"></div>
 			<!---->
 			<h3 class="api-def"><a name="mbStopLoading"></a>void mbStopLoading(mbWebView webView)</h3>
@@ -241,6 +290,27 @@
 			<h3 class="api-def"><a name="mbRunJS"></a>void mbRunJS(mbWebView webView, mbWebFrameHandle frameId, const utf8* script, BOOL isInClosure, mbRunJsCallback callback, void* param, void* unuse)</h3>
 			<div>运行一段js。返回js的值mbValue在callback中获取。mbValue是个封装了内部v8各种类型的类，如果需要获取详细信息，有mbXXX相关接口可以调用。见下述。</div>
 			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnJsQuery"></a>void mbOnJsQuery(mbWebView webView, mbJsQueryCallback callback, void* param)</h3>
+			<div>注册js通知native的回调。</div>
+			<div class="api-params">参数：回调：typedef void(* mbJsQueryCallback)(mbWebView webView, void* param, mbJsExecState es, int64_t queryId, int customMsg, const utf8* request)</div>
+			<div class="api-remark"><br>
+				设置一个回调，js中以下面形式调用：<p/>
+				<p/>
+
+				function onNative(customMsg, response) {<p/>
+				    console.log("on~~mbQuery:" + response);<p/>
+				}<p/>
+				window.mbQuery(0x123456, "test run", onNative);<p/>
+				<p/>
+				其中0x123456将被发送给mbJsQueryCallback的customMsg，"test run"给request。<p/>
+				如果需要在mbJsQueryCallback返回消息给js，则在mbJsQueryCallback里调用：<p/>
+				mbResponseQuery(mbWebView webView, int64_t queryId, int customMsg, const utf8* response);<p/>
+				<p/>
+				customMsg可以是任意的整数，request是任意的字符串，js中的onNative将收到回调<p/>
+				<p/>
+			</div>
 			<div class="sep-line"></div>
 			<!---->
 			<h3 class="api-def"><a name="mbSetZoomFactor"></a>void mbSetZoomFactor(mbWebView webView, float factor)</h3>
@@ -490,21 +560,6 @@
 			<div class="api-params">参数：略</div>
 			<div class="sep-line"></div>
 			<!---->
-			<h3 class="api-def"><a name="mbInit"></a>void mbInit(const mbSettings* settings)</h3>
-			<div>初始化整个mb。此句必须在所有mb api前最先调用。并且所有mb api必须和调用mbInit的线程为同个线程</div>
-			<div class="api-params">参数：
-				<div class="api-param">
-					typedef struct { mbProxy proxy; unsigned int mask; } mbSettings;
-					mask可以取：
-					<div class="api-param-value">
-						WKE_SETTING_PROXY：效果和mbSetProxy一样，通过proxy设置<br>
-						WKE_SETTING_PAINTCALLBACK_IN_OTHER_THREAD：这是个高级用法，开启时，on paint回调会在另外个线程（其实就是渲染线程）。<br>
-						这个是用来实现多线程上屏功能，性能更快。<br>
-					</div>
-				</div>
-			</div>
-			<div class="sep-line"></div>
-			<!---->
 			<h3 class="api-def"><a name="mbSetProxy"></a>void mbSetProxy(const mbProxy* proxy)</h3>
 			<div>设置整个mb的代码。此句是全局生效</div>
 			<div class="api-params">参数：略</div>
@@ -657,12 +712,12 @@
 			<div class="api-params">参数：略</div>
 			<div class="sep-line"></div>
 			<!---->
-			<h3 class="api-def"><a name="jsToDouble"></a>double mbToDouble(mbExecState es, mbValue v)</h3>
+			<h3 class="api-def"><a name="mbToDouble"></a>double mbToDouble(mbExecState es, mbValue v)</h3>
 			<div>如果v是个浮点形，返回相应值。如果是其他类型，返回0.0（这里注意）</div>
 			<div class="api-params">参数：略</div>
 			<div class="sep-line"></div>
 			<!---->
-			<h3 class="api-def"><a name="jsToString"></a>const utf8* jsToString(mbExecState es, mbValue v)</h3>
+			<h3 class="api-def"><a name="mbToString"></a>const utf8* mbToString(mbExecState es, mbValue v)</h3>
 			<div>
 				如果v是个字符串，返回相应值。如果是其他类型，返回L""（这里注意）
 				另外，返回的字符串不需要外部释放。mb会在下一帧自动释放</div>
