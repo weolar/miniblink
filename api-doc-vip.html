@@ -62,7 +62,7 @@
 			<ul class="list list-warning2">
 				<li>所有申明改成了stdcall</li>
 				<li>其他接口和回调都是在窗口ui线程（以下称主线程）调用，<p/>
-				唯独mbOnLoadUrlBegin、mbOnLoadUrlEnd、onDownloadCallback是在另外个线程被回调，请注意保护变量</li>
+				唯独mbOnLoadUrlBegin、mbOnLoadUrlEnd、onDownloadCallback、mbOnNavigation是在另外个线程被回调，请注意保护变量</li>
 				<li>老js相关接口全部被移除，现在统一改成mbRunJs和mbOnJsQuery。</li>
 				<li>打开mtmb.sln后，mtmb\mb.h是mb.dll的导出头文件，Testdll工程是测试工程，需要翻译成c#的代码可以参考这里的代码</li>
 				<li>mbGetLockedViewDC后需要调用mbUnlockViewDC</li>
