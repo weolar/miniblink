@@ -371,7 +371,7 @@
 			<!---->
 			<h3 class="api-def"><a name="mbOnNavigation"></a>void mbOnNavigation(mbWebView webView, mbNavigationCallback callback, void* param)</h3>
 			<div>网页开始浏览将触发回调</div>
-			<div class="api-params">参数：typedef bool(*mbNavigationCallback)(mbWebView webView, void* param, mbNavigationType navigationType, const utf8 url);</div>
+			<div class="api-params">参数：typedef bool(*mbNavigationCallback)(mbWebView webView, void* param, mbNavigationType navigationType, const utf8* url);</div>
 			<div class="api-param">mbNavigationType: 表示浏览触发的原因。可以取的值有：
 				<div class="api-param-value">
 				    MB_NAVIGATION_TYPE_LINKCLICK：点击a标签触发<br>
