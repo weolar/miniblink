@@ -207,6 +207,11 @@
 			<div class="api-remark">注意：这个接口只是调用curl设置命令，并不会去修改js里的内容</div>
 			<div class="sep-line"></div>
 			<!---->
+			<h3 class="api-def"><a name="mbClearCookie"></a>void mbClearCookie(mbWebView webView)</h3>
+			<div>清理cookie。目前只支持清理所有页面的cookie。</div>
+			<div class="api-params">参数：无</div>
+			<div class="sep-line"></div>
+			<!---->
 			<h3 class="api-def"><a name="mbSetCookieEnabled"></a>void mbSetCookieEnabled(mbWebView webView, bool enable)</h3>
 			<div>开启或关闭cookie</div>
 			<div class="api-params">参数：略</div>
@@ -643,6 +648,11 @@
 			<h3 class="api-def"><a name="mbNetSetHTTPHeaderField"></a>void mbNetSetHTTPHeaderField(void* jobPtr, wchar_t* key, wchar_t* value, bool response)</h3>
 			<div>在mbOnLoadUrlBegin回调里调用，表示设置http请求（或者file:///协议）的 http header field。response一直要被设置成false</div>
 			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetGetRawHttpHead"></a>const mbSlist* mbNetGetRawHttpHead(mbNetJob jobPtr)</h3>
+			<div>在mbOnLoadUrlBegin回调里调用，获取curl返回的原生请求头</div>
+			<div class="api-params">返回值：const mbSlist*，是一个C语言链表，详情看头文件</div>
 			<div class="sep-line"></div>
 			<!---->
 			<h3 class="api-def"><a name="mbNetSetMIMEType"></a>void mbNetSetMIMEType(void* jobPtr, char* type)</h3>

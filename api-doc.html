@@ -295,6 +295,11 @@
 			<div class="api-remark">注意：这个接口只是调用curl设置命令，并不会去修改js里的内容</div>
 			<div class="sep-line"></div>
 			<!---->
+			<h3 class="api-def"><a name="wkeClearCookie"></a>void wkeClearCookie(wkeWebView webView)</h3>
+			<div>清理cookie。目前只支持清理所有页面的cookie。</div>
+			<div class="api-params">参数：无</div>
+			<div class="sep-line"></div>
+			<!---->
 			<h3 class="api-def"><a name="wkeSetCookieEnabled"></a>void wkeSetCookieEnabled(wkeWebView webView, bool enable)</h3>
 			<div>开启或关闭cookie</div>
 			<div class="api-params">参数：略</div>
@@ -765,8 +770,8 @@
 			<div class="api-params">参数：略</div>
 			<div class="sep-line"></div>
 			<!---->
-			<h3 class="api-def"><a name="wkeSetDeviceParameter"></a>void wkeSetDeviceParameter(wkeWebView webView, const char* device, const char* paramStr, int paramInt, float paramFloat)</h3>
-			<div>设置mb模拟的硬件设备环境。主要用在伪装手机设备场景</div>
+			<h3 class="api-def api-deprecated"><a name="wkeSetDeviceParameter"></a>void wkeSetDeviceParameter(wkeWebView webView, const char* device, const char* paramStr, int paramInt, float paramFloat)</h3>
+			<div>（已废弃）设置mb模拟的硬件设备环境。主要用在伪装手机设备场景</div>
 			<div class="api-params">参数：</div>
 			<div class="api-param">device：设备的字符串。可取值有：
 				<table class="api-param-value">
@@ -960,6 +965,11 @@
 			<h3 class="api-def"><a name="wkeNetSetHTTPHeaderField"></a>void wkeNetSetHTTPHeaderField(void* jobPtr, wchar_t* key, wchar_t* value, bool response)</h3>
 			<div>在wkeOnLoadUrlBegin回调里调用，表示设置http请求（或者file:///协议）的 http header field。response一直要被设置成false</div>
 			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="wkeNetGetRawHttpHead"></a>const wkeSlist* wkeNetGetRawHttpHead(wkeNetJob jobPtr)</h3>
+			<div>在wkeOnLoadUrlBegin回调里调用，获取curl返回的原生请求头</div>
+			<div class="api-params">返回值：const wkeSlist*，是一个C语言链表，详情看头文件</div>
 			<div class="sep-line"></div>
 			<!---->
 			<h3 class="api-def"><a name="wkeNetSetMIMEType"></a>void wkeNetSetMIMEType(void* jobPtr, char* type)</h3>
