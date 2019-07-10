@@ -1,0 +1,2764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="miniblink,浏览器开发,Web开发,界面开发,控件开发,Qt控件,工业控件,金融控件,ERP,BS,CS,图表开发,嵌入式开发,界面设计,控件设计,图标设计,Delphi界面开发,WinForm界面开发">
+    <meta name="description" content="miniblink是一款极致小巧的开源浏览器控件，可嵌入各种软件中，提供浏览服务">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>Miniblink - 小巧开源的浏览器控件</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <div class="container">
+        <div class="header-logo">
+            <h1>Miniblink</h1>
+        </div>
+        <div class="header-nav">
+            <div class="header-nav-item">
+                <a href="../../index.html">首页</a>
+            </div>
+            <div class="header-nav-item header-nav-active">
+                <a href="./index.html">文档</a>
+            </div>
+            <div class="header-nav-item">
+                <a href="../features.html">功能定制</a>
+            </div>
+            <div class="header-nav-item">
+                <a href="https://github.com/weolar/miniblink49/releases" target="_bank">下载</a>
+            </div>
+            <div class="header-nav-item">
+                <a href="http://bbs.miniblink.net/" target="_bank">论坛</a>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="header-right-item">
+                <a href="https://github.com/weolar/miniblink49/releases" target="_bank">
+                    <img src="../../images/icon/github.png">
+                    <span>Github</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- doc -->
+<div class="main" id="doc-page">
+    <div class="container">
+        <div class="side-bar">
+            <div class="side-bar-wrap">
+                <div class="side-bar-item"><a href="./index.html">前言</a></div>
+                <div class="side-bar-item"><a href="./isMiniblink.html">Miniblink是什么</a></div>
+                <div class="side-bar-item side-bar-item-active"><a href="./api.html">API</a></div>
+                <div class="side-bar-item"><a href="./info.html">mini-electron介绍</a></div>
+                <div class="side-bar-item"><a href="./other.html">其他语言绑定及例程</a></div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="body-wrap">
+                <!-- api -->
+                <div class="doc-item" v-if="active == 3">
+                    <div class="doc-item-title">API</div>
+                    <div class="doc-item-content">
+                        <div class="api-list">
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [1] unsigned int wkeVersion();
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取目前api版本号
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [2] const utf8* wkeVersionString();
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取版本字符串
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [3] void wkeSetWkeDllPath(const wchar_t* dllPath)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置miniblink的全路径+文件名
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            dllPath
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            dll的全路径，注意是全路径
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [4] void wkeGC(wkeWebView webView, long delayMs);
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    延迟让miniblink垃圾回收
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [5] void wkeSetFileSystem(WKE_FILE_OPEN pfnOpen, WKE_FILE_CLOSE pfnClose,
+                                    WKE_FILE_SIZE pfnSize, WKE_FILE_READ pfnRead, WKE_FILE_SEEK pfnSeek)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    wke遗留的接口，设置文件相关的hook函数。可以作为拦截对文件的操作。现在已被更先进的函数取代
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [6] bool wkeIsLoaded(wkeWebView webView);
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取webView是否处于加载状态，还是加载完成。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [7] bool wkeIsLoadingSucceeded(wkeWebView webView)
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    判断webview是否加载成功
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [8] bool wkeIsLoadFailed(wkeWebView webView)
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    判断webview是否加载失败
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [9] bool wkeIsLoadComplete(wkeWebView webView)
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    判断webview是否加载完成
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    wkeIsLoadComdivlete等效于wkeIsLoadFailed、wkeIsLoadingSucceeded其中任何一个返回true
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [10] bool wkeIsDocumentReady(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    DOM文档结构是否加载完成。和上述几个接口不同，上述几个接口是网络相关的判断。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [11] void wkeStopLoading(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    停止加载页面
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [12] bool wkeReload(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    重新加载页面
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [13] const utf8* wkeGetTitle(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取页面标题
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [14] const wchar_t* wkeGetTitleW(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取页面标题的宽字节版本
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [15] void wkeResize(wkeWebView webView, int w, int h)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    重新设置页面的宽高。如果webView是带窗口模式的，会设置真窗口的宽高。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [16] int wkeGetWidth(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取页面宽度
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [17] int wkeGetHeight(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取页面高度
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [18] int wkeGetContentWidth(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取网页排版出来的宽度
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [19] int wkeGetContentHeight(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取网页排版出来的高度
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [20] void wkeSetDirty(wkeWebView webView, bool dirty)
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置页面为脏状态，在下一帧将强制重绘页面
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [21] bool wkeIsDirty(wkeWebView webView)
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取页面脏状态
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [22] void wkeAddDirtyArea(wkeWebView webView, int x, int y, int w, int
+                                        h)
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    添加页面脏矩形
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [23] void wkeLayoutIfNeeded(wkeWebView webView)
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    强制让页面重新排版
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [24] void wkePaint2(wkeWebView webView, void* bits, int bufWid, int bufHei,
+                                    int xDst, int yDst, int w, int h, int xSrc, int ySrc, bool bCopyAlpha)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            bits
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            外部申请并传递给mb的buffer，大小是bufWid * bufHei * 4 字节
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            bufWid
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            bits的宽
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            bufHei
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            bits的高
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            xDst
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            绘制到bits的哪个坐标
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            yDst
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            绘制到bits的哪个坐标
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            w
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            mb需要取的画面的起始坐标
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            h
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            mb需要取的画面的起始坐标
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            xSrc
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            mb需要取的画面的起始坐标
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            ySrc
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            mb需要取的画面的起始坐标
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            bCopyAlpha
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            是否拷贝画面的透明度值
+                                        </div>
+                                    </div>
+                                </div>
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    此函数一般给3d游戏使用。另外频繁使用此接口并拷贝像素有性能问题。最好用wkeGetViewDC再去拷贝dc。
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [25] void wkePaint(wkeWebView webView, void* bits, int pitch)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取页面的像素的简化版函数。
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            bits
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            外部申请并传递给mb的buffer，大小是webview宽度 * 高度 * 4 字节。
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            pitch
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            填0即可。这个参数玩过directX的人应该懂
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [26] void wkeRepaintIfNeeded(wkeWebView webView)
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    强制重绘页面
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [27] HDC wkeGetViewDC(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取webview的DC
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [28] HWND wkeGetHostHWND(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取webveiw对应的窗口句柄。实现和wkeGetWindowHandle完全相同
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [29] bool wkeCanGoBack(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    页面是否可以后退
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [30] bool wkeGoBack(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    强制让页面后退
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [31] bool wkeCanGoForward(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [32] bool wkeGoForward(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [33] void wkeEditorSelectAll(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    给webview发送全选命令
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [34] void wkeEditorUnSelect(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [35] void wkeEditorCopy(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    拷贝页面里被选中的字符串
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [36] void wkeEditorCut(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [37] void wkeEditorDelete(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [38] void wkeEditorUndo(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [39] void wkeEditorRedo(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [40] const wchar_t * wkeGetCookieW(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取页面的cookie
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [41] const utf8* wkeGetCookie(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取页面的cookie
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [42] void wkeSetCookie(wkeWebView webView, const utf8* url, const utf8*
+                                    cookie)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置页面cookie。
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    cookie必须符合curl的cookie写法。一个例子是：PERSONALIZE=123;expires=Monday, 13-Jun-2022
+                                    03:04:55 GMT; domain=.fidelity.com; path=/; secure
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [43] void wkeVisitAllCookie(void* params, wkeCookieVisitor visitor)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    通过访问器visitor访问所有cookie。
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            visitor
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            访问器
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [44] void wkePerformCookieCommand(wkeCookieCommand command)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    通过设置mb内置的curl来操作cookie。
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    这个接口只是调用curl设置命令，并不会去修改js里的内容
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [45] void wkeSetCookieEnabled(wkeWebView webView, bool enable)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    开启或关闭cookie
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    这个接口只是影响blink，并不会设置curl。所以还是会生成curl的cookie文件
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [46] bool wkeIsCookieEnabled(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [47] void wkeSetCookieJarPath(wkeWebView webView, const WCHAR* path)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置cookie的本地文件目录。默认是当前目录。cookies存在当前目录的“cookie.dat”里
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [48] void wkeSetCookieJarFullPath(wkeWebView webView, const WCHAR* path)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置cookie的全路径+文件名，如c:\mb\cookie.dat
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [49] void wkeSetLocalStorageFullPath(wkeWebView webView, const WCHAR*
+                                    path)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置local storage的全路径。如“c:\mb\LocalStorage\”
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    这个接口只能接受目录。
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [50] void wkeSetMediaVolume(wkeWebView webView, float volume)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置音量，未实现
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [51] float wkeGetMediaVolume(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取音量，未实现
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [52] bool wkeFireMouseEvent(wkeWebView webView, unsigned int message,
+                                    int x, int y, unsigned int flags)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    向mb发送鼠标消息
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            message
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            可取WM_MOUSELEAVE等Windows相关鼠标消息
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            x
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            x坐标
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            y
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            y坐标
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            flags
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            可取值有WKE_CONTROL、WKE_SHIFT、WKE_LBUTTON、WKE_MBUTTON、WKE_RBUTTON，可通过“或”操作并联
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [53] bool wkeFireContextMenuEvent(wkeWebView webView, int x, int y, unsigned
+                                    int flags)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    向mb发送菜单消息（未实现）
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [54] bool wkeFireMouseWheelEvent(wkeWebView webView, int x, int y, int
+                                    delta, unsigned int flags)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    向mb发送滚轮消息，用法和参数类似wkeFireMouseEvent。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [55] bool wkeFireKeyUpEvent(wkeWebView webView, unsigned int virtualKeyCode,
+                                    unsigned int flags, bool systemKey)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    向mb发送WM_KEYUP消息，
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            virtualKeyCode
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            见https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            flags
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            可取值有WKE_REPEAT、WKE_EXTENDED，可通过“或”操作并联。
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            systemKey
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            暂时没用
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [56] bool wkeFireKeyDownEvent(wkeWebView webView, unsigned int virtualKeyCode,
+                                    unsigned int flags, bool systemKey)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            charCode
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            WM_CHAR消息的The character code of the key.见https://msdn.microsoft.com/en-us/library/windows/desktop/ms646276(v=vs.85).aspx
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [57] bool wkeFireWindowsMessage(wkeWebView webView, HWND hWnd, UINT message,
+                                    WPARAM wParam, LPARAM lParam, LRESULT* result)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    向mb发送任意windows消息。不过目前mb主要用来处理光标相关。mb在无窗口模式下，要响应光标事件，需要通过本函数手动发送光标消息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [58] void wkeSetFocus(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置webview是焦点态。如果webveiw关联了窗口，窗口也会有焦点
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [59] void wkeKillFocus(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [60] wkeRect wkeGetCaretRect(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取编辑框的那个游标的位置
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [61] jsValue wkeRunJS(wkeWebView webView, const utf8* script)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    运行一段js。返回js的值jsValue。jsValue是个封装了内部v8各种类型的类，如果需要获取详细信息，有jsXXX相关接口可以调用。见下述。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [62] jsValue wkeRunJSW(wkeWebView webView, const wchar_t* script)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    同上。注意，此函数以及wkeRunJS，执行的js，也就是script，是在一个闭包中
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [63] jsExecState wkeGlobalExec(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取页面主frame的jsExecState。jsExecState是什么，见下述。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [64] void wkeSleep(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂未实现
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [65] void wkeWake(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [66] bool wkeIsAwake(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂未实现
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [67] void wkeSetZoomFactor(wkeWebView webView, float factor)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置页面缩放系数，默认是1
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [68] float wkeGetZoomFactor(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [69] void wkeSetEditable(wkeWebView webView, bool editable)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    未实现
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [70] void wkeOnTitleChanged(wkeWebView webView, wkeTitleChangedCallback
+                                    callback, void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置标题变化的通知回调
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [71] void wkeOnMouseOverUrlChanged(wkeWebView webView, wkeTitleChangedCallback
+                                    callback, void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    鼠标划过的元素，如果是，则调用此回调，并发送a标签的url
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [72] void wkeOnURLChanged(wkeWebView webView, wkeURLChangedCallback callback,
+                                    void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    url改变回调
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [73] void wkeOnURLChanged2(wkeWebView webView, wkeURLChangedCallback2
+                                    callback, void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    和上个接口不同的是，回调多了个参数
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            callback
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            typedef void(*wkeURLChangedCallback2)(wkeWebView webView, void* param,
+                                            wkeWebFrameHandle frameId, const wkeString url)
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            frameId
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            表示frame的id。有相关接口可以判断这个frameId是否是主frame
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [75] void wkeOnPaintUpdated(wkeWebView webView, wkePaintUpdatedCallback
+                                    callback, void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    页面有任何需要刷新的地方，将调用此回调
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            callback
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            typedef void(*wkePaintUpdatedCallback)(wkeWebView webView, void* param,
+                                            const HDC hdc, int x, int y, int cx, int cy)
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            x
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            表示刷新的区域矩形
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            y
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            表示刷新的区域矩形
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            cx
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            表示刷新的区域矩形
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            cy
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            表示刷新的区域矩形
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [77] void wkeOnPaintBitUpdated(wkeWebView webView, wkePaintBitUpdatedCallback
+                                    callback, void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    同上。不同的是回调过来的是填充好像素的buffer，而不是DC。方便嵌入到游戏中做离屏渲染
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [78] void wkeOnAlertBox(wkeWebView webView, wkeAlertBoxCallback callback,
+                                    void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    网页调用alert会走到这个接口填入的回调
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [79] void wkeOnConfirmBox(wkeWebView webView, wkeConfirmBoxCallback callback,
+                                    void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [80] void wkeOnPromptBox(wkeWebView webView, wkePromptBoxCallback callback,
+                                    void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [81] void wkeOnNavigation(wkeWebView webView, wkeNavigationCallback callback,
+                                    void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    网页开始浏览将触发回调
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            callback
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            typedef bool(*wkeNavigationCallback)(wkeWebView webView, void* param,
+                                            wkeNavigationType navigationType, const wkeString url);
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            wkeNavigationType
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            表示浏览触发的原因。可以取的值有：WKE_NAVIGATION_TYPE_LINKCLICK：点击a标签触发。WKE_NAVIGATION_TYPE_FORMSUBMITTE：点击form触发。WKE_NAVIGATION_TYPE_BACKFORWARD：前进后退触发。WKE_NAVIGATION_TYPE_RELOAD：重新加载触发
+                                        </div>
+                                    </div>
+                                </div>
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    wkeNavigationCallback回调的返回值，如果是true，表示可以继续进行浏览，false表示阻止本次浏览。
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [83] void wkeOnCreateView(wkeWebView webView, wkeCreateViewCallback callback,
+                                    void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    网页点击a标签创建新窗口时将触发回调
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            callback
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            typedef wkeWebView(*wkeCreateViewCallback)(wkeWebView webView, void* param,
+                                            wkeNavigationType navigationType, const wkeString url, const wkeWindowFeatures*
+                                            windowFeatures);
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [85] void wkeOnDocumentReady(wkeWebView webView, wkeDocumentReadyCallback
+                                    callback, void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    对应js里的body onload事件
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [86] void wkeOnDocumentReady2(wkeWebView webView, wkeDocumentReady2Callback
+                                    callback, void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    同上。区别是wkeDocumentReady2Callback多了wkeWebFrameHandle frameId参数。可以判断是否是主frame
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [87] void wkeOnDownload(wkeWebView webView, wkeDownloadCallback callback,
+                                    void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    页面下载事件回调。点击某些链接，触发下载会调用
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [88] void wkeNetOnResponse(wkeWebView webView, wkeNetResponseCallback
+                                    callback, void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    一个网络请求发送后，收到服务器response触发回调
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [89] void wkeOnConsole(wkeWebView webView, wkeConsoleCallback callback,
+                                    void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    网页调用console触发
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [90] void wkeSetUIThreadCallback(wkeWebView webView, wkeCallUiThread callback,
+                                    void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂时未实现
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [91] void wkeOnLoadUrlBegin(wkeWebView webView, wkeLoadUrlBeginCallback
+                                    callback, void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    任何网络请求发起前会触发此回调
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            callback
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            typedef bool(*wkeLoadUrlBeginCallback)(wkeWebView webView, void* param,
+                                            const char *url, void *job)
+                                        </div>
+                                    </div>
+                                </div>
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    1，此回调功能强大，在回调里，如果对job设置了wkeNetHookRequest，则表示mb会缓存获取到的网络数据，并在这次网络请求 结束后调用wkeOnLoadUrlEnd设置的回调，同时传递缓存的数据。在此期间，mb不会处理网络数据。2，如果在wkeLoadUrlBeginCallback里没设置wkeNetHookRequest，则不会触发wkeOnLoadUrlEnd回调。3，如果wkeLoadUrlBeginCallback回调里返回true，表示mb不处理此网络请求（既不会发送网络请求）。返回false，表示mb依然会发送网络请求。
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [92] void wkeOnLoadUrlEnd(wkeWebView webView, wkeLoadUrlEndCallback callback,
+                                    void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    见wkeOnLoadUrlBegin的描述
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [93] void wkeOnDidCreateScriptContext(wkeWebView webView, wkeDidCreateScriptContextCallback
+                                    callback, void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    javascript的v8执行环境被创建时触发此回调
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    每个frame创建时都会触发此回调
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [94] void wkeOnWillReleaseScriptContext(wkeWebView webView, wkeWillReleaseScriptContextCallback
+                                    callback, void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    每个frame的javascript的v8执行环境被关闭时触发此回调
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [95] void wkeOnWillMediaLoad(wkeWebView webView, wkeWillMediaLoadCallback
+                                    callback, void* callbackParam)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    video等多媒体标签创建时触发此回调
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [96] bool wkeIsMainFrame(wkeWebView webView, wkeWebFrameHandle frameId)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    判断frameId是否是主frame
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [97] wkeWebFrameHandle wkeWebFrameGetMainFrame(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取主frame的句柄
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [98] jsValue wkeRunJsByFrame(wkeWebView webView, wkeWebFrameHandle frameId,
+                                    const utf8* script, bool isInClosure)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    运行js在指定的frame上，通过frameId
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            isInClosure
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            表示是否在外层包个function() {}形式的闭包
+                                        </div>
+                                    </div>
+                                </div>
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    如果需要返回值，在isInClosure为true时，需要写return，为false则不用
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [99] const utf8* wkeGetFrameUrl(wkeWebView webView, wkeWebFrameHandle
+                                    frameId)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取frame对应的url
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [100] const utf8* wkeGetString(const wkeString s)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取wkeString结构体对应的字符串，utf8编码
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [101] const wchar_t* wkeGetStringW(const wkeString string)const wchar_t*
+                                    wkeGetStringW(const wkeString string)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取wkeString结构体对应的字符串，utf16编码
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [102] void wkeSetString(wkeString string, const utf8* str, size_t len)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置wkeString结构体对应的字符串，utf8编码
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [103] void wkeSetStringW(wkeString string, const wchar_t* str, size_t
+                                    len)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置wkeString结构体对应的字符串，utf16编码
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [104] wkeString wkeCreateStringW(const wchar_t* str, size_t len)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    通过utf16编码的字符串，创建一个wkeString
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [105] void wkeDeleteString(wkeString str)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    析构这个wkeString
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [106] void wkeSetUserKeyValue(wkeWebView webView, const char* key, void*
+                                    value)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    对webView设置一个key value键值对。可以用来保存用户自己定义的任何指针
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [107] void* wkeGetUserKeyValue(wkeWebView webView, const char* key)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [108] int wkeGetCursorInfoType(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [109] wkeWebView wkeCreateWebView()
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    创建一个webview，但不创建真窗口。一般用在离屏渲染里，如游戏
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [110] void wkeDestroyWebView(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    效果同wkeDestroyWebWindow
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [111] wkeWebView wkeCreateWebWindow(wkeWindowType type, HWND parent, int
+                                    x, int y, int width, int height)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    创建一个带真实窗口的wkeWebView
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            wkeWindowType
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            WKE_WINDOW_TYPE_POPUP：普通窗口。WKE_WINDOW_TYPE_TRANSPARENT：透明窗口。mb内部通过layer
+                                            window实现。WKE_WINDOW_TYPE_CONTROL：嵌入在父窗口里的子窗口。此时parent需要被设置
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [112] void wkeDestroyWebWindow(wkeWebView webWindow)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    销毁wkeWebView对应的所有数据结构，包括真实窗口等
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [113] HWND wkeGetWindowHandle(wkeWebView webWindow)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取窗口对应的真实句柄。和wkeGetHostHWND的实现完全相同
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [114] void wkeOnWindowClosing(wkeWebView webWindow, wkeWindowClosingCallback
+                                    callback, void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    wkeWebView如果是真窗口模式，则在收到WM_CLODE消息时触发此回调。可以通过在回调中返回false拒绝关闭窗口
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [115] void wkeOnWindowDestroy(wkeWebView webWindow, wkeWindowDestroyCallback
+                                    callback, void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    窗口即将被销毁时触发回调。不像wkeOnWindowClosing，这个操作无法取消
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [116] void wkeShowWindow(wkeWebView webWindow, bool showFlag)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [117] void wkeEnableWindow(wkeWebView webWindow, bool enableFlag)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [118] void wkeMoveWindow(wkeWebView webWindow, int x, int y, int width,
+                                    int height)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [119] void wkeMoveToCenter(wkeWebView webWindow)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    窗口在父窗口或屏幕里居中
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [120] void wkeResizeWindow(wkeWebView webWindow, int width, int height)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    resize窗口，和wkeResize效果一样
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [121] void wkeSetWindowTitle(wkeWebView webWindow, const utf8* title)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [122] void wkeSetWindowTitle(wkeWebView webWindow, const wchar_t* title)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [123] void wkeSetDeviceParameter(wkeWebView webView, const char* device,
+                                    const char* paramStr, int paramInt, float paramFloat)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置mb模拟的硬件设备环境。主要用在伪装手机设备场景
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            device
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            设备的字符串。可取值有："navigator.maxTouchPoints"此时 paramInt 需要被设置，表示 touch 的点数。"navigator.platform"此时
+                                            paramStr 需要被设置，表示js里获取的 navigator.platform字符串。"navigator.hardwareConcurrency"此时
+                                            paramInt 需要被设置，表示js里获取的 navigator.hardwareConcurrency 整数值。"screen.width"此时
+                                            paramInt 需要被设置，表示js里获取的 screen.width 整数值。"screen.height"此时 paramInt 需要被设置，表示js里获取的
+                                            screen.height 整数值。"screen.availWidth"此时 paramInt 需要被设置，表示js里获取的 screen.availWidth
+                                            整数值。"screen.availHeight"此时 paramInt 需要被设置，表示js里获取的 screen.availHeight 整数值。"screen.pixelDepth"此时
+                                            paramInt 需要被设置，表示js里获取的 screen.pixelDepth 整数值。"screen.pixelDepth"目前等价于"screen.pixelDepth"。"window.devicePixelRatio"同上
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [124] void wkeInit()
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    初始化整个mb。此句必须在所有mb api前最先调用。并且所有mb api必须和调用wkeInit的线程为同个线程
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [125] void wkeShutdown()
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    关闭整个mb。调用后，所有mb api将不能再被调用，否则会有崩溃
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [126] void wkeInitialize()
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    效果和wkeInit一模一样
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [127] void wkeSetProxy(const wkeProxy* proxy)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置整个mb的代码。此句是全局生效
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [128] void wkeSetViewProxy(wkeWebView webView, wkeProxy* proxy)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置整个mb的代码。此句是针对特定webview生效
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [129] void wkeConfigure(const wkeSettings* settings)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置一些配置项
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            settings
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            typedef struct { wkeProxy proxy; unsigned int mask; } wkeSettings; mask可以取：WKE_SETTING_PROXY：效果和wkeSetProxy一样，通过proxy设置
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [130] bool wkeIsInitialize()
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="" style="color: rgb(255, 36, 0);">
+                                    <del data-v-4fb65e44="">
+                                        [131] void wkeFinalize()
+                                    </del>
+                                    （已作废）
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    效果和wkeShutdown一样
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [132] void wkeSetMemoryCacheEnable(wkeWebView webView, bool b)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    开启内存缓存。网页的图片等都会在内存缓存里。关闭后，内存使用会降低一些，但容易引起一些问题，如果不懂怎么用，最好别开
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [133] void wkeSetTouchEnabled(wkeWebView webView, bool b)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    开启触屏模式。开启后，鼠标消息将自动转换成触屏消息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [134] void wkeSetMouseEnabled(wkeWebView webView, bool b)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    开启关闭鼠标消息，可以在开启触屏后，关闭鼠标消息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [135] void wkeSetNavigationToNewWindowEnable(wkeWebView webView, bool
+                                    b)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    关闭后，点a标签将不会弹出新窗口，而是在本窗口跳转
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [136] void wkeSetCspCheckEnable(wkeWebView webView, bool b)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    关闭后，跨域检查将被禁止，此时可以做任何跨域操作，如跨域ajax，跨域设置iframe
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [137] void wkeSetNpapiPluginsEnabled(wkeWebView webView, bool b)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    开启关闭npapi插件，如flash
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [138] void wkeSetHeadlessEnabled(wkeWebView webView, bool b)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    开启无头模式。开启后，将不会渲染页面，提升了网页性能。此功能方便用来实现一些爬虫，或者刷单工具
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [139] void wkeSetDebugConfig(wkeWebView webView, const char* debugString,
+                                    const char* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    开启一些实验性选项。
+                                </p>
+                                <div data-v-4fb65e44="" class="table params">
+                                    <div data-v-4fb65e44="" class="table-row table-header">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            参数名
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            说明
+                                        </div>
+                                    </div>
+                                    <div data-v-4fb65e44="" class="table-row">
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            debugString
+                                        </div>
+                                        <div data-v-4fb65e44="" class="table-col">
+                                            "showDevTools"开启开发者工具，此时param要填写开发者工具的资源路径，如file:///c:/miniblink-release/front_end/inspector.html。注意param此时必须是utf8编码。"wakeMinInterval"设置帧率，默认值是10，值越大帧率越低。"drawMinInterval"设置帧率，默认值是3，值越大帧率越低。"antiAlias"设置抗锯齿渲染。param必须设置为1。"minimumFontSize"最小字体。"minimumLogicalFontSize"最小逻辑字体。"defaultFontSize"默认字体。"defaultFixedFontSize"默认fixed字体。
+                                        </div>
+                                    </div>
+                                </div>
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [140] void wkeSetHandle(wkeWebView webView, HWND wnd)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置wkeWebView对应的窗口句柄。
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    只有在无窗口模式下才能使用。如果是用wkeCreateWebWindow创建的webview，已经自带窗口句柄了。
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [141] void wkeSetHandleOffset(wkeWebView webView, int x, int y)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置无窗口模式下的绘制偏移。在某些情况下（主要是离屏模式），绘制的地方不在真窗口的(0, 0)处，就需要手动调用此接口
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [142] void wkeSetViewSettings(wkeWebView webView, const wkeViewSettings*
+                                    settings)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置一些webview相关的设置.目前只有背景颜色可以设置
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [143] void wkeSetTransparent(wkeWebView webView, bool transparent)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    通知无窗口模式下，webview开启透明模式。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [144] bool wkeIsTransparent(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    判断窗口是否是分层窗口（layer window）
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [145] void wkeSetUserAgent(wkeWebView webView, const utf8* userAgent)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置webview的UA
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [146] void wkeSetUserAgentW(wkeWebView webView, const wchar_t* userAgent)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [147] const utf8* wkeGetUserAgent(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取webview的UA
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [148] void wkeLoadURL(wkeWebView webView, const utf8* url)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    加载url。url必须是网络路径，如http://qq.com/
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [149] void wkeLoadW(wkeWebView webView, const wchar_t* url)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [150] void wkeLoadHTML(wkeWebView webView, const utf8* html)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    加载一段html
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    如果html里有相对路径，则是相对exe所在目录的路径
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [151] void wkeLoadHtmlWithBaseUrl(wkeWebView webView, const utf8* html,
+                                    const utf8* baseUrl)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    加载一段html，但可以指定baseURL，也就是相对于哪个目录的url
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [152] void wkeLoadFile(wkeWebView webView, const utf8* filename)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [153] const utf8* wkeGetURL(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取webview主frame的url
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [154] void wkeNetSetHTTPHeaderField(void* jobPtr, wchar_t* key, wchar_t*
+                                    value, bool response)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    在wkeOnLoadUrlBegin回调里调用，表示设置http请求（或者file:///协议）的 http header field。response一直要被设置成false
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [155] void wkeNetSetMIMEType(void* jobPtr, char* type)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    在wkeOnLoadUrlBegin回调里调用，表示设置http请求的MIME type
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [156] const char* wkeNetGetMIMEType(void* jobPtr, wkeString mime)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [157] void wkeNetSetData(void* jobPtr, void* buf, int len)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    在wkeOnLoadUrlEnd里被调用，表示设置hook后缓存的数据
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [158] void wkeNetCancelRequest(void* jobPtr)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    在wkeOnLoadUrlBegin回调里调用，设置后，此请求将被取消。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [159] int wkeNetGetFavicon(wkeWebView webView, wkeOnNetGetFavicon callback,
+                                    void* param)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取favicon。
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    此接口必须在wkeOnLoadingFinish回调里调用。
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [160] BOOL wkeNetHoldJobToAsynCommit(void* jobPtr)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    高级用法。在wkeOnLoadUrlBegin回调里调用。 有时候，wkeOnLoadUrlBegin里拦截到一个请求后，不能马上判断出结果。此时可以调用本接口，然后在
+                                    异步的某个时刻，调用wkeNetContinueJob来让此请求继续进行
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    TRUE代表成功，FALSE代表调用失败，不能再调用wkeNetContinueJob了
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [161] wkeRequestType wkeNetGetRequestMethod(void *jobPtr)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取此请求的method，如post还是get
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [162] wkePostBodyElements* wkeNetGetPostBody(void *jobPtr)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取此请求中的post数据。只有当请求是post时才有效果
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [163] wkePostBodyElements* wkeNetCreatePostBodyElements(wkeWebView webView,
+                                    size_t length)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [164] void wkeNetFreePostBodyElements(wkePostBodyElements* elements)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [165] void wkeNetFreePostBodyElements(wkePostBodyElements* elements)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [166] wkePostBodyElement* wkeNetCreatePostBodyElement(wkeWebView webView)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [167] void wkeNetFreePostBodyElement(wkePostBodyElement* element)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    这四个接口要结合起来使用。 当wkeOnLoadUrlBegin里判断是post时，可以通过wkeNetCreatePostBodyElements来创建一个新的post数据包。
+                                    然后wkeNetFreePostBodyElements来释放原post数据。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [168] int jsArgCount(jsExecState es)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取es里存的参数个数。一般是在绑定的js调用c++回调里使用，判断js传递了多少参数给c++
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [169] jsType jsArgType(jsExecState es, int argIdx)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    判断第argIdx个参数的参数类型。argIdx从是个0开始计数的值。如果超出jsArgCount返回的值，将发生崩溃
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [170] jsValue jsArg(jsExecState es, int argIdx)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取第argIdx对应的参数的jsValue值。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [171] jsType jsTypeOf(jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取v对应的类型。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [172] bool jsIsNumber(jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    判断v是否为数字
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [173] bool jsIsString(jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [174] bool jsIsBoolean(jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [175] bool jsIsObject(jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [176] 当v不是数字、字符串、undefined、null、函数的时候，此接口返回true
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [177] bool jsIsTrue(jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    如果v本身是个布尔值，返回对应的true或者false；如果是个对象（JSTYPE_OBJECT），返回false（这里注意）
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [178] bool jsIsFalse(jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    等价于!jsIsTrue(v)
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [179] int jsToInt(jsExecState es, jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    如果v是个整形或者浮点，返回相应值（如果是浮点，返回取整后的值）。如果是其他类型，返回0（这里注意）
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [180] double jsToDouble(jsExecState es, jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    如果v是个浮点形，返回相应值。如果是其他类型，返回0.0（这里注意）
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [181] const wchar_t* jsToTempStringW(jsExecState es, jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    如果v是个字符串，返回相应值。如果是其他类型，返回L""（这里注意） 另外，返回的字符串不需要外部释放。mb会在下一帧自动释放
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [182] const utf8* jsToTempString(jsExecState es, jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    同上
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [183] const utf8* jsToString(jsExecState es, jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    同上，只是返回的是utf8编码
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [184] const wchar_t* jsToStringW(jsExecState es, jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    暂无接口描述信息
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [185] jsValue jsInt(int n)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    创建建一个int型的jsValue，注意是创建
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [186] jsValue jsString(jsExecState es, const utf8* str)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    构建一个utf8编码的字符串的的jsValue。str会在内部拷贝保存，注意是创建
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [187] jsValue jsArrayBuffer(jsExecState es, char * buffer, size_t size)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    构建一个js的arraybuffer类型的jaValue。主要用来处理一些二进制数据，注意是创建
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [188] wkeMemBuf* jsGetArrayBuffer(jsExecState es, jsValue value)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取一个js的arraybuffer类型的数据。主要用来处理一些二进制数据
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [189] jsValue jsEmptyObject(jsExecState es)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    构建一个临时js object的jsValue，注意是创建
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [190] jsValue jsEvalW(jsExecState es, const wchar_t* str)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    执行一段js，并返回值。
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    str的代码会在mb内部自动被包裹在一个function(){}中。所以使用的变量会被隔离 注意：要获取返回值，请写return。这和wke不太一样。wke不需要写retrun
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [191] jsValue jsEvalExW(jsExecState es, const wchar_t* str, bool isInClosure)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    和上述接口的区别是，isInClosure表示是否要包裹一层function(){}。jsEvalW相当于jsEvalExW(es, str,
+                                    false)
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    如果需要返回值，在isInClosure为true时，需要写return，为false则不用
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [192] jsValue jsCall(jsExecState es, jsValue func, jsValue thisValue,
+                                    jsValue* args, int argCount)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    调用一个func对应的js函数。如果此js函数是成员函数，则需要填thisValue。 否则可以传jsUndefined。args是个数组，个数由argCount控制。
+                                    func可以是从js里取的，也可以是自行构造的。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [193] jsValue jsCallGlobal(jsExecState es, jsValue func, jsValue* args,
+                                    int argCount)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    调用window上的全局函数
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [194] jsValue jsGet(jsExecState es, jsValue object, const char* prop)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    如果object是个js的object，则获取prop指定的属性。如果object不是js object类型，则返回jsUndefined
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [195] void jsSet(jsExecState es, jsValue object, const char* prop, jsValue
+                                    value)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置object的属性
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [196] jsValue jsGetGlobal(jsExecState es, const char* prop)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取window上的属性
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [197] void jsSetGlobal(jsExecState es, const char* prop, jsValue v)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置window上的属性
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [198] jsValue jsGetAt(jsExecState es, jsValue object, int index)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置js arrary的第index个成员的值，object必须是js array才有用，否则会返回jsUndefined
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [199] void jsSetAt(jsExecState es, jsValue object, int index, jsValue
+                                    value)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置js arrary的第index个成员的值，object必须是js array才有用。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [200] jsKeys* jsGetKeys(jsExecState es, jsValue object)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取object有哪些key
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [201] int jsGetLength(jsExecState es, jsValue object)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取js arrary的长度，object必须是js array才有用。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [202] void jsSetLength(jsExecState es, jsValue object, int length)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    设置js arrary的长度，object必须是js array才有用。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [203] wkeWebView jsGetWebView(jsExecState es)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取es对应的webview
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [204] void jsGC()
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    强制垃圾回收
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [205] void fastcall jsBindFunction(const char* name, jsNativeFunction
+                                    fn, unsigned int argCount)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    绑定一个全局函数到主frame的window上。
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    此接口只能绑定主frame，并且特别需要注意的是，因为历史原因，此接口是fastcall调用约定！（但wkeJsBindFunction不是）另外此接口和wkeJsBindFunction必须在webview创建前调用
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [206] void jsBindGetter(const char* name, jsNativeFunction fn)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    对js winows绑定一个属性访问器，在js里windows.XXX这种形式调用时，fn会被调用
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    jsBindGetter("XXX")
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [207] void jsBindSetter(const char* name, jsNativeFunction fn)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    对js winows绑定一个属性设置器。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [208] void wkeJsBindFunction(const char* name, wkeJsNativeFunction fn,
+                                    void* param, unsigned int argCount)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    和jsBindFunction功能类似，但更方便一点，可以传一个param做自定义数据。
+                                </p>
+                                <!---->
+                                <blockquote data-v-4fb65e44="" class="api-tips">
+                                    此接口和wkeJsBindFunction必须在webview创建前调用
+                                </blockquote>
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [209] jsValue jsObject(jsExecState es, jsData* data)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    构建一个js Objcet，可以传递给js使用。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [210] jsValue jsFunction(jsExecState es, jsData* data)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    创建一个主frame的全局函数。jsData的用法如上。js调用：XXX() 此时jsData的callAsFunction触发。 其实jsFunction和jsObject功能基本类似。且jsObject的功能更强大一些
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [211] jsData* jsGetData(jsExecState es, jsValue value)
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    获取jsObject或jsFunction创建的jsValue对应的jsData指针。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
+                                    [212] jsExceptionInfo* jsGetLastErrorIfException(jsExecState es);
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    当wkeRunJs、jsCall等接口调用时，如果执行的js代码有异常，此接口将获取到异常信息。否则返回nullptr。
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<div class="footer">
+    <div class="container">
+        <p>Copyright 2019 weolar@qq.com , 粤ICP备18103739号</p>
+    </div>
+</div>
+</body>
+</html>

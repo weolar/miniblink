@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="miniblink,浏览器开发,Web开发,界面开发,控件开发,Qt控件,工业控件,金融控件,ERP,BS,CS,图表开发,嵌入式开发,界面设计,控件设计,图标设计,Delphi界面开发,WinForm界面开发">
+    <meta name="description" content="miniblink是一款极致小巧的开源浏览器控件，可嵌入各种软件中，提供浏览服务">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>Miniblink - 小巧开源的浏览器控件</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <div class="container">
+        <div class="header-logo">
+            <h1>Miniblink</h1>
+        </div>
+        <div class="header-nav">
+            <div class="header-nav-item">
+                <a href="../../index.html">首页</a>
+            </div>
+            <div class="header-nav-item header-nav-active">
+                <a href="./index.html">文档</a>
+            </div>
+            <div class="header-nav-item">
+                <a href="../features.html">功能定制</a>
+            </div>
+            <div class="header-nav-item">
+                <a href="https://github.com/weolar/miniblink49/releases" target="_bank">下载</a>
+            </div>
+            <div class="header-nav-item">
+                <a href="http://bbs.miniblink.net/" target="_bank">论坛</a>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="header-right-item">
+                <a href="https://github.com/weolar/miniblink49/releases" target="_bank">
+                    <img src="../../images/icon/github.png">
+                    <span>Github</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- doc -->
+<div class="main" id="doc-page">
+    <div class="container">
+        <div class="side-bar">
+            <div class="side-bar-wrap">
+                <div class="side-bar-item"><a href="./index.html">前言</a></div>
+                <div class="side-bar-item"><a href="./isMiniblink.html">Miniblink是什么</a></div>
+                <div class="side-bar-item"><a href="./api.html">API</a></div>
+                <div class="side-bar-item side-bar-item-active"><a href="./info.html">mini-electron介绍</a></div>
+                <div class="side-bar-item"><a href="./other.html">其他语言绑定及例程</a></div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="body-wrap">
+                <!-- mini-electron介绍 -->
+                <div class="doc-item" v-if="active == 4">
+                    <div class="doc-item-title">mini-electron模式</div>
+                    <div class="doc-item-content">
+                        <h3>mini-electron模式</h3>
+                        <p>目前miniblink已支持mini-eletcron模式。electron是目前最流行的跨平台PC开发框架，相当于把nodejs和chromium结合起来，可以同时使用两者的功能。（如果不想看废话，需要了解怎么使用的人，可以拉到文末）</p>
+                        <p>nodejs使用了v8，而miniblink因为本身就是chromium的blink+v8，所以某天我大胆的猜测，只要加上nodejs的功能，再补上electron为了撮合这几个部件的代码，就可以实现超级精简的electron了。</p>
+                        <p>事实证明这样完全没问题，mini-eletcron目前已实现原版electron大约90%的接口。绝大部分electron app已能跑起。</p>
+                        <p>mini-eletcron的实现方式很简单，由两部分组成：</p>
+                        <p>1，mini-eletcron.exe；</p>
+                        <p>2，nodejs.dll；</p>
+                        <p>先看mini-electron.exe部分。这是个只有几百K的小exe（原版的electron.exe有大约5-60m）。其目的是调用nodejs.dll导出的接口，以模拟electron的功能。由于原版electron是开源的，所以我直接挪用了很多代码。当然，需要做大量改动。原因有二：一是因为原版代码大量依赖chromium的base、net等基础库，所以不得不对这些代码进行重写；</p>
+                        <p>二是将原版使用了chromium的web相关功能，通过调用nodejs.dll提供的接口来实现。</p>
+                        <p>其中web相关功能，我巧妙的通过miniblink导出的C接口来实现，而其nodejs相关，我是直接将nodejs的代码完整的编译进了nodejs.dll。</p>
+                        <p>所以，这里说到的第二个nodejs.dll部分，其实已经不是网上原版的nodejs.dll了，而是我将miniblink的代码和nodej.dll的代码简单的编译在一个dll中所产生的文件。其中v8部分是共用的。所以仅仅在miniblink的基础上，增加了几M而已。</p>
+                        <p>所以，这也解释了为什么每次发出来的编译好的miniblink的包，主dll都叫node.dll。因为需要伪装成nodejs。</p>
+                        <p>但mini-electron和原版并不是完全一样。有个最大的不同在于，原版因为chromium的限制，必须使用多进程架构。了解electron使用方式的人都知道，electron分成主进程和渲染进程。其中主进程跑了一个nodejs上下文环境，而每个渲染进程又跑了一个nodejs环境。 主进程同时也是chromium的主进程。主进程的nodejs环境用来调用chromium的content api来实现操纵chromium的web能力。</p>
+                        <p>而mini-electron不同， 因为miniblink的架构本身就是单进程，所以为了简单起见，我使用单进程多线程来模拟electron多进程。其中，主线程一个nodejs环境，渲染线程跑一个miniblink的webview。注意，这里只有一个渲染线程，不管有多少个webview。这是blink的架构限制的。同时主线程通过异步的调用miniblink的webview接口（又称为wke接口）来实现操纵web能力。</p>
+                        <p>这也就造成了一个技术上的限制：mini-electron不能实现同时加载多个同样的原生dll（在nodejs里，这部分是以".node"结尾的文件）。</p>
+                        <p>这是windows的dll加载机制限制。所以对于那些同时在主进程和渲染进程都加载了原生dll的应用，mini-electron会报错。例如vscode就在主进程和渲染进程里都加载了keymap.node。</p>
+                        <p>但这个限制是可以通过简单的改造js来绕过的。electron实现了remote功能，可以通过remote.require来指挥主进程去加载dll，并远程使用dll的接口。我就稍微改了下keymap的js，便完美的跑起了vscode。事实上，应该不会有人真的需要两个进程同时使用一个dll。绝大部分情况可以通过remote来规避。</p>
+                        
+                        <h3>mini-electron有哪些优势</h3>
+                        <p>先看electron有哪些劣势：</p>
+                        <p>1，安装包的大小难以优化，除非你搞明白vscode团队是如何做到的。</p>
+                        <p>2，Electron因为需要一份chromium库的拷贝，因此再小的app，内存开销都不少。</p>
+                        <p>3，多个Electron运行，是不能共享主进程资源的，也无法做关联性的优化，浏览器是有一套IPC进程做所有调度的。能有开销上的优化。</p>
+                        <p>所以，electron的劣势正好就是mini-electron的优势。</p>
+                        <p>此外，刚看到PWA也打算进军桌面市场。据我对PWA的了解，它在和mini-electron在上面几个点上并没任何优势，所以，你懂的……</p>
+                        
+                        <h3>mini-electron有哪些劣势</h3>
+                        <p>1，目前还有几个模块没支持上，主要是session那块。</p>
+                        <p>2，单进程架构限制了无法多次加载同个dll。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<div class="footer">
+    <div class="container">
+        <p>Copyright 2019 weolar@qq.com , 粤ICP备18103739号</p>
+    </div>
+</div>
+</body>
+</html>

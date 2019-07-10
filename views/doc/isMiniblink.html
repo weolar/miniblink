@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="miniblink,浏览器开发,Web开发,界面开发,控件开发,Qt控件,工业控件,金融控件,ERP,BS,CS,图表开发,嵌入式开发,界面设计,控件设计,图标设计,Delphi界面开发,WinForm界面开发">
+    <meta name="description" content="miniblink是一款极致小巧的开源浏览器控件，可嵌入各种软件中，提供浏览服务">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>Miniblink - 小巧开源的浏览器控件</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <div class="container">
+        <div class="header-logo">
+            <h1>Miniblink</h1>
+        </div>
+        <div class="header-nav">
+            <div class="header-nav-item">
+                <a href="../../index.html">首页</a>
+            </div>
+            <div class="header-nav-item header-nav-active">
+                <a href="./index.html">文档</a>
+            </div>
+            <div class="header-nav-item">
+                <a href="../features.html">功能定制</a>
+            </div>
+            <div class="header-nav-item">
+                <a href="https://github.com/weolar/miniblink49/releases" target="_bank">下载</a>
+            </div>
+            <div class="header-nav-item">
+                <a href="http://bbs.miniblink.net/" target="_bank">论坛</a>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="header-right-item">
+                <a href="https://github.com/weolar/miniblink49/releases" target="_bank">
+                    <img src="../../images/icon/github.png">
+                    <span>Github</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- doc -->
+<div class="main" id="doc-page">
+    <div class="container">
+        <div class="side-bar">
+            <div class="side-bar-wrap">
+                <div class="side-bar-item"><a href="./index.html">前言</a></div>
+                <div class="side-bar-item side-bar-item-active"><a href="./isMiniblink.html">Miniblink是什么</a></div>
+                <div class="side-bar-item"><a href="./api.html">API</a></div>
+                <div class="side-bar-item"><a href="./info.html">mini-electron介绍</a></div>
+                <div class="side-bar-item"><a href="./other.html">其他语言绑定及例程</a></div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="body-wrap">
+                <!-- miniblink是什么 -->
+                <div class="doc-item" v-if="active == 2">
+                    <div class="doc-item-title">Miniblink是什么</div>
+                    <div class="doc-item-content">
+                        <h3>miniblink是什么？</h3>
+                        <p>Miniblink是一个追求极致小巧的浏览器内核项目，全世界第三大流行的浏览器内核控件。
+                        <p>其基于chromium最新版内核，去除了chromium所有多余的部件，只保留最基本的排版引擎blink。</p>
+                        <p>Miniblink保持了10M左右的极简大小，是所有同类产品最小的体积，同时支持windows xp、npapi。</p>
+                    
+                        <h3>为什么要做miniblink？</h3>
+                        <p>市面上作为嵌入的组件的可用的浏览器内核，不外乎这几个：webkit、cef、nwjs、electron。</p>
+                        <p>cef：优点是由于集成的chromium内核，所以对H5支持的很全，同时因为使用的人也多，各种教程、示例，资源很多。但缺点很明显，太大了。最新的cef已经夸张到了100多M，还要带一堆的文件。同时新的cef已经不支持xp了（chromium对应版本是M49）。而且由于是多进程架构，对资源的消耗也很夸张。如果只是想做个小软件，一坨文件需要带上、超大的安装包，显然不能忍受。</p>
+                        <p>nwjs，或者最近大火的electron：和cef内核类似，都是chromium内核。缺点和cef一模一样。优点是由于可以使用nodejs的资源，同时又自带了各种api的绑定，所以可以用的周边资源非常丰富；而基于js的开发方案，使得前端很容易上手。所以最近N多项目都是基于nwjs或electron来实现。例如vscode，atom等等。</p>
+                        <p>原版webkit：现在官网还在更新windows port，但显然漫不在心，而且最新的webkit也很大了，超过20几M。最关键的是，周边资源很少，几乎没人再基于webkit来做开发。同时由于windows版的saferi已经停止开发了，所以用webkit就用不了他的dev tools了。这是个大遗憾。</p>
+                        <p>WKE：这是个很老的webkit内核的裁剪版了。小是小，但bug太多了。</p>
+                    
+                        <h3>那么关键点来了，使用miniblink有啥好处呢？？</h3>
+                        <p>首先，miniblink对大小要求非常严格。原版chromium、blink里对排版渲染没啥大用的如音视频全都被砍了，只专注于网页的排版和渲染。甚至为了裁剪大小，我不惜使用vc6的crt来跑mininblink(见我上篇文章)。这个也算前无古人后无来者了。</p>
+                        <p>其次，miniblink紧跟最新chromium，这意味着chromium相关的资源都可以利用。在未来的规划里，我是打算把electron的接口也加上的，这样可以无缝替换electron。使用miniblink的话，开发调试时用原版electron，发布的时候再替换掉那些dll，直接可以无缝切换，非常方便。</p>
+                        
+                        <h3>miniblink如何使用？</h3>
+                        <p>Miniblink导出了electron、WKE的接口，可以直接无缝替换现有的electron、WKE项目。</p>
+                        <p>早期miniblink还导出了CEF接口，不过现在已被废弃。</p>
+                        <p>miniblink有个小demo，从demo里可以看到，brackct这个基于cef的开源编辑器，已经顺利由miniblink跑起来了。现在electron的接口已做好，vscode跑起来了。</p>
+                        <p>更详细的使用文档见本页其他文章。</p>
+                        
+                        <h3>miniblink如何裁剪到这么小？</h3>
+                        <p>这个比较复杂了。主要就是把blink从chromium抽离了出来，同时补上了cc层（硬件渲染层）。现在的blink，已经不是当年的那个webkit了，渲染部分全走cc层，复杂无比。我这大半年都在重写他那个蛋疼又复杂的cc层。</p>
+                        
+                        <h3>和webkit比，miniblink架构有什么优势</h3>
+                        <p>现在的webkit版本，已经比miniblink落后太多了。blink一直在加入各种极富创造力和想象力的功能、组件。例如，blink早就加入多线程解析html token、blink gc回收器、多线程录制回放渲染机制。这些能让blink的解析渲染速度极大提升。下一次，我会先开源出blink gc组件，这东西很有意思，在c++里硬是搞出了一个垃圾回收机制，能让你像写java一样写c++。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<div class="footer">
+    <div class="container">
+        <p>Copyright 2019 weolar@qq.com , 粤ICP备18103739号</p>
+    </div>
+</div>
+</body>
+</html>
