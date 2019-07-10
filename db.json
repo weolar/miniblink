@@ -1,0 +1,1842 @@
+{
+    "name": "Miniblink",
+    "description": "小巧开源的浏览器控件，全球最小的基于chromium的浏览器控件，没有之一",
+    "desc_list": [
+        "极致小巧的体积",
+        "内嵌Nodejs，支持electron",
+        "支持Windows XP、npapi",
+        "C++、C#、Delphi等语言调用",
+        "随心所欲的定制功能、模拟环境",
+        "完美支持各种H5效果"
+    ],
+    "github": "https://github.com/weolar/miniblink49/",
+    "download": "https://github.com/weolar/miniblink49/releases",
+    "nav": [
+        {
+            "id": 1,
+            "name": "首页",
+            "url": "/"
+        },
+        {
+            "id": 2,
+            "name": "文档",
+            "url": "/doc"
+        },
+        {
+            "id": 3,
+            "name": "功能定制",
+            "url": "/features"
+        },
+        {
+            "id": 4,
+            "name": "下载",
+            "url": "https://github.com/weolar/miniblink49/releases"
+        },
+        {
+            "id": 5,
+            "name": "论坛",
+            "url": "http://bbs.miniblink.net/"
+        }
+    ],
+    "r": [
+        {
+            "title": "为什么选择Miniblink",
+            "list": [
+                {
+                    "title": "简洁的API，完善的文档",
+                    "text": "易于使用的纯C API，轻松绑定到其他语言"
+                },
+                {
+                    "title": "强大的技术团队",
+                    "text": "来自金山，猎豹等公司，及微信X5内核引擎组核心开发"
+                },
+                {
+                    "title": "开发者的选择",
+                    "text": "数百款商业级软件嵌入miniblink，稳定运行"
+                },
+                {
+                    "title": "完善的技术支持，开放的技术氛围",
+                    "text": "核心源码完全开放，全天候提供技术支持"
+                }
+            ]
+        },
+        {
+            "title": "Miniblink能用来做什么",
+            "list": [
+                {
+                    "title": "桌面 Apps UI",
+                    "text": "使用web技术栈构建桌面Apps UI，开发效率更高，维护更简单"
+                },
+                {
+                    "title": "网络爬虫",
+                    "text": "内置无头模式，实现爬虫更省内存，速度更快"
+                },
+                {
+                    "title": "web版功能本地化",
+                    "text": "通过嵌入miniblink，实现打包web功能至本地应用。可实现财务报表、OA企业办公自动化系统"
+                },
+                {
+                    "title": "自动化测试、打印、保存至pdf",
+                    "text": "即将支持打印、保存至pdf等功能"
+                }
+            ]
+        }
+    ],
+    "features": [
+        {
+            "title": "小巧、容易集成",
+            "desc": "Miniblink压缩后仅几M左右的体积，只需一个dll，通过纯C接口，数行代码即可集成到各种软件",
+            "img": "/images/features/1.png",
+            "list": [
+                "小巧，压缩后仅几M大小。",
+                "接口纯C，单线程，交互简单。",
+                "C++，C#，Delphi等调用方便"
+            ]
+        },
+        {
+            "title": "无比强大的功能、随心所欲的定制",
+            "desc": "完善的HTML5支持，对各种前端库友好",
+            "img": "/images/features/2.png",
+            "list": [
+                "关闭跨域开关后，可以使用各种跨域功能",
+                "网络资源拦截，替换任意网站任意js为本地文件",
+                "可无缝模拟移动环境",
+                "整合融入nodejs，可以无缝使用nodejs各种开源框架",
+                "新增headless模式，可以极大节省资源，用于爬虫"
+            ]
+        },
+        {
+            "title": "支持electron模式",
+            "desc": "可无缝替换原版electron",
+            "img": "/images/features/3.png",
+            "list": [
+                "仅需3个文件，即可替代原版electron",
+                "体积仅为原版electron的二十分之一",
+                "无缝替换原版，不需要改动js代码",
+                "支持windows xp"
+            ]
+        }
+    ],
+    "api": [
+        {
+            "id": 1,
+            "title": "unsigned int wkeVersion();",
+            "desc": "获取目前api版本号",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 2,
+            "title": "const utf8* wkeVersionString();",
+            "desc": "获取版本字符串",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 3,
+            "title": "void wkeSetWkeDllPath(const wchar_t* dllPath)",
+            "desc": "设置miniblink的全路径+文件名",
+            "params": {
+                "dllPath": "dll的全路径，注意是全路径"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 4,
+            "title": "void wkeGC(wkeWebView webView, long delayMs);",
+            "desc": "延迟让miniblink垃圾回收",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 5,
+            "title": "void wkeSetFileSystem(WKE_FILE_OPEN pfnOpen, WKE_FILE_CLOSE pfnClose, WKE_FILE_SIZE pfnSize, WKE_FILE_READ pfnRead, WKE_FILE_SEEK pfnSeek)",
+            "desc": "wke遗留的接口，设置文件相关的hook函数。可以作为拦截对文件的操作。现在已被更先进的函数取代",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 6,
+            "title": "bool wkeIsLoaded(wkeWebView webView);",
+            "desc": "获取webView是否处于加载状态，还是加载完成。",
+            "params": {},
+            "tips": "",
+            "del": true
+        },
+        {
+            "id": 7,
+            "title": "bool wkeIsLoadingSucceeded(wkeWebView webView)",
+            "desc": "判断webview是否加载成功",
+            "params": {},
+            "tips": "",
+            "del": true
+        },
+        {
+            "id": 8,
+            "title": "bool wkeIsLoadFailed(wkeWebView webView)",
+            "desc": "判断webview是否加载失败",
+            "params": {},
+            "tips": "",
+            "del": true
+        },
+        {
+            "id": 9,
+            "title": "bool wkeIsLoadComplete(wkeWebView webView)",
+            "desc": "判断webview是否加载完成",
+            "params": {},
+            "tips": "wkeIsLoadComdivlete等效于wkeIsLoadFailed、wkeIsLoadingSucceeded其中任何一个返回true",
+            "del": true
+        },
+        {
+            "id": 10,
+            "title": "bool wkeIsDocumentReady(wkeWebView webView)",
+            "desc": "DOM文档结构是否加载完成。和上述几个接口不同，上述几个接口是网络相关的判断。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 11,
+            "title": "void wkeStopLoading(wkeWebView webView)",
+            "desc": "停止加载页面",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 12,
+            "title": "bool wkeReload(wkeWebView webView)",
+            "desc": "重新加载页面",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 13,
+            "title": "const utf8* wkeGetTitle(wkeWebView webView)",
+            "desc": "获取页面标题",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 14,
+            "title": "const wchar_t* wkeGetTitleW(wkeWebView webView)",
+            "desc": "获取页面标题的宽字节版本",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 15,
+            "title": "void wkeResize(wkeWebView webView, int w, int h)",
+            "desc": "重新设置页面的宽高。如果webView是带窗口模式的，会设置真窗口的宽高。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 16,
+            "title": "int wkeGetWidth(wkeWebView webView)",
+            "desc": "获取页面宽度",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 17,
+            "title": "int wkeGetHeight(wkeWebView webView)",
+            "desc": "获取页面高度",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 18,
+            "title": "int wkeGetContentWidth(wkeWebView webView)",
+            "desc": "获取网页排版出来的宽度",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 19,
+            "title": "int wkeGetContentHeight(wkeWebView webView)",
+            "desc": "获取网页排版出来的高度",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 20,
+            "title": "void wkeSetDirty(wkeWebView webView, bool dirty)",
+            "desc": "设置页面为脏状态，在下一帧将强制重绘页面",
+            "params": {},
+            "tips": "",
+            "del": true
+        },
+        {
+            "id": 21,
+            "title": "bool wkeIsDirty(wkeWebView webView)",
+            "desc": "获取页面脏状态",
+            "params": {},
+            "tips": "",
+            "del": true
+        },
+        {
+            "id": 22,
+            "title": "void wkeAddDirtyArea(wkeWebView webView, int x, int y, int w, int h)",
+            "desc": "添加页面脏矩形",
+            "params": {},
+            "tips": "",
+            "del": true
+        },
+        {
+            "id": 23,
+            "title": "void wkeLayoutIfNeeded(wkeWebView webView)",
+            "desc": "强制让页面重新排版",
+            "params": {},
+            "tips": "",
+            "del": true
+        },
+        {
+            "id": 24,
+            "title": "void wkePaint2(wkeWebView webView, void* bits, int bufWid, int bufHei, int xDst, int yDst, int w, int h, int xSrc, int ySrc, bool bCopyAlpha)",
+            "desc": "",
+            "params": {
+                "bits": "外部申请并传递给mb的buffer，大小是bufWid * bufHei * 4 字节",
+                "bufWid": "bits的宽",
+                "bufHei": "bits的高",
+                "xDst": "绘制到bits的哪个坐标",
+                "yDst": "绘制到bits的哪个坐标",
+                "w": "mb需要取的画面的起始坐标",
+                "h": "mb需要取的画面的起始坐标",
+                "xSrc": "mb需要取的画面的起始坐标",
+                "ySrc": "mb需要取的画面的起始坐标",
+                "bCopyAlpha": "是否拷贝画面的透明度值"
+            },
+            "tips": "此函数一般给3d游戏使用。另外频繁使用此接口并拷贝像素有性能问题。最好用wkeGetViewDC再去拷贝dc。",
+            "del": false
+        },
+        {
+            "id": 25,
+            "title": "void wkePaint(wkeWebView webView, void* bits, int pitch)",
+            "desc": "获取页面的像素的简化版函数。",
+            "params": {
+                "bits": "外部申请并传递给mb的buffer，大小是webview宽度 * 高度 * 4 字节。",
+                "pitch": "填0即可。这个参数玩过directX的人应该懂"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 26,
+            "title": "void wkeRepaintIfNeeded(wkeWebView webView)",
+            "desc": "强制重绘页面",
+            "params": {},
+            "tips": "",
+            "del": true
+        },
+        {
+            "id": 27,
+            "title": "HDC wkeGetViewDC(wkeWebView webView)",
+            "desc": "获取webview的DC",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 28,
+            "title": "HWND wkeGetHostHWND(wkeWebView webView)",
+            "desc": "获取webveiw对应的窗口句柄。实现和wkeGetWindowHandle完全相同",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 29,
+            "title": "bool wkeCanGoBack(wkeWebView webView)",
+            "desc": "页面是否可以后退",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 30,
+            "title": "bool wkeGoBack(wkeWebView webView)",
+            "desc": "强制让页面后退",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 31,
+            "title": "bool wkeCanGoForward(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 32,
+            "title": "bool wkeGoForward(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 33,
+            "title": "void wkeEditorSelectAll(wkeWebView webView)",
+            "desc": "给webview发送全选命令",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 34,
+            "title": "void wkeEditorUnSelect(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 35,
+            "title": "void wkeEditorCopy(wkeWebView webView)",
+            "desc": "拷贝页面里被选中的字符串",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 36,
+            "title": "void wkeEditorCut(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 37,
+            "title": "void wkeEditorDelete(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 38,
+            "title": "void wkeEditorUndo(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 39,
+            "title": "void wkeEditorRedo(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 40,
+            "title": "const wchar_t * wkeGetCookieW(wkeWebView webView)",
+            "desc": "获取页面的cookie",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 41,
+            "title": "const utf8* wkeGetCookie(wkeWebView webView)",
+            "desc": "获取页面的cookie",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 42,
+            "title": "void wkeSetCookie(wkeWebView webView, const utf8* url, const utf8* cookie)",
+            "desc": "设置页面cookie。",
+            "params": {},
+            "tips": "cookie必须符合curl的cookie写法。一个例子是：PERSONALIZE=123;expires=Monday, 13-Jun-2022 03:04:55 GMT; domain=.fidelity.com; path=/; secure",
+            "del": false
+        },
+        {
+            "id": 43,
+            "title": "void wkeVisitAllCookie(void* params, wkeCookieVisitor visitor)",
+            "desc": "通过访问器visitor访问所有cookie。",
+            "params": {
+                "visitor": "访问器"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 44,
+            "title": "void wkePerformCookieCommand(wkeCookieCommand command)",
+            "desc": "通过设置mb内置的curl来操作cookie。",
+            "params": {},
+            "tips": "这个接口只是调用curl设置命令，并不会去修改js里的内容",
+            "del": false
+        },
+        {
+            "id": 45,
+            "title": "void wkeSetCookieEnabled(wkeWebView webView, bool enable)",
+            "desc": "开启或关闭cookie",
+            "params": {},
+            "tips": "这个接口只是影响blink，并不会设置curl。所以还是会生成curl的cookie文件",
+            "del": false
+        },
+        {
+            "id": 46,
+            "title": "bool wkeIsCookieEnabled(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 47,
+            "title": "void wkeSetCookieJarPath(wkeWebView webView, const WCHAR* path)",
+            "desc": "设置cookie的本地文件目录。默认是当前目录。cookies存在当前目录的“cookie.dat”里",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 48,
+            "title": "void wkeSetCookieJarFullPath(wkeWebView webView, const WCHAR* path)",
+            "desc": "设置cookie的全路径+文件名，如c:\\mb\\cookie.dat",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 49,
+            "title": "void wkeSetLocalStorageFullPath(wkeWebView webView, const WCHAR* path)",
+            "desc": "设置local storage的全路径。如“c:\\mb\\LocalStorage\\”",
+            "params": {},
+            "tips": "这个接口只能接受目录。",
+            "del": false
+        },
+        {
+            "id": 50,
+            "title": "void wkeSetMediaVolume(wkeWebView webView, float volume)",
+            "desc": "设置音量，未实现",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 51,
+            "title": "float wkeGetMediaVolume(wkeWebView webView)",
+            "desc": "获取音量，未实现",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 52,
+            "title": "bool wkeFireMouseEvent(wkeWebView webView, unsigned int message, int x, int y, unsigned int flags)",
+            "desc": "向mb发送鼠标消息",
+            "params": {
+                "message": "可取WM_MOUSELEAVE等Windows相关鼠标消息",
+                "x": "x坐标",
+                "y": "y坐标",
+                "flags": "可取值有WKE_CONTROL、WKE_SHIFT、WKE_LBUTTON、WKE_MBUTTON、WKE_RBUTTON，可通过“或”操作并联"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 53,
+            "title": "bool wkeFireContextMenuEvent(wkeWebView webView, int x, int y, unsigned int flags)",
+            "desc": "向mb发送菜单消息（未实现）",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 54,
+            "title": "bool wkeFireMouseWheelEvent(wkeWebView webView, int x, int y, int delta, unsigned int flags)",
+            "desc": "向mb发送滚轮消息，用法和参数类似wkeFireMouseEvent。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 55,
+            "title": "bool wkeFireKeyUpEvent(wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey)",
+            "desc": "向mb发送WM_KEYUP消息，",
+            "params": {
+                "virtualKeyCode": "见https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx",
+                "flags": "可取值有WKE_REPEAT、WKE_EXTENDED，可通过“或”操作并联。",
+                "systemKey": "暂时没用"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 56,
+            "title": "bool wkeFireKeyDownEvent(wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey)",
+            "desc": "",
+            "params": {
+                "charCode": "WM_CHAR消息的The character code of the key.见https://msdn.microsoft.com/en-us/library/windows/desktop/ms646276(v=vs.85).aspx"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 57,
+            "title": "bool wkeFireWindowsMessage(wkeWebView webView, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, LRESULT* result)",
+            "desc": "向mb发送任意windows消息。不过目前mb主要用来处理光标相关。mb在无窗口模式下，要响应光标事件，需要通过本函数手动发送光标消息",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 58,
+            "title": "void wkeSetFocus(wkeWebView webView)",
+            "desc": "设置webview是焦点态。如果webveiw关联了窗口，窗口也会有焦点",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 59,
+            "title": "void wkeKillFocus(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 60,
+            "title": "wkeRect wkeGetCaretRect(wkeWebView webView)",
+            "desc": "获取编辑框的那个游标的位置",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 61,
+            "title": "jsValue wkeRunJS(wkeWebView webView, const utf8* script)",
+            "desc": "运行一段js。返回js的值jsValue。jsValue是个封装了内部v8各种类型的类，如果需要获取详细信息，有jsXXX相关接口可以调用。见下述。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 62,
+            "title": "jsValue wkeRunJSW(wkeWebView webView, const wchar_t* script)",
+            "desc": "同上。注意，此函数以及wkeRunJS，执行的js，也就是script，是在一个闭包中",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 63,
+            "title": "jsExecState wkeGlobalExec(wkeWebView webView)",
+            "desc": "获取页面主frame的jsExecState。jsExecState是什么，见下述。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 64,
+            "title": "void wkeSleep(wkeWebView webView)",
+            "desc": "暂未实现",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 65,
+            "title": "void wkeWake(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 66,
+            "title": "bool wkeIsAwake(wkeWebView webView)",
+            "desc": "暂未实现",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 67,
+            "title": "void wkeSetZoomFactor(wkeWebView webView, float factor)",
+            "desc": "设置页面缩放系数，默认是1",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 68,
+            "title": "float wkeGetZoomFactor(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 69,
+            "title": "void wkeSetEditable(wkeWebView webView, bool editable)",
+            "desc": "未实现",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 70,
+            "title": "void wkeOnTitleChanged(wkeWebView webView, wkeTitleChangedCallback callback, void* callbackParam)",
+            "desc": "设置标题变化的通知回调",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 71,
+            "title": "void wkeOnMouseOverUrlChanged(wkeWebView webView, wkeTitleChangedCallback callback, void* callbackParam)",
+            "desc": "鼠标划过的元素，如果是，则调用此回调，并发送a标签的url",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 72,
+            "title": "void wkeOnURLChanged(wkeWebView webView, wkeURLChangedCallback callback, void* callbackParam)",
+            "desc": "url改变回调",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 73,
+            "title": "void wkeOnURLChanged2(wkeWebView webView, wkeURLChangedCallback2 callback, void* callbackParam)",
+            "desc": "和上个接口不同的是，回调多了个参数",
+            "params": {
+                "callback": "typedef void(*wkeURLChangedCallback2)(wkeWebView webView, void* param, wkeWebFrameHandle frameId, const wkeString url)",
+                "frameId": "表示frame的id。有相关接口可以判断这个frameId是否是主frame"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 75,
+            "title": "void wkeOnPaintUpdated(wkeWebView webView, wkePaintUpdatedCallback callback, void* callbackParam)",
+            "desc": "页面有任何需要刷新的地方，将调用此回调",
+            "params": {
+                "callback": "typedef void(*wkePaintUpdatedCallback)(wkeWebView webView, void* param, const HDC hdc, int x, int y, int cx, int cy)",
+                "x": "表示刷新的区域矩形",
+                "y": "表示刷新的区域矩形",
+                "cx": "表示刷新的区域矩形",
+                "cy": "表示刷新的区域矩形"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 77,
+            "title": "void wkeOnPaintBitUpdated(wkeWebView webView, wkePaintBitUpdatedCallback callback, void* callbackParam)",
+            "desc": "同上。不同的是回调过来的是填充好像素的buffer，而不是DC。方便嵌入到游戏中做离屏渲染",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 78,
+            "title": "void wkeOnAlertBox(wkeWebView webView, wkeAlertBoxCallback callback, void* callbackParam)",
+            "desc": "网页调用alert会走到这个接口填入的回调",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 79,
+            "title": "void wkeOnConfirmBox(wkeWebView webView, wkeConfirmBoxCallback callback, void* callbackParam)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 80,
+            "title": "void wkeOnPromptBox(wkeWebView webView, wkePromptBoxCallback callback, void* callbackParam)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 81,
+            "title": "void wkeOnNavigation(wkeWebView webView, wkeNavigationCallback callback, void* param)",
+            "desc": "网页开始浏览将触发回调",
+            "params": {
+                "callback": "typedef bool(*wkeNavigationCallback)(wkeWebView webView, void* param, wkeNavigationType navigationType, const wkeString url);",
+                "wkeNavigationType": "表示浏览触发的原因。可以取的值有：WKE_NAVIGATION_TYPE_LINKCLICK：点击a标签触发。WKE_NAVIGATION_TYPE_FORMSUBMITTE：点击form触发。WKE_NAVIGATION_TYPE_BACKFORWARD：前进后退触发。WKE_NAVIGATION_TYPE_RELOAD：重新加载触发"
+            },
+            "tips": "wkeNavigationCallback回调的返回值，如果是true，表示可以继续进行浏览，false表示阻止本次浏览。",
+            "del": false
+        },
+        {
+            "id": 83,
+            "title": "void wkeOnCreateView(wkeWebView webView, wkeCreateViewCallback callback, void* param)",
+            "desc": "网页点击a标签创建新窗口时将触发回调",
+            "params": {
+                "callback": "typedef wkeWebView(*wkeCreateViewCallback)(wkeWebView webView, void* param, wkeNavigationType navigationType, const wkeString url, const wkeWindowFeatures* windowFeatures);"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 85,
+            "title": "void wkeOnDocumentReady(wkeWebView webView, wkeDocumentReadyCallback callback, void* param)",
+            "desc": "对应js里的body onload事件",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 86,
+            "title": "void wkeOnDocumentReady2(wkeWebView webView, wkeDocumentReady2Callback callback, void* param)",
+            "desc": "同上。区别是wkeDocumentReady2Callback多了wkeWebFrameHandle frameId参数。可以判断是否是主frame",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 87,
+            "title": "void wkeOnDownload(wkeWebView webView, wkeDownloadCallback callback, void* param)",
+            "desc": "页面下载事件回调。点击某些链接，触发下载会调用",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 88,
+            "title": "void wkeNetOnResponse(wkeWebView webView, wkeNetResponseCallback callback, void* param)",
+            "desc": "一个网络请求发送后，收到服务器response触发回调",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 89,
+            "title": "void wkeOnConsole(wkeWebView webView, wkeConsoleCallback callback, void* param)",
+            "desc": "网页调用console触发",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 90,
+            "title": "void wkeSetUIThreadCallback(wkeWebView webView, wkeCallUiThread callback, void* param)",
+            "desc": "暂时未实现",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 91,
+            "title": "void wkeOnLoadUrlBegin(wkeWebView webView, wkeLoadUrlBeginCallback callback, void* callbackParam)",
+            "desc": "任何网络请求发起前会触发此回调",
+            "params": {
+                "callback": "typedef bool(*wkeLoadUrlBeginCallback)(wkeWebView webView, void* param, const char *url, void *job)"
+            },
+            "tips": "1，此回调功能强大，在回调里，如果对job设置了wkeNetHookRequest，则表示mb会缓存获取到的网络数据，并在这次网络请求 结束后调用wkeOnLoadUrlEnd设置的回调，同时传递缓存的数据。在此期间，mb不会处理网络数据。2，如果在wkeLoadUrlBeginCallback里没设置wkeNetHookRequest，则不会触发wkeOnLoadUrlEnd回调。3，如果wkeLoadUrlBeginCallback回调里返回true，表示mb不处理此网络请求（既不会发送网络请求）。返回false，表示mb依然会发送网络请求。",
+            "del": false
+        },
+        {
+            "id": 92,
+            "title": "void wkeOnLoadUrlEnd(wkeWebView webView, wkeLoadUrlEndCallback callback, void* callbackParam)",
+            "desc": "见wkeOnLoadUrlBegin的描述",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 93,
+            "title": "void wkeOnDidCreateScriptContext(wkeWebView webView, wkeDidCreateScriptContextCallback callback, void* callbackParam)",
+            "desc": "javascript的v8执行环境被创建时触发此回调",
+            "params": {},
+            "tips": "每个frame创建时都会触发此回调",
+            "del": false
+        },
+        {
+            "id": 94,
+            "title": "void wkeOnWillReleaseScriptContext(wkeWebView webView, wkeWillReleaseScriptContextCallback callback, void* callbackParam)",
+            "desc": "每个frame的javascript的v8执行环境被关闭时触发此回调",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 95,
+            "title": "void wkeOnWillMediaLoad(wkeWebView webView, wkeWillMediaLoadCallback callback, void* callbackParam)",
+            "desc": "video等多媒体标签创建时触发此回调",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 96,
+            "title": "bool wkeIsMainFrame(wkeWebView webView, wkeWebFrameHandle frameId)",
+            "desc": "判断frameId是否是主frame",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 97,
+            "title": "wkeWebFrameHandle wkeWebFrameGetMainFrame(wkeWebView webView)",
+            "desc": "获取主frame的句柄",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 98,
+            "title": "jsValue wkeRunJsByFrame(wkeWebView webView, wkeWebFrameHandle frameId, const utf8* script, bool isInClosure)",
+            "desc": "运行js在指定的frame上，通过frameId",
+            "params": {
+                "isInClosure": "表示是否在外层包个function() {}形式的闭包"
+            },
+            "tips": "如果需要返回值，在isInClosure为true时，需要写return，为false则不用",
+            "del": false
+        },
+        {
+            "id": 99,
+            "title": "const utf8* wkeGetFrameUrl(wkeWebView webView, wkeWebFrameHandle frameId)",
+            "desc": "获取frame对应的url",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 100,
+            "title": "const utf8* wkeGetString(const wkeString s)",
+            "desc": "获取wkeString结构体对应的字符串，utf8编码",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 101,
+            "title": "const wchar_t* wkeGetStringW(const wkeString string)const wchar_t* wkeGetStringW(const wkeString string)",
+            "desc": "获取wkeString结构体对应的字符串，utf16编码",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 102,
+            "title": "void wkeSetString(wkeString string, const utf8* str, size_t len)",
+            "desc": "设置wkeString结构体对应的字符串，utf8编码",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 103,
+            "title": "void wkeSetStringW(wkeString string, const wchar_t* str, size_t len)",
+            "desc": "设置wkeString结构体对应的字符串，utf16编码",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 104,
+            "title": "wkeString wkeCreateStringW(const wchar_t* str, size_t len)",
+            "desc": "通过utf16编码的字符串，创建一个wkeString",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 105,
+            "title": "void wkeDeleteString(wkeString str)",
+            "desc": "析构这个wkeString",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 106,
+            "title": "void wkeSetUserKeyValue(wkeWebView webView, const char* key, void* value)",
+            "desc": "对webView设置一个key value键值对。可以用来保存用户自己定义的任何指针",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 107,
+            "title": "void* wkeGetUserKeyValue(wkeWebView webView, const char* key)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 108,
+            "title": "int wkeGetCursorInfoType(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 109,
+            "title": "wkeWebView wkeCreateWebView()",
+            "desc": "创建一个webview，但不创建真窗口。一般用在离屏渲染里，如游戏",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 110,
+            "title": "void wkeDestroyWebView(wkeWebView webView)",
+            "desc": "效果同wkeDestroyWebWindow",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 111,
+            "title": "wkeWebView wkeCreateWebWindow(wkeWindowType type, HWND parent, int x, int y, int width, int height)",
+            "desc": "创建一个带真实窗口的wkeWebView",
+            "params": {
+                "wkeWindowType": "WKE_WINDOW_TYPE_POPUP：普通窗口。WKE_WINDOW_TYPE_TRANSPARENT：透明窗口。mb内部通过layer window实现。WKE_WINDOW_TYPE_CONTROL：嵌入在父窗口里的子窗口。此时parent需要被设置"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 112,
+            "title": "void wkeDestroyWebWindow(wkeWebView webWindow)",
+            "desc": "销毁wkeWebView对应的所有数据结构，包括真实窗口等",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 113,
+            "title": "HWND wkeGetWindowHandle(wkeWebView webWindow)",
+            "desc": "获取窗口对应的真实句柄。和wkeGetHostHWND的实现完全相同",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 114,
+            "title": "void wkeOnWindowClosing(wkeWebView webWindow, wkeWindowClosingCallback callback, void* param)",
+            "desc": "wkeWebView如果是真窗口模式，则在收到WM_CLODE消息时触发此回调。可以通过在回调中返回false拒绝关闭窗口",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 115,
+            "title": "void wkeOnWindowDestroy(wkeWebView webWindow, wkeWindowDestroyCallback callback, void* param)",
+            "desc": "窗口即将被销毁时触发回调。不像wkeOnWindowClosing，这个操作无法取消",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 116,
+            "title": "void wkeShowWindow(wkeWebView webWindow, bool showFlag)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 117,
+            "title": "void wkeEnableWindow(wkeWebView webWindow, bool enableFlag)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 118,
+            "title": "void wkeMoveWindow(wkeWebView webWindow, int x, int y, int width, int height)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 119,
+            "title": "void wkeMoveToCenter(wkeWebView webWindow)",
+            "desc": "窗口在父窗口或屏幕里居中",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 120,
+            "title": "void wkeResizeWindow(wkeWebView webWindow, int width, int height)",
+            "desc": "resize窗口，和wkeResize效果一样",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 121,
+            "title": "void wkeSetWindowTitle(wkeWebView webWindow, const utf8* title)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 122,
+            "title": "void wkeSetWindowTitle(wkeWebView webWindow, const wchar_t* title)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 123,
+            "title": "void wkeSetDeviceParameter(wkeWebView webView, const char* device, const char* paramStr, int paramInt, float paramFloat)",
+            "desc": "设置mb模拟的硬件设备环境。主要用在伪装手机设备场景",
+            "params": {
+                "device": "设备的字符串。可取值有：\"navigator.maxTouchPoints\"此时 paramInt 需要被设置，表示 touch 的点数。\"navigator.platform\"此时 paramStr 需要被设置，表示js里获取的 navigator.platform字符串。\"navigator.hardwareConcurrency\"此时 paramInt 需要被设置，表示js里获取的 navigator.hardwareConcurrency 整数值。\"screen.width\"此时 paramInt 需要被设置，表示js里获取的 screen.width 整数值。\"screen.height\"此时 paramInt 需要被设置，表示js里获取的 screen.height 整数值。\"screen.availWidth\"此时 paramInt 需要被设置，表示js里获取的 screen.availWidth 整数值。\"screen.availHeight\"此时 paramInt 需要被设置，表示js里获取的 screen.availHeight 整数值。\"screen.pixelDepth\"此时 paramInt 需要被设置，表示js里获取的 screen.pixelDepth 整数值。\"screen.pixelDepth\"目前等价于\"screen.pixelDepth\"。\"window.devicePixelRatio\"同上"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 124,
+            "title": "void wkeInit()",
+            "desc": "初始化整个mb。此句必须在所有mb api前最先调用。并且所有mb api必须和调用wkeInit的线程为同个线程",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 125,
+            "title": "void wkeShutdown()",
+            "desc": "关闭整个mb。调用后，所有mb api将不能再被调用，否则会有崩溃",
+            "params": {},
+            "tips": "",
+            "del": true
+        },
+        {
+            "id": 126,
+            "title": "void wkeInitialize()",
+            "desc": "效果和wkeInit一模一样",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 127,
+            "title": "void wkeSetProxy(const wkeProxy* proxy)",
+            "desc": "设置整个mb的代码。此句是全局生效",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 128,
+            "title": "void wkeSetViewProxy(wkeWebView webView, wkeProxy* proxy)",
+            "desc": "设置整个mb的代码。此句是针对特定webview生效",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 129,
+            "title": "void wkeConfigure(const wkeSettings* settings)",
+            "desc": "设置一些配置项",
+            "params": {
+                "settings": "typedef struct { wkeProxy proxy; unsigned int mask; } wkeSettings; mask可以取：WKE_SETTING_PROXY：效果和wkeSetProxy一样，通过proxy设置"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 130,
+            "title": "bool wkeIsInitialize()",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 131,
+            "title": "void wkeFinalize()",
+            "desc": "效果和wkeShutdown一样",
+            "params": {},
+            "tips": "",
+            "del": true
+        },
+        {
+            "id": 132,
+            "title": "void wkeSetMemoryCacheEnable(wkeWebView webView, bool b)",
+            "desc": "开启内存缓存。网页的图片等都会在内存缓存里。关闭后，内存使用会降低一些，但容易引起一些问题，如果不懂怎么用，最好别开",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 133,
+            "title": "void wkeSetTouchEnabled(wkeWebView webView, bool b)",
+            "desc": "开启触屏模式。开启后，鼠标消息将自动转换成触屏消息",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 134,
+            "title": "void wkeSetMouseEnabled(wkeWebView webView, bool b)",
+            "desc": "开启关闭鼠标消息，可以在开启触屏后，关闭鼠标消息",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 135,
+            "title": "void wkeSetNavigationToNewWindowEnable(wkeWebView webView, bool b)",
+            "desc": "关闭后，点a标签将不会弹出新窗口，而是在本窗口跳转",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 136,
+            "title": "void wkeSetCspCheckEnable(wkeWebView webView, bool b)",
+            "desc": "关闭后，跨域检查将被禁止，此时可以做任何跨域操作，如跨域ajax，跨域设置iframe",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 137,
+            "title": "void wkeSetNpapiPluginsEnabled(wkeWebView webView, bool b)",
+            "desc": "开启关闭npapi插件，如flash",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 138,
+            "title": "void wkeSetHeadlessEnabled(wkeWebView webView, bool b)",
+            "desc": "开启无头模式。开启后，将不会渲染页面，提升了网页性能。此功能方便用来实现一些爬虫，或者刷单工具",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 139,
+            "title": "void wkeSetDebugConfig(wkeWebView webView, const char* debugString, const char* param)",
+            "desc": "开启一些实验性选项。",
+            "params": {
+                "debugString": "\"showDevTools\"开启开发者工具，此时param要填写开发者工具的资源路径，如file:///c:/miniblink-release/front_end/inspector.html。注意param此时必须是utf8编码。\"wakeMinInterval\"设置帧率，默认值是10，值越大帧率越低。\"drawMinInterval\"设置帧率，默认值是3，值越大帧率越低。\"antiAlias\"设置抗锯齿渲染。param必须设置为1。\"minimumFontSize\"最小字体。\"minimumLogicalFontSize\"最小逻辑字体。\"defaultFontSize\"默认字体。\"defaultFixedFontSize\"默认fixed字体。"
+            },
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 140,
+            "title": "void wkeSetHandle(wkeWebView webView, HWND wnd)",
+            "desc": "设置wkeWebView对应的窗口句柄。",
+            "params": {},
+            "tips": "只有在无窗口模式下才能使用。如果是用wkeCreateWebWindow创建的webview，已经自带窗口句柄了。",
+            "del": false
+        },
+        {
+            "id": 141,
+            "title": "void wkeSetHandleOffset(wkeWebView webView, int x, int y)",
+            "desc": "设置无窗口模式下的绘制偏移。在某些情况下（主要是离屏模式），绘制的地方不在真窗口的(0, 0)处，就需要手动调用此接口",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 142,
+            "title": "void wkeSetViewSettings(wkeWebView webView, const wkeViewSettings* settings)",
+            "desc": "设置一些webview相关的设置.目前只有背景颜色可以设置",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 143,
+            "title": "void wkeSetTransparent(wkeWebView webView, bool transparent)",
+            "desc": "通知无窗口模式下，webview开启透明模式。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 144,
+            "title": "bool wkeIsTransparent(wkeWebView webView)",
+            "desc": "判断窗口是否是分层窗口（layer window）",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 145,
+            "title": "void wkeSetUserAgent(wkeWebView webView, const utf8* userAgent)",
+            "desc": "设置webview的UA",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 146,
+            "title": "void wkeSetUserAgentW(wkeWebView webView, const wchar_t* userAgent)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 147,
+            "title": "const utf8* wkeGetUserAgent(wkeWebView webView)",
+            "desc": "获取webview的UA",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 148,
+            "title": "void wkeLoadURL(wkeWebView webView, const utf8* url)",
+            "desc": "加载url。url必须是网络路径，如http://qq.com/",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 149,
+            "title": "void wkeLoadW(wkeWebView webView, const wchar_t* url)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 150,
+            "title": "void wkeLoadHTML(wkeWebView webView, const utf8* html)",
+            "desc": "加载一段html",
+            "params": {},
+            "tips": "如果html里有相对路径，则是相对exe所在目录的路径",
+            "del": false
+        },
+        {
+            "id": 151,
+            "title": "void wkeLoadHtmlWithBaseUrl(wkeWebView webView, const utf8* html, const utf8* baseUrl)",
+            "desc": "加载一段html，但可以指定baseURL，也就是相对于哪个目录的url",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 152,
+            "title": "void wkeLoadFile(wkeWebView webView, const utf8* filename)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 153,
+            "title": "const utf8* wkeGetURL(wkeWebView webView)",
+            "desc": "获取webview主frame的url",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 154,
+            "title": "void wkeNetSetHTTPHeaderField(void* jobPtr, wchar_t* key, wchar_t* value, bool response)",
+            "desc": "在wkeOnLoadUrlBegin回调里调用，表示设置http请求（或者file:///协议）的 http header field。response一直要被设置成false",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 155,
+            "title": "void wkeNetSetMIMEType(void* jobPtr, char* type)",
+            "desc": "在wkeOnLoadUrlBegin回调里调用，表示设置http请求的MIME type",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 156,
+            "title": "const char* wkeNetGetMIMEType(void* jobPtr, wkeString mime)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 157,
+            "title": "void wkeNetSetData(void* jobPtr, void* buf, int len)",
+            "desc": "在wkeOnLoadUrlEnd里被调用，表示设置hook后缓存的数据",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 158,
+            "title": "void wkeNetCancelRequest(void* jobPtr)",
+            "desc": "在wkeOnLoadUrlBegin回调里调用，设置后，此请求将被取消。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 159,
+            "title": "int wkeNetGetFavicon(wkeWebView webView, wkeOnNetGetFavicon callback, void* param)",
+            "desc": "获取favicon。",
+            "params": {},
+            "tips": "此接口必须在wkeOnLoadingFinish回调里调用。",
+            "del": false
+        },
+        {
+            "id": 160,
+            "title": "BOOL wkeNetHoldJobToAsynCommit(void* jobPtr)",
+            "desc": "高级用法。在wkeOnLoadUrlBegin回调里调用。 有时候，wkeOnLoadUrlBegin里拦截到一个请求后，不能马上判断出结果。此时可以调用本接口，然后在 异步的某个时刻，调用wkeNetContinueJob来让此请求继续进行",
+            "params": {},
+            "tips": "TRUE代表成功，FALSE代表调用失败，不能再调用wkeNetContinueJob了",
+            "del": false
+        },
+        {
+            "id": 161,
+            "title": "wkeRequestType wkeNetGetRequestMethod(void *jobPtr)",
+            "desc": "获取此请求的method，如post还是get",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 162,
+            "title": "wkePostBodyElements* wkeNetGetPostBody(void *jobPtr)",
+            "desc": "获取此请求中的post数据。只有当请求是post时才有效果",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 163,
+            "title": "wkePostBodyElements* wkeNetCreatePostBodyElements(wkeWebView webView, size_t length)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 164,
+            "title": "void wkeNetFreePostBodyElements(wkePostBodyElements* elements)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 165,
+            "title": "void wkeNetFreePostBodyElements(wkePostBodyElements* elements)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 166,
+            "title": "wkePostBodyElement* wkeNetCreatePostBodyElement(wkeWebView webView)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 167,
+            "title": "void wkeNetFreePostBodyElement(wkePostBodyElement* element)",
+            "desc": "这四个接口要结合起来使用。 当wkeOnLoadUrlBegin里判断是post时，可以通过wkeNetCreatePostBodyElements来创建一个新的post数据包。 然后wkeNetFreePostBodyElements来释放原post数据。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 168,
+            "title": "int jsArgCount(jsExecState es)",
+            "desc": "获取es里存的参数个数。一般是在绑定的js调用c++回调里使用，判断js传递了多少参数给c++",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 169,
+            "title": "jsType jsArgType(jsExecState es, int argIdx)",
+            "desc": "判断第argIdx个参数的参数类型。argIdx从是个0开始计数的值。如果超出jsArgCount返回的值，将发生崩溃",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 170,
+            "title": "jsValue jsArg(jsExecState es, int argIdx)",
+            "desc": "获取第argIdx对应的参数的jsValue值。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 171,
+            "title": "jsType jsTypeOf(jsValue v)",
+            "desc": "获取v对应的类型。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 172,
+            "title": "bool jsIsNumber(jsValue v)",
+            "desc": "判断v是否为数字",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 173,
+            "title": "bool jsIsString(jsValue v)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 174,
+            "title": "bool jsIsBoolean(jsValue v)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 175,
+            "title": "bool jsIsObject(jsValue v)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 176,
+            "title": "当v不是数字、字符串、undefined、null、函数的时候，此接口返回true",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 177,
+            "title": "bool jsIsTrue(jsValue v)",
+            "desc": "如果v本身是个布尔值，返回对应的true或者false；如果是个对象（JSTYPE_OBJECT），返回false（这里注意）",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 178,
+            "title": "bool jsIsFalse(jsValue v)",
+            "desc": "等价于!jsIsTrue(v)",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 179,
+            "title": "int jsToInt(jsExecState es, jsValue v)",
+            "desc": "如果v是个整形或者浮点，返回相应值（如果是浮点，返回取整后的值）。如果是其他类型，返回0（这里注意）",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 180,
+            "title": "double jsToDouble(jsExecState es, jsValue v)",
+            "desc": "如果v是个浮点形，返回相应值。如果是其他类型，返回0.0（这里注意）",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 181,
+            "title": "const wchar_t* jsToTempStringW(jsExecState es, jsValue v)",
+            "desc": "如果v是个字符串，返回相应值。如果是其他类型，返回L\"\"（这里注意） 另外，返回的字符串不需要外部释放。mb会在下一帧自动释放",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 182,
+            "title": "const utf8* jsToTempString(jsExecState es, jsValue v)",
+            "desc": "同上",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 183,
+            "title": "const utf8* jsToString(jsExecState es, jsValue v)",
+            "desc": "同上，只是返回的是utf8编码",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 184,
+            "title": "const wchar_t* jsToStringW(jsExecState es, jsValue v)",
+            "desc": "",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 185,
+            "title": "jsValue jsInt(int n)",
+            "desc": "创建建一个int型的jsValue，注意是创建",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 186,
+            "title": "jsValue jsString(jsExecState es, const utf8* str)",
+            "desc": "构建一个utf8编码的字符串的的jsValue。str会在内部拷贝保存，注意是创建",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 187,
+            "title": "jsValue jsArrayBuffer(jsExecState es, char * buffer, size_t size)",
+            "desc": "构建一个js的arraybuffer类型的jaValue。主要用来处理一些二进制数据，注意是创建",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 188,
+            "title": "wkeMemBuf* jsGetArrayBuffer(jsExecState es, jsValue value)",
+            "desc": "获取一个js的arraybuffer类型的数据。主要用来处理一些二进制数据",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 189,
+            "title": "jsValue jsEmptyObject(jsExecState es)",
+            "desc": "构建一个临时js object的jsValue，注意是创建",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 190,
+            "title": "jsValue jsEvalW(jsExecState es, const wchar_t* str)",
+            "desc": "执行一段js，并返回值。",
+            "params": {},
+            "tips": "str的代码会在mb内部自动被包裹在一个function(){}中。所以使用的变量会被隔离 注意：要获取返回值，请写return。这和wke不太一样。wke不需要写retrun",
+            "del": false
+        },
+        {
+            "id": 191,
+            "title": "jsValue jsEvalExW(jsExecState es, const wchar_t* str, bool isInClosure)",
+            "desc": "和上述接口的区别是，isInClosure表示是否要包裹一层function(){}。jsEvalW相当于jsEvalExW(es, str, false)",
+            "params": {},
+            "tips": "如果需要返回值，在isInClosure为true时，需要写return，为false则不用",
+            "del": false
+        },
+        {
+            "id": 192,
+            "title": "jsValue jsCall(jsExecState es, jsValue func, jsValue thisValue, jsValue* args, int argCount)",
+            "desc": "调用一个func对应的js函数。如果此js函数是成员函数，则需要填thisValue。 否则可以传jsUndefined。args是个数组，个数由argCount控制。 func可以是从js里取的，也可以是自行构造的。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 193,
+            "title": "jsValue jsCallGlobal(jsExecState es, jsValue func, jsValue* args, int argCount)",
+            "desc": "调用window上的全局函数",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 194,
+            "title": "jsValue jsGet(jsExecState es, jsValue object, const char* prop)",
+            "desc": "如果object是个js的object，则获取prop指定的属性。如果object不是js object类型，则返回jsUndefined",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 195,
+            "title": "void jsSet(jsExecState es, jsValue object, const char* prop, jsValue value)",
+            "desc": "设置object的属性",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 196,
+            "title": "jsValue jsGetGlobal(jsExecState es, const char* prop)",
+            "desc": "获取window上的属性",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 197,
+            "title": "void jsSetGlobal(jsExecState es, const char* prop, jsValue v)",
+            "desc": "设置window上的属性",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 198,
+            "title": "jsValue jsGetAt(jsExecState es, jsValue object, int index)",
+            "desc": "设置js arrary的第index个成员的值，object必须是js array才有用，否则会返回jsUndefined",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 199,
+            "title": "void jsSetAt(jsExecState es, jsValue object, int index, jsValue value)",
+            "desc": "设置js arrary的第index个成员的值，object必须是js array才有用。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 200,
+            "title": "jsKeys* jsGetKeys(jsExecState es, jsValue object)",
+            "desc": "获取object有哪些key",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 201,
+            "title": "int jsGetLength(jsExecState es, jsValue object)",
+            "desc": "获取js arrary的长度，object必须是js array才有用。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 202,
+            "title": "void jsSetLength(jsExecState es, jsValue object, int length)",
+            "desc": "设置js arrary的长度，object必须是js array才有用。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 203,
+            "title": "wkeWebView jsGetWebView(jsExecState es)",
+            "desc": "获取es对应的webview",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 204,
+            "title": "void jsGC()",
+            "desc": "强制垃圾回收",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 205,
+            "title": "void fastcall jsBindFunction(const char* name, jsNativeFunction fn, unsigned int argCount)",
+            "desc": "绑定一个全局函数到主frame的window上。",
+            "params": {},
+            "tips": "此接口只能绑定主frame，并且特别需要注意的是，因为历史原因，此接口是fastcall调用约定！（但wkeJsBindFunction不是）另外此接口和wkeJsBindFunction必须在webview创建前调用",
+            "del": false
+        },
+        {
+            "id": 206,
+            "title": "void jsBindGetter(const char* name, jsNativeFunction fn)",
+            "desc": "对js winows绑定一个属性访问器，在js里windows.XXX这种形式调用时，fn会被调用",
+            "params": {},
+            "tips": "jsBindGetter(\"XXX\")",
+            "del": false
+        },
+        {
+            "id": 207,
+            "title": "void jsBindSetter(const char* name, jsNativeFunction fn)",
+            "desc": "对js winows绑定一个属性设置器。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 208,
+            "title": "void wkeJsBindFunction(const char* name, wkeJsNativeFunction fn, void* param, unsigned int argCount)",
+            "desc": "和jsBindFunction功能类似，但更方便一点，可以传一个param做自定义数据。",
+            "params": {},
+            "tips": "此接口和wkeJsBindFunction必须在webview创建前调用",
+            "del": false
+        },
+        {
+            "id": 209,
+            "title": "jsValue jsObject(jsExecState es, jsData* data)",
+            "desc": "构建一个js Objcet，可以传递给js使用。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 210,
+            "title": "jsValue jsFunction(jsExecState es, jsData* data)",
+            "desc": "创建一个主frame的全局函数。jsData的用法如上。js调用：XXX() 此时jsData的callAsFunction触发。 其实jsFunction和jsObject功能基本类似。且jsObject的功能更强大一些",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 211,
+            "title": "jsData* jsGetData(jsExecState es, jsValue value)",
+            "desc": "获取jsObject或jsFunction创建的jsValue对应的jsData指针。",
+            "params": {},
+            "tips": "",
+            "del": false
+        },
+        {
+            "id": 212,
+            "title": "jsExceptionInfo* jsGetLastErrorIfException(jsExecState es);",
+            "desc": "当wkeRunJs、jsCall等接口调用时，如果执行的js代码有异常，此接口将获取到异常信息。否则返回nullptr。",
+            "params": {},
+            "tips": "",
+            "del": false
+        }
+    ],
+    "footer": "Copyright 2019 weolar@qq.com , 粤ICP备18103739号"
+}
