@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>VIP-API DOC</title>
+		<style type="text/css">
+			body{margin: 0px;}
+			.title{text-align: center;background: #d4d4d4;line-height: 150px;margin: 0px;color: #fff;font-weight: 500}
+			.sub-title{margin-left: 20px;font-weight: 400;}
+			.sep-line{border-bottom: 1px solid #ddf;margin: 10px 0;}
+			.content{margin-left: 15px;;font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;font-size: 14px;}
+			.content .api-def{font-size: 19px;border:1px solid #e1e1e8;padding: 2px 8px;border-left-color: #ce4844;border-left-width: 5px;font-weight: 500;background: #d5cfcf;}
+			.content .api-deprecated{color: #d60027;text-decoration: line-through;}
+			.content .api-param{border: 1px solid #20206f;margin: 12px 0px;}
+			.content table.api-param {border-collapse: collapse;border: 1px solid #e1e1e8;font-size: 14px;}
+			.content table.api-param tr {padding: 0px}
+			.content table.api-param tr td:first-child{background: #f7f7f9;}
+			.content table.api-param tr td{padding: 2px 8px;}
+			.list{margin:0px;padding: 8px 46px;}
+			.list li{margin-bottom: 8px;}
+			.list-warning{background-color: #f0ad4e;color: #fff;}
+			.list-warning2{background-color: #9a5656;color: #fff;}
+			.search{position: fixed;height: 320px; width: 400px;background: #F7F7F7;left: 40%;top:25%;transform: translate(-25%,-25%);padding: 8px 16px;text-align: center;display: none;}
+			.search input{margin-top:25px;width: 320px;height: 32px;border: solid 1px #d7d7d9;}
+			.search .search-result{list-style: none;margin: 0px;padding: 0px;text-align: left;margin-left: 10%;margin-top: 10px;overflow:auto;height: 220px;}
+			.search .search-result li{border-bottom: solid 1px #ddd;font-size: 12px;overflow: hidden;    height: 18px;}
+			.search .search-result li:hover{background-color: #ddd;}
+			
+		</style>
+	</head>
+	<body>
+		<div>
+			<h1 class="title">
+				VIP-API文档
+			</h1>
+		</div>
+		<h2 class="sub-title">前言</h2>
+		<div class="sep-line"></div>
+		<div class="content">
+			<p>miniblink的接口是纯C导出，只要使用mb.h、mb.dll、node.dll即可加载。无需.lib。</p>
+			mb.dll是基于mb的主dll（通常为node.dll）之上的一个封装层，在拥有原版主dll的所有能力之外，<p/>
+额外增加了：<p/>
+<ul class="">
+<li>高性能多线程渲染</li>
+<li>不同页面独立cookie支持</li>
+<li>MP3\MP4支持</li>
+<li>加载ActiveX控件</li>
+<li>网页内开启nodejs能力</li>
+<li>打印（正在实现中，未来将提供）</li>
+<li>资源打包（正在实现中，未来将提供）</li>
+<li>硬件加速（正在实现中，未来将提供）</li>
+</ul>
+等功能。<p/>
+
+若要使用mb.dll，可以向weolar@qq.com 购买，详情可见：http://miniblink.net/pricing/pricing.htm<p/>
+另外mb.dll必须依赖node.dll。<p/>
+
+		</div>
+		<div class="content">
+			升级到新接口注意事项：<p/>
+			
+			<ul class="list list-warning2">
+				<li>所有申明改成了stdcall</li>
+				<li>其他接口和回调都是在窗口ui线程（以下称主线程）调用，<p/>
+				唯独mbOnLoadUrlBegin、mbOnLoadUrlEnd、onDownloadCallback、mbOnNavigation是在另外个线程被回调，请注意保护变量</li>
+				<li>老js相关接口全部被移除，现在统一改成mbRunJs和mbOnJsQuery。</li>
+				<li>打开mtmb.sln后，mtmb\mb.h是mb.dll的导出头文件，Testdll工程是测试工程，需要翻译成c#的代码可以参考这里的代码</li>
+				<li>mbGetLockedViewDC后需要调用mbUnlockViewDC</li>
+				<li>WM_IME_STARTCOMPOSITION消息直接调用mbFireWindowsMessage派发过去即可</li>
+				<li>wkeString等相关结构全部删除</li>
+				<li>W相关接口全部删除</li>
+				<li>mbOnURLChanged默认就是主frame的url</li>
+				<li>URLChanged 回调增加了几个参数</li>
+			</ul>
+			<p/>
+			<ul class="list list-warning">
+				<li>另外，请勿跨线程调用所有接口（除非接口有特殊申明）</li>
+				<li>所有接口如果返回的是const utf8*，const wchar_t*类型的字符串，均不需要手动释放</li>
+				<li>miniblink暂时只支持windows系统</li>
+			</ul>
+		</div>
+		<div class="sep-line"></div>
+		<h2 class="sub-title">API</h2>
+		<div class="content">
+			<h3 class="api-def"><a name="mbSetWkeDllPath"></a>void mbSetMbDllPath(const wchar_t* dllPath)</h3>
+			<div>设置mb.dll的全路径+文件名</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">dllPath：dll的全路径，注意是全路径</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetWkeDllPath"></a>void mbSetMbMainDllPath(const wchar_t* dllPath)</h3>
+			<div>设置node.dll的全路径+文件名</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">dllPath：dll的全路径，注意是全路径</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbInit"></a>void mbInit(const mbSettings* settings)</h3>
+			<div>初始化整个mb。此句必须在所有mb api前最先调用。并且所有mb api必须和调用mbInit的线程为同个线程</div>
+			<div class="api-params">参数：
+				<div class="api-param">
+					typedef struct { mbProxy proxy; unsigned int mask; } mbSettings;
+					mask可以取：
+					<div class="api-param-value">
+						WKE_SETTING_PROXY：效果和mbSetProxy一样，通过proxy设置<br>
+						WKE_SETTING_PAINTCALLBACK_IN_OTHER_THREAD：这是个高级用法，开启时，on paint回调会在另外个线程（其实就是渲染线程）。<br>
+						这个是用来实现多线程上屏功能，性能更快。<br>
+					</div>
+				</div>
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbStopLoading"></a>void mbStopLoading(mbWebView webView)</h3>
+			<div>停止加载页面</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbReload"></a>bool mbReload(mbWebView webView)</h3>
+			<div>重新加载页面</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbResize"></a>void mbResize(mbWebView webView, int w, int h)</h3>
+			<div>重新设置页面的宽高。如果webView是带窗口模式的，会设置真窗口的宽高。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbGetHostHWND"></a>HWND mbGetHostHWND(mbWebView webView)</h3>
+			<div>获取webveiw对应的窗口句柄。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbGoBack"></a>bool mbGoBack(mbWebView webView)</h3>
+			<div>强制让页面后退</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbGoForward"></a>bool mbGoForward(mbWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbEditorSelectAll"></a>void mbEditorSelectAll(mbWebView webView)</h3>
+			<div>给webview发送全选命令</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbEditorUnSelect"></a>void mbEditorUnSelect(mbWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbEditorCopy"></a>void mbEditorCopy(mbWebView webView)</h3>
+			<div>拷贝页面里被选中的字符串</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbEditorCut"></a>void mbEditorCut(mbWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbEditorDelete"></a>void mbEditorDelete(mbWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbEditorUndo"></a>void mbEditorUndo(mbWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbEditorRedo"></a>void mbEditorRedo(mbWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbGetCookie"></a>const wchar_t * mbGetCookieW(mbWebView webView, mbGetCookieCallback callback, void* param)</h3>
+			<div>获取页面的cookie，得到的cookie将在callback里返回。这个过程是异步的</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetCookie"></a>void mbSetCookie(mbWebView webView, const utf8* url, const utf8* cookie)</h3>
+			<div>设置页面cookie。</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">
+				注意：cookie必须符合curl的cookie写法。一个例子是：PERSONALIZE=123;expires=Monday, 13-Jun-2022 03:04:55 GMT; domain=.fidelity.com; path=/; secure
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbVisitAllCookie"></a>void mbVisitAllCookie(void* params, mbCookieVisitor visitor)</h3>
+			<div>通过访问器visitor访问所有cookie。</div>
+			<div class="api-params">参数：</div>
+			<div class="sep-param">visitor：访问器。</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbPerformCookieCommand"></a>void mbPerformCookieCommand(mbCookieCommand command)</h3>
+			<div>通过设置mb内置的curl来操作cookie。</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">command：
+				<div class="api-param-value">
+				mbCookieCommandClearAllCookies: 内部实际执行了curl_easy_setopt(curl, CURLOPT_COOKIELIST, "ALL");<br>
+				mbCookieCommandClearSessionCookies: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "SESS");<br>
+				mbCookieCommandFlushCookiesToFile: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "FLUSH");<br>
+				mbCookieCommandReloadCookiesFromFile: curl_easy_setopt(curl, CURLOPT_COOKIELIST, "RELOAD");
+				</div>
+			</div>
+			<div class="api-remark">注意：这个接口只是调用curl设置命令，并不会去修改js里的内容</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbClearCookie"></a>void mbClearCookie(mbWebView webView)</h3>
+			<div>清理cookie。目前只支持清理所有页面的cookie。</div>
+			<div class="api-params">参数：无</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetCookieEnabled"></a>void mbSetCookieEnabled(mbWebView webView, bool enable)</h3>
+			<div>开启或关闭cookie</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：这个接口只是影响blink，并不会设置curl。所以还是会生成curl的cookie文件</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetCookieJarPath"></a>void mbSetCookieJarPath(mbWebView webView, const WCHAR* path)</h3>
+			<div>设置cookie的本地文件目录。默认是当前目录。cookies存在当前目录的“cookie.dat”里</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetCookieJarFullPath"></a>void mbSetCookieJarFullPath(mbWebView webView, const WCHAR* path)</h3>
+			<div>设置cookie的全路径+文件名，如“c:\mb\cookie.dat”</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetLocalStorageFullPath"></a>void mbSetLocalStorageFullPath(mbWebView webView, const WCHAR* path)</h3>
+			<div>设置local storage的全路径。如“c:\mb\LocalStorage\”</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：这个接口只能接受目录。</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetDiskCacheEnabled"></a>void mbSetDiskCacheEnabled(mbWebView webView, bool enable)</h3>
+			<div>开启或关闭硬盘本地缓存</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：这个接口是全局的。webView参数暂时没用</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbFireMouseEvent"></a>bool mbFireMouseEvent(mbWebView webView, unsigned int message, int x, int y, unsigned int flags)</h3>
+			<div>向mb发送鼠标消息</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">
+				message：可取WM_MOUSELEAVE等Windows相关鼠标消息<br>
+				x、y：坐标<br>
+				flags：可取值有MB_CONTROL、MB_SHIFT、MB_LBUTTON、MB_MBUTTON、MB_RBUTTON，可通过“或”操作并联。
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbFireContextMenuEvent"></a>bool mbFireContextMenuEvent(mbWebView webView, int x, int y, unsigned int flags)</h3>
+			<div>向mb发送菜单消息（未实现）</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbFireMouseWheelEvent"></a>bool mbFireMouseWheelEvent(mbWebView webView, int x, int y, int delta, unsigned int flags)</h3>
+			<div>向mb发送滚轮消息，用法和参数类似mbFireMouseEvent。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbFireKeyUpEvent"></a>bool mbFireKeyUpEvent(mbWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey)</h3>
+			<div>向mb发送WM_KEYUP消息，</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">
+				virtualKeyCode：见https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
+				flags：可取值有WKE_REPEAT、WKE_EXTENDED，可通过“或”操作并联。
+				systemKey：暂时没用
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbFireKeyDownEvent"></a>bool mbFireKeyDownEvent(mbWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbFireKeyPressEvent"></a>bool mbFireKeyPressEvent(mbWebView webView, unsigned int charCode, unsigned int flags, bool systemKey)</h3>
+			<div>略</div>
+			<div class="api-params">参数：</div>
+			<div class="api-param">
+				charCode：WM_CHAR消息的The character code of the key.见https://msdn.microsoft.com/en-us/library/windows/desktop/ms646276(v=vs.85).aspx
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbFireWindowsMessage"></a>bool mbFireWindowsMessage(mbWebView webView, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, LRESULT* result)</h3>
+			<div>向mb发送任意windows消息。不过目前mb主要用来处理光标相关。mb在无窗口模式下，要响应光标事件，需要通过本函数手动发送光标消息</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetFocus"></a>void mbSetFocus(mbWebView webView)</h3>
+			<div>设置webview是焦点态。如果webveiw关联了窗口，窗口也会有焦点</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbKillFocus"></a>void mbKillFocus(mbWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbRunJS"></a>void mbRunJS(mbWebView webView, mbWebFrameHandle frameId, const utf8* script, BOOL isInClosure, mbRunJsCallback callback, void* param, void* unuse)</h3>
+			<div>运行一段js。返回js的值mbValue在callback中获取。mbValue是个封装了内部v8各种类型的类，如果需要获取详细信息，有mbXXX相关接口可以调用。见下述。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnJsQuery"></a>void mbOnJsQuery(mbWebView webView, mbJsQueryCallback callback, void* param)</h3>
+			<div>注册js通知native的回调。</div>
+			<div class="api-params">参数：回调：typedef void(* mbJsQueryCallback)(mbWebView webView, void* param, mbJsExecState es, int64_t queryId, int customMsg, const utf8* request)</div>
+			<div class="api-remark"><br>
+				设置一个回调，js中以下面形式调用：<p/>
+				<p/>
+
+				function onNative(customMsg, response) {<p/>
+				    console.log("on~~mbQuery:" + response);<p/>
+				}<p/>
+				window.mbQuery(0x123456, "test run", onNative);<p/>
+				<p/>
+				其中0x123456将被发送给mbJsQueryCallback的customMsg，"test run"给request。<p/>
+				如果需要在mbJsQueryCallback返回消息给js，则在mbJsQueryCallback里调用：<p/>
+				mbResponseQuery(mbWebView webView, int64_t queryId, int customMsg, const utf8* response);<p/>
+				<p/>
+				customMsg可以是任意的整数，request是任意的字符串，js中的onNative将收到回调<p/>
+				<p/>
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetZoomFactor"></a>void mbSetZoomFactor(mbWebView webView, float factor)</h3>
+			<div>设置页面缩放系数，默认是1</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbGetZoomFactor"></a>float mbGetZoomFactor(mbWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnTitleChanged"></a>void mbOnTitleChanged(mbWebView webView, mbTitleChangedCallback callback, void* callbackParam)</h3>
+			<div>设置标题变化的通知回调</div>
+			<div class="api-params">参数：typedef void(*mbTitleChangedCallback)(mbWebView webView, void* param, const utf8* title);</div>
+			<div class="api-param">
+				title：标题的字符串封装。mbString怎么用，见相关接口。
+				param：通过mbOnTitleChanged的callbackParam设置
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnURLChanged"></a>void mbOnURLChanged(mbWebView webView, mbURLChangedCallback callback, void* callbackParam)</h3>
+			<div>url改变回调。注意回调中还返回了前面是否可以前进后退相关信息</div>
+			<div class="api-params">参数：typedef void(*mbURLChangedCallback)(mbWebView webView, void* param, const utf8* url, bool canGoBack, bool canGoForward)</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnPaintUpdated"></a>void mbOnPaintUpdated(mbWebView webView, mbPaintUpdatedCallback callback, void* callbackParam)</h3>
+			<div>页面有任何需要刷新的地方，将调用此回调</div>
+			<div class="api-params">参数：typedef void(*mbPaintUpdatedCallback)(mbWebView webView, void* param, const HDC hdc, int x, int y, int cx, int cy) </div>
+			<div class="api-param">x、y、cx、cy表示刷新的区域矩形</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnPaintBitUpdated"></a>void mbOnPaintBitUpdated(mbWebView webView, mbPaintBitUpdatedCallback callback, void* callbackParam)</h3>
+			<div>同上。不同的是回调过来的是填充好像素的buffer，而不是DC。方便嵌入到游戏中做离屏渲染</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnAlertBox"></a>void mbOnAlertBox(mbWebView webView, mbAlertBoxCallback callback, void* callbackParam)</h3>
+			<div>网页调用alert会走到这个接口填入的回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnConfirmBox"></a>void mbOnConfirmBox(mbWebView webView, mbConfirmBoxCallback callback, void* callbackParam)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnPromptBox"></a>void mbOnPromptBox(mbWebView webView, mbPromptBoxCallback callback, void* callbackParam)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnNavigation"></a>void mbOnNavigation(mbWebView webView, mbNavigationCallback callback, void* param)</h3>
+			<div>网页开始浏览将触发回调</div>
+			<div class="api-params">参数：typedef bool(*mbNavigationCallback)(mbWebView webView, void* param, mbNavigationType navigationType, const utf8* url);</div>
+			<div class="api-param">mbNavigationType: 表示浏览触发的原因。可以取的值有：
+				<div class="api-param-value">
+				    MB_NAVIGATION_TYPE_LINKCLICK：点击a标签触发<br>
+					MB_NAVIGATION_TYPE_FORMSUBMITTE：点击form触发<br>
+					MB_NAVIGATION_TYPE_BACKFORWARD：前进后退触发<br>
+					MB_NAVIGATION_TYPE_RELOAD：重新加载触发
+				</div>
+			</div>
+			<div class="api-remark">注意：mbNavigationCallback回调的返回值，如果是true，表示可以继续进行浏览，false表示阻止本次浏览。</div>
+			
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnCreateView"></a>void mbOnCreateView(mbWebView webView, mbCreateViewCallback callback, void* param)</h3>
+			<div>网页点击a标签创建新窗口时将触发回调。注意此接口</div>
+			<div class="api-params">参数：typedef mbWebView(*mbCreateViewCallback)(mbWebView webView, void* param, mbNavigationType navigationType, const mbString url, const mbWindowFeatures* windowFeatures);</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnDocumentReady"></a>void mbOnDocumentReady(mbWebView webView, mbDocumentReady2Callback callback, void* param)</h3>
+			<div>同上。页面DOM发出ready事件时回调。可以判断是否是主frame</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnDownload"></a>void mbOnDownload(mbWebView webView, mbDownloadCallback callback, void* param)</h3>
+			<div>页面下载事件回调。点击某些链接，触发下载会调用</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnDownloadInBlinkThread"></a>void mbOnDownloadInBlinkThread(mbWebView webView, mbDownloadInBlinkThreadCallback callback, void* param)</h3>
+			<div>同上，但回调提供的参数更多。另外回调是在非UI线程。此外可在回调中调用mbPopupDialogAndDownload，这样能弹出文件另存框，并自动下载</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbPopupDialogAndDownload"></a>mbDownloadOpt mbPopupDialogAndDownload(mbWebView webView, void* param, size_t contentLength, const char* url, const char* mime, const char* disposition, mbNetJob job, mbNetJobDataBind* dataBind, void* unuse)</h3>
+			<div>见上。在mbOnDownloadInBlinkThread的回调中调用。mbPopupDialogAndDownload的参数来自mbOnDownloadInBlinkThread的回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetOnResponse"></a>void mbNetOnResponse(mbWebView webView, mbNetResponseCallback callback, void* param)</h3>
+			<div>一个网络请求发送后，收到服务器response触发回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnConsole"></a>void mbOnConsole(mbWebView webView, mbConsoleCallback callback, void* param)</h3>
+			<div>网页调用console触发</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnLoadUrlBegin"></a>void mbOnLoadUrlBegin(mbWebView webView, mbLoadUrlBeginCallback callback, void* callbackParam)</h3>
+			<div>任何网络请求发起前会触发此回调</div>
+			<div class="api-params">参数：typedef bool(*mbLoadUrlBeginCallback)(mbWebView webView, void* param, const char *url, void *job)</div>
+			<div class="api-remark">注意：<br>
+				1，此回调功能强大，在回调里，如果对job设置了mbNetHookRequest，则表示mb会缓存获取到的网络数据，并在这次网络请求
+				结束后调用mbOnLoadUrlEnd设置的回调，同时传递缓存的数据。在此期间，mb不会处理网络数据。<br>
+				2，如果在mbLoadUrlBeginCallback里没设置mbNetHookRequest，则不会触发mbOnLoadUrlEnd回调。<br>
+				3，如果mbLoadUrlBeginCallback回调里返回true，表示mb不处理此网络请求（既不会发送网络请求）。返回false，表示mb依然会发送网络请求。<br>
+				4, 注意此接口是在非UI线程执行（很重要！）请记得自行负责线程同步等<br>
+				用法举例：<br>
+				假如需要hook百度某个url（如httdiv://baidu.com/a.js）,替换为本地c:\b.js，则可以这样实现：<br>
+			<pre>	void readJsFile(const wchar_t* divath, std::vector<char>* buffer) {
+			    HANDLE hFile = CreateFileW(divath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+			    if (INVALID_HANDLE_VALUE == hFile) {
+			        DebugBreak();
+			        return;
+			    }
+			
+			    DWORD fileSizeHigh;
+			    const DWORD bufferSize = ::GetFileSize(hFile, &amp;amdiv;fileSizeHigh);
+			
+			    DWORD numberOfBytesRead = 0;
+			    buffer-&gt;resize(bufferSize);
+			    BOOL b = ::ReadFile(hFile, &amp;amdiv;buffer-&gt;at(0), bufferSize, &amp;amdiv;numberOfBytesRead, nulldivtr);
+			    ::CloseHandle(hFile);
+			
+			}
+			
+			static bool HookUrl(void* job, const char* url, const char* hookUrl, const wchar_t* localFile, const char* mime) {
+			    if (0 != strstr(url, hookUrl)) {
+			        mbNetSetMIMETydive(job, (char*)mime); // "text/html" "text/javascridivt"
+			        std::vector<char> buffer;
+				        ReadJsFile(localFile, &amp;amdiv;buffer);
+				        mbNetSetData(job, &amp;amdiv;buffer[0], buffer.size());
+				        return true;
+				    }
+			
+				    return false;
+				}
+			
+				bool handleLoadUrlBegin(mbWebView webView, void* divaram, const char* url, void* job) {
+				    if (HookUrl(job, url, "httdiv://baidu.com/a.js", L"c:\\b.js", "text/javascridivt"))
+				        return true;
+			
+				    return false;
+				}
+				如果需要拿到httdiv://baidu.com/a.js的真实网络数据再修改，则可以：
+				bool handleLoadUrlBegin(mbWebView webView, void* divaram, const char* url, void* job) {
+				    if (0 != strstr(url, "httdiv://baidu.com/a.js")) {
+				        mbNetHookRequest(job);
+				        return false;
+				    }
+				    return false;
+				}
+			
+				void handleLoadUrlEnd(mbWebView webView, void* divaram, const char* url, void* job, void* buf, int len) {
+				    char code[] = "console.log('test')";
+				    mbNetSetData(job, code, sizeof(code));
+				}
+			 </char></char></pre>
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnLoadUrlEnd"></a>void mbOnLoadUrlEnd(mbWebView webView, mbLoadUrlEndCallback callback, void* callbackParam)</h3>
+			<div>见mbOnLoadUrlBegin的描述</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnDidCreateScriptContext"></a>void mbOnDidCreateScriptContext(mbWebView webView, mbDidCreateScriptContextCallback callback, void* callbackParam)</h3>
+			<div>javascript的v8执行环境被创建时触发此回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：每个frame创建时都会触发此回调</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnWillReleaseScriptContext"></a>void mbOnWillReleaseScriptContext(mbWebView webView, mbWillReleaseScriptContextCallback callback, void* callbackParam)</h3>
+			<div>每个frame的javascript的v8执行环境被关闭时触发此回调</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbIsMainFrame"></a>bool mbIsMainFrame(mbWebView webView, mbWebFrameHandle frameId)</h3>
+			<div>判断frameId是否是主frame</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbWebFrameGetMainFrame"></a>mbWebFrameHandle mbWebFrameGetMainFrame(mbWebView webView)</h3>
+			<div>获取主frame的句柄</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbGetString"></a>const utf8* mbGetString(const mbString s)</h3>
+			<div>获取mbString结构体对应的字符串，utf8编码</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbGetStringW"></a>const wchar_t* mbGetStringW(const mbString string)const wchar_t* mbGetStringW(const mbString string)</h3>
+			<div>获取mbString结构体对应的字符串，utf16编码</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetString"></a>void mbSetString(mbString string, const utf8* str, size_t len)</h3>
+			<div>设置mbString结构体对应的字符串，utf8编码</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbDeleteString"></a>void mbDeleteString(mbString str)</h3>
+			<div>析构这个mbString</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbCreateWebView"></a>mbWebView mbCreateWebView()</h3>
+			<div>创建一个webview，但不创建真窗口。一般用在离屏渲染里，如游戏</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbDestroyWebView"></a>void mbDestroyWebView(mbWebView webView)</h3>
+			<div>效果同mbDestroyWebWindow</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbCreateWebWindow"></a>mbWebView mbCreateWebWindow(mbWindowType type, HWND parent, int x, int y, int width, int height)</h3>
+			<div>创建一个带真实窗口的mbWebView</div>
+			<div class="api-params">参数：mbWindowType </div>
+			<div class="api-param">WKE_WINDOW_TYPE_POPUP：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;普通窗口<br>
+				WKE_WINDOW_TYPE_TRANSPARENT：透明窗口。mb内部通过layer window实现<br>
+				WKE_WINDOW_TYPE_CONTROL：&nbsp;&nbsp;&nbsp;&nbsp;嵌入在父窗口里的子窗口。此时parent需要被设置</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnWindowClosing"></a>void mbOnClose(mbWebView webWindow, mbWindowClosingCallback callback, void* param)</h3>
+			<div>mbWebView如果是真窗口模式，则在收到WM_CLODE消息时触发此回调。可以通过在回调中返回false拒绝关闭窗口</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbOnWindowDestroy"></a>void mbOnDestroy(mbWebView webWindow, mbWindowDestroyCallback callback, void* param)</h3>
+			<div>窗口即将被销毁时触发回调。不像mbOnClose，这个操作无法取消</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbShowWindow"></a>void mbShowWindow(mbWebView webWindow, bool showFlag)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbMoveToCenter"></a>void mbMoveToCenter(mbWebView webWindow)</h3>
+			<div>窗口在父窗口或屏幕里居中</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetProxy"></a>void mbSetProxy(const mbProxy* proxy)</h3>
+			<div>设置整个mb的代码。此句是全局生效</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetMemoryCacheEnable"></a>void mbSetMemoryCacheEnable(mbWebView webView, bool b)</h3>
+			<div>开启内存缓存。网页的图片等都会在内存缓存里。关闭后，内存使用会降低一些，但容易引起一些问题，如果不懂怎么用，最好别开</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetNavigationToNewWindowEnable"></a>void mbSetNavigationToNewWindowEnable(mbWebView webView, bool b)</h3>
+			<div>关闭后，点a标签将不会弹出新窗口，而是在本窗口跳转</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetCspCheckEnable"></a>void mbSetCspCheckEnable(mbWebView webView, bool b)</h3>
+			<div>关闭后，跨域检查将被禁止，此时可以做任何跨域操作，如跨域ajax，跨域设置iframe</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetNpapiPluginsEnabled"></a>void mbSetNpapiPluginsEnabled(mbWebView webView, bool b)</h3>
+			<div>开启关闭npapi插件，如flash</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetHeadlessEnabled"></a>void mbSetHeadlessEnabled(mbWebView webView, bool b)</h3>
+			<div>开启无头模式。开启后，将不会渲染页面，提升了网页性能。此功能方便用来实现一些爬虫，或者刷单工具</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetDebugConfig"></a>void mbSetDebugConfig(mbWebView webView, const char* debugString, const char* param)</h3>
+			<div>开启一些实验性选项。</div>
+			<div class="api-params">参数：
+				<div class="api-param">debugString：
+			    	<table class="api-param-value">
+				    	<tbody><tr><td>"showDevTools"</td><td>开启开发者工具，此时param要填写开发者工具的资源路径，如file:///c:/miniblink-release/front_end/inspector.html。注意param此时必须是utf8编码</td></tr>
+						<tr><td>"wakeMinInterval"</td><td>设置帧率，默认值是10，值越大帧率越低</td></tr>
+						<tr><td>"drawMinInterval"</td><td>设置帧率，默认值是3，值越大帧率越低</td></tr>
+						<tr><td>"antiAlias"</td><td>设置抗锯齿渲染。param必须设置为"1"</td></tr>
+						<tr><td>"minimumFontSize"</td><td>最小字体</td></tr>
+						<tr><td>"minimumLogicalFontSize"</td><td>最小逻辑字体</td></tr>
+						<tr><td>"defaultFontSize"</td><td>默认字体</td></tr>
+						<tr><td>"defaultFixedFontSize"</td><td>默认fixed字体</td></tr>
+					</tbody></table>
+				</div>
+			</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetHandle"></a>void mbSetHandle(mbWebView webView, HWND wnd)</h3>
+			<div>设置mbWebView对应的窗口句柄。</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：只有在无窗口模式下才能使用。如果是用mbCreateWebWindow创建的webview，已经自带窗口句柄了。</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetHandleOffset"></a>void mbSetHandleOffset(mbWebView webView, int x, int y)</h3>
+			<div>设置无窗口模式下的绘制偏移。在某些情况下（主要是离屏模式），绘制的地方不在真窗口的(0, 0)处，就需要手动调用此接口</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbSetUserAgent"></a>void mbSetUserAgent(mbWebView webView, const utf8* userAgent)</h3>
+			<div>设置webview的UA</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbLoadURL"></a>void mbLoadURL(mbWebView webView, const utf8* url)</h3>
+			<div>加载url。url必须是网络路径，如"http://qq.com/"</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbLoadHtmlWithBaseUrl"></a>void mbLoadHtmlWithBaseUrl(mbWebView webView, const utf8* html, const utf8* baseUrl)</h3>
+			<div>加载一段html，但可以指定baseURL，也就是相对于哪个目录的url</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetSetHTTPHeaderField"></a>void mbNetSetHTTPHeaderField(void* jobPtr, wchar_t* key, wchar_t* value, bool response)</h3>
+			<div>在mbOnLoadUrlBegin回调里调用，表示设置http请求（或者file:///协议）的 http header field。response一直要被设置成false</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetGetRawHttpHead"></a>const mbSlist* mbNetGetRawHttpHead(mbNetJob jobPtr)</h3>
+			<div>在mbOnLoadUrlBegin回调里调用，获取curl返回的原生请求头</div>
+			<div class="api-params">返回值：const mbSlist*，是一个C语言链表，详情看头文件</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetSetMIMEType"></a>void mbNetSetMIMEType(void* jobPtr, char* type)</h3>
+			<div>在mbOnLoadUrlBegin回调里调用，表示设置http请求的MIME type</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetGetMIMEType"></a>const char* mbNetGetMIMEType(void* jobPtr, mbString mime)</h3>
+			<div>略</div>
+			<div class="api-params">参数：第2个参数可以传nullptr</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetSetData"></a>void mbNetSetData(void* jobPtr, void* buf, int len)</h3>
+			<div>在mbOnLoadUrlEnd里被调用，表示设置hook后缓存的数据</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetGetFavicon"></a>int mbNetGetFavicon(mbWebView webView, mbOnNetGetFavicon callback, void* param)</h3>
+			<div>获取favicon。</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：此接口必须在mbOnLoadingFinish回调里调用。可以用下面方式来判断是否是主frame的LoadingFinish:
+			<pre>		mbTempCallbackInfo* temInfo = mbGetTempCallbackInfo(webView);
+			    if (::mbIsMainFrame(webView, temInfo-&gt;frame)) {
+			    &nbsp;&nbsp;&nbsp;&nbsp;::mbNetGetFavicon(webView, HandleFaviconReceived, divaram);
+			    }
+			</pre>
+			</div>
+			<div class="sep-line"></div>
+			
+			<!---->
+			<h3 class="api-def"><a name="mbNetHoldJobToAsynCommit"></a>BOOL mbNetHoldJobToAsynCommit(void* jobPtr)</h3>
+			<div>高级用法。在mbOnLoadUrlBegin回调里调用。
+				有时候，mbOnLoadUrlBegin里拦截到一个请求后，不能马上判断出结果。此时可以调用本接口，然后在
+				异步的某个时刻，调用mbNetContinueJob来让此请求继续进行</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-params">返回值：TRUE代表成功，FALSE代表调用失败，不能再调用mbNetContinueJob了</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetGetRequestMethod"></a>mbRequestType mbNetGetRequestMethod(void *jobPtr)</h3>
+			<div>获取此请求的method，如post还是get</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetGetPostBody"></a>mbPostBodyElements* mbNetGetPostBody(void *jobPtr)</h3>
+			<div>获取此请求中的post数据。只有当请求是post时才有效果</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetCreatePostBodyElements"></a>mbPostBodyElements* mbNetCreatePostBodyElements(mbWebView webView, size_t length)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetFreePostBodyElements"></a>void mbNetFreePostBodyElements(mbPostBodyElements* elements)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetFreePostBodyElements"></a>void mbNetFreePostBodyElements(mbPostBodyElements* elements)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetCreatePostBodyElement"></a>mbPostBodyElement* mbNetCreatePostBodyElement(mbWebView webView)</h3>
+			<div>略</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbNetFreePostBodyElement"></a>void mbNetFreePostBodyElement(mbPostBodyElement* element)</h3>
+			<div>这四个接口要结合起来使用。
+				当mbOnLoadUrlBegin里判断是post时，可以通过mbNetCreatePostBodyElements来创建一个新的post数据包。
+				然后mbNetFreePostBodyElements来释放原post数据。</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbToDouble"></a>double mbToDouble(mbExecState es, mbValue v)</h3>
+			<div>如果v是个浮点形，返回相应值。如果是其他类型，返回0.0（这里注意）</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			<!---->
+			<h3 class="api-def"><a name="mbToString"></a>const utf8* mbToString(mbExecState es, mbValue v)</h3>
+			<div>
+				如果v是个字符串，返回相应值。如果是其他类型，返回L""（这里注意）
+				另外，返回的字符串不需要外部释放。mb会在下一帧自动释放</div>
+			<div class="api-params">参数：略</div>
+			<div class="sep-line"></div>
+			
+		</div>
+		<div class="search">
+			<input type="text" name="" id="" value="" />
+			<ul class="search-result">
+			</ul>
+		</div>
+<!--
+<script src="http://lib.sinaapp.com/js/jquery/1.10/jquery-1.10.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	function scrollSpeed(location){
+		var location = parseFloat(location,2);
+		$('html,body').animate({scrollTop: location.toString()+'px'}, 400);
+	}
+	function search(keywords){
+		console.log('start------------');
+		$('.search-result').empty();
+		var num = 1;
+		$('.api-def').each(function(){
+			if($(this).text().toLowerCase().indexOf(keywords.toLowerCase()) != -1){
+				$('.search-result').append('<li data-top="'+$(this).offset().top+'" title="'+$(this).text()+'">['+num.toString()+'] '+$(this).text()+'</li>');
+				if(num == 1){
+					scrollSpeed($(this).offset().top);					
+				}
+				num++;
+			}
+		});
+		console.log('end------------');
+	}
+	$(".search").bind("input propertychange",function(event){
+	    var keyword = $(this).children('input').val();
+	    search(keyword);
+	});
+	$(".search ul").on('click','li',function(){
+		scrollSpeed($(this).data('top'));	
+	});
+	document.onkeydown = function(e){
+		var keyCode = e.keyCode || e.which || e.charCode;
+		var ctrlKey = e.ctrlKey || e.metaKey;
+		if(ctrlKey && keyCode == 70) {
+			$('.search').fadeToggle('fast');
+			e.preventDefault();
+		}
+		return true;
+	}
+</script>
+-->
+	</body>
+</html>
