@@ -20,7 +20,7 @@
             <div class="header-nav-item">
                 <a href="../../index.html">首页</a>
             </div>
-            <div class="header-nav-item header-nav-active">
+            <div class="header-nav-item">
                 <a href="./index.html">文档</a>
             </div>
             <div class="header-nav-item">
@@ -29,8 +29,8 @@
             <div class="header-nav-item">
                 <a href="https://github.com/weolar/miniblink49/releases" target="_bank">下载</a>
             </div>
-            <div class="header-nav-item">
-                <a href="./company.html" target="_bank">公司简介</a>
+            <div class="header-nav-item header-nav-active">
+                <a href="../company.html" target="_bank">公司简介</a>
             </div>
         </div>
         <div class="header-right">
@@ -47,29 +47,14 @@
 <!-- doc -->
 <div class="main" id="doc-page">
     <div class="container">
-        <div class="side-bar">
-            <div class="side-bar-wrap">
-                <div class="side-bar-item side-bar-item-active"><a href="./index.html">前言</a></div>
-                <div class="side-bar-item"><a href="./isMiniblink.html">Miniblink是什么</a></div>
-                <div class="side-bar-item"><a href="./api.html">API</a></div>
-                <div class="side-bar-item"><a href="./api-vip.html" target="_blank">VIP-API</a></div>
-                <div class="side-bar-item"><a href="./info.html">mini-electron介绍</a></div>
-                <div class="side-bar-item"><a href="./other.html">其他语言绑定及例程</a></div>
-            </div>
-        </div>
         <div class="body">
             <div class="body-wrap">
-                <!-- 前言 -->
+                <!-- 公司简介 -->
                 <div class="doc-item" v-if="active == 1">
-                    <div class="doc-item-title">前言</div>
+                    <div class="doc-item-title">珠海独角兽科技有限公司</div>
                     <div class="doc-item-content">
-                        <p>miniblink使用了wke的接口。wke的相关介绍可以google一下。</p>
-                        <p>总的来说，miniblink的接口是纯C导出，只要使用wke.h即可加载。无需.lib。</p>
-                        <blockquote>
-                            <p>另外，请勿跨线程调用所有接口（除非接口有特殊申明）</p>
-                            <p>所有接口如果返回的是const utf8*，const wchar_t*类型的字符串，均不需要手动释放</p>
-                            <p>miniblink暂时只支持windows系统</p>
-                        </blockquote>
+                        <p>珠海独角兽科技有限公司是一家位于珠海的高科技企业。</p>
+                        <p>主要产品为miniblink浏览器控件，并提供各种浏览器相关技术服务。</p>
                     </div>
                 </div>
             </div>
