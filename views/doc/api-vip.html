@@ -240,6 +240,12 @@
 			<div class="api-remark">注意：这个接口是全局的。webView参数暂时没用</div>
 			<div class="sep-line"></div>
 			<!---->
+			<h3 class="api-def"><a name="mbEnableHighDPISupport"></a>void mbEnableHighDPISupport()</h3>
+			<div>开启高分屏支持。</div>
+			<div class="api-params">参数：略</div>
+			<div class="api-remark">注意：这个api内部是通过设置ZOOM，并且关闭系统默认放大来实现。所以再使用wkeGetZoomFactor会发现值可能不为1</div>
+			<div class="sep-line"></div>
+			<!---->
 			<h3 class="api-def"><a name="mbFireMouseEvent"></a>bool mbFireMouseEvent(mbWebView webView, unsigned int message, int x, int y, unsigned int flags)</h3>
 			<div>向mb发送鼠标消息</div>
 			<div class="api-params">参数：</div>
@@ -614,6 +620,8 @@
 						<tr><td>"minimumLogicalFontSize"</td><td>最小逻辑字体</td></tr>
 						<tr><td>"defaultFontSize"</td><td>默认字体</td></tr>
 						<tr><td>"defaultFixedFontSize"</td><td>默认fixed字体</td></tr>
+						<tr><td>"imageEnable"</td><td>是否打开无图模式。param为"0"表示开启无图模式</td></tr>
+						<tr><td>"jsEnable"</td><td>是否禁用js。param为"0"表示禁用</td></tr>
 					</tbody></table>
 				</div>
 			</div>

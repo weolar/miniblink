@@ -123,6 +123,16 @@
                             </div>
                             <div data-v-4fb65e44="" class="api-list-item">
                                 <h3 data-v-4fb65e44="">
+                                    [4] void wkeEnableHighDPISupport();
+                                </h3>
+                                <p data-v-4fb65e44="">
+                                    开启高分屏支持。注意，这个api内部是通过设置ZOOM，并且关闭系统默认放大来实现。所以再使用wkeGetZoomFactor会发现值可能不为1
+                                </p>
+                                <!---->
+                                <!---->
+                            </div>
+                            <div data-v-4fb65e44="" class="api-list-item">
+                                <h3 data-v-4fb65e44="">
                                     [5] void wkeSetFileSystem(WKE_FILE_OPEN pfnOpen, WKE_FILE_CLOSE pfnClose,
                                     WKE_FILE_SIZE pfnSize, WKE_FILE_READ pfnRead, WKE_FILE_SEEK pfnSeek)
                                 </h3>
@@ -1977,7 +1987,19 @@
                                             debugString
                                         </div>
                                         <div data-v-4fb65e44="" class="table-col">
-                                            "showDevTools"开启开发者工具，此时param要填写开发者工具的资源路径，如file:///c:/miniblink-release/front_end/inspector.html。注意param此时必须是utf8编码。"wakeMinInterval"设置帧率，默认值是10，值越大帧率越低。"drawMinInterval"设置帧率，默认值是3，值越大帧率越低。"antiAlias"设置抗锯齿渲染。param必须设置为1。"minimumFontSize"最小字体。"minimumLogicalFontSize"最小逻辑字体。"defaultFontSize"默认字体。"defaultFixedFontSize"默认fixed字体。
+                                            "showDevTools"开启开发者工具，此时param要填写开发者工具的资源路径，如file:///c:/miniblink-release/front_end/inspector.html。注意param此时必须是utf8编码。<p/>
+                                            "wakeMinInterval"设置帧率，默认值是10，值越大帧率越低。<p/>
+                                            "drawMinInterval"设置帧率，默认值是3，值越大帧率越低。<p/>
+                                            "antiAlias"设置抗锯齿渲染。param必须设置为"1"。<p/>
+                                            "minimumFontSize"最小字体。<p/>
+                                            "minimumLogicalFontSize"最小逻辑字体。<p/>
+                                            "defaultFontSize"默认字体。<p/>
+                                            "defaultFixedFontSize"默认fixed字体。<p/>
+                                            "defaultFixedFontSize"默认fixed字体。<p/>
+                                            "defaultFontSize"默认字体。<p/>
+                                            "defaultFixedFontSize"默认fixed字体。<p/>
+                                            "imageEnable" 是否打开无图模式。param为"0"表示开启无图模式<p/>
+                                            "jsEnable" 是否禁用js。param为"0"表示禁用<p/>
                                         </div>
                                     </div>
                                 </div>
