@@ -347,6 +347,10 @@ blockquote{
     color:inherit;
 }
 
+.doc-item-content-center{
+    text-align: center;
+}
+
 .api-list-item{
     /* background: red; */
     padding:10px;
