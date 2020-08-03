@@ -65,119 +65,251 @@
     </div>
 </div>
 
-
 <div class="main">
     <div class="container">
         <div class="container-title">
-            <h1>如果免费开源版满足不了您的需求，可以考虑购买VIP版</h1>
-            <p>Choice</p>
-            <!-- <p>如果免费开源版满足不了您的需求，可以考虑购买定制版。定制版是一个独立于原dll的新dll</p> -->
+            <h1>MB版本、功能及价格说明</h1>
         </div>
-        <div class="feature-list">
-            <div class="feature-list-item">
-                <div class="feature-list-wrap">
-                    <div class="feature-list-item-header">
-                        <div class="feature-list-item-header-title">个人版<small>Personal</small></div>
-                        <div class="feature-list-item-header-price">￥899</div>
-                    </div>
-                    <div class="feature-list-item-body">
-                        <ul>
-                            <li style="font-weight:bold">不支持定制编译</li>
-                            <li style="font-weight:bold">bug优先修复</li>
-                            <li>永久授权</li>
-                            <li>购买后可在软件中自由分发</li>
-                            <li>一年内免费更新</li>
-                            <li>高性能多线程渲染</li>
-                            <li>不同页面独立cookie支持</li>
-                            <li>MP3/MP4支持</li>
-                            <li>网页内开启Nodejs能力</li>
-                            <li>打印及打印预览</li>
-                            <li>下载管理</li>
-                            <li>硬盘本地缓存</li>
-                            <li>资源打包</li>
-                            <li>硬件加速（正在实现中，未来将提供）</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        
+        <script>
+        function scrollBottom()
+        {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+        </script>
 
-            <div class="feature-list-item">
-                <div class="feature-list-wrap">
-                    <div class="feature-list-item-header">
-                        <div class="feature-list-item-header-title">企业版<small>Enterprise</small></div>
-                        <div class="feature-list-item-header-price">￥5,999</div>
-                    </div>
-                    <div class="feature-list-item-body">
-                        <ul>
-                            <li style="font-weight:bold">提供功能定制</li>
-                            <li style="font-weight:bold">完善的技术支持，功能定制</li>
-                            <li>永久授权</li>
-                            <li>购买后可在软件中自由分发</li>
-                            <li>一年内技术支持及更新</li>
-                            <li>高性能多线程渲染</li>
-                            <li>不同页面独立cookie支持</li>
-                            <li>MP3/MP4支持</li>
-                            <li>网页内开启Nodejs能力</li>
-                            <li>打印及打印预览</li>
-                            <li>下载管理</li>
-                            <li>硬盘本地缓存</li>
-                            <li>资源打包</li>
-                            <li>硬件加速（正在实现中，未来将提供）</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="feature-list-item">
-                <div class="feature-list-wrap">
-                    <div class="feature-list-item-header">
-                        <div class="feature-list-item-header-title">精简源码<small>Source code</small></div>
-                        <div class="feature-list-item-header-price">￥14,999</div>
-                    </div>
-                    <div class="feature-list-item-body">
-                        <ul>
-                            <li>源码仅供购买者使用，禁止二次分发、传播</li>
-                            <li>精简版源码不包含硬件加速、webgl相关</li>
-                            <li style="font-weight:bold">如果对webgl不感兴趣，可只购买精简源码</li>
-                            <li>该源码其他功能和完整版没有区别；</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="feature-list-item">
-                <div class="feature-list-wrap">
-                    <div class="feature-list-item-header">
-                        <div class="feature-list-item-header-title">完整源码<small>Source code</small></div>
-                        <div class="feature-list-item-header-price">￥43,999</div>
-                    </div>
-                    <div class="feature-list-item-body">
-                        <ul>
-                            <li>源码仅供购买者使用，禁止二次分发、传播</li>
-                            <li>完整版代码包含硬件加速、webgl相关</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div>
+            <table border="1px" cellspacing="0px" cellpadding="6px" style="vertical-align: middle; text-align: center; border: 1px solid black; border-collapse: collapse;">
+                <tr height="50" style="background: #393D49; color:#f1f1f1;">
+                  <td style="border: 1px solid black;" width="200">功能 / 版本</td>
+                  <td style="border: 1px solid black;" width="200">基础版</td>
+                  <td style="border: 1px solid black;" width="200">标准版</td>
+                  <td style="border: 1px solid black;" width="200">个人VIP版</td>
+                  <td style="border: 1px solid black;" width="200">企业VIP版</td>
+                  <td style="border: 1px solid black;" width="200">特殊定制版</td>
+                  <td style="border: 1px solid black;" width="200">Android版</td>
+                  <td style="border: 1px solid black;" width="200">Linux版</td>
+                </tr>
+                <tr height="180">
+                  <td style="border: 1px solid black;"  style="border: 1px solid black;" >说明</td>
+                  <td style="border: 1px solid black;" >完全免费，适合嵌入其他程序中，作为界面组件。支持主流js界面库，开发快速，动态排版，可热更新，个人/企业可用。</td>
+                  <td style="border: 1px solid black;" >免费版基础上添加一些实用功能，如独立cookie、拦截数据等，个人/企业可用。</td>
+                  <td style="border: 1px solid black;" >在标准版基础上提供更多个性化及强化功能，仅供个人学习、教育机构教学，独立开发者发布个人作品使用，不可用于企业发布软件，违者将受到法律追责。</td>
+                  <td style="border: 1px solid black;" >功能基本同个人版VIP，但提供更多企业级功能，企业产品使用请购买此版本商业授权。</td>
+                  <td style="border: 1px solid black;" >行业或产品特殊需求定制，具体私聊。</td>
+                  <td style="border: 1px solid black;" >主要针对移动端，提供免费版及标准版功能</td>
+                  <td style="border: 1px solid black;" >主要针对嵌入式系统，适配各种小内存低性能硬件特性</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >价格</td>
+                  <td style="border: 1px solid black;" >免费 / 有广告（可关闭）</td>
+                  <td style="border: 1px solid black;" >免费 / 有广告</td>
+                  <td style="border: 1px solid black;" >999 / 永久授权</td>
+                  <td style="border: 1px solid black;" ><span style="color: #0000FF; text-decoration: underline;" onclick="scrollBottom()">咨询</span></td>
+                  <td style="border: 1px solid black;" ><span style="color: #0000FF; text-decoration: underline;" onclick="scrollBottom()">咨询</span></td>
+                  <td style="border: 1px solid black;" ><span style="color: #0000FF; text-decoration: underline;" onclick="scrollBottom()">咨询</span></td>
+                  <td style="border: 1px solid black;" ><span style="color: #0000FF; text-decoration: underline;" onclick="scrollBottom()">咨询</span></td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >标准功能接口</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >高性能多线程渲染</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >多媒体支持</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >独立cookie及代理等</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >NodeJS支持</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >NPAPI支持</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >ActiveX支持</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >WebGL支持</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >下载管理</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >修改指纹特征</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >打印及预览</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >资源打包</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >硬盘本地缓存</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >小内存（V8替换QJS）</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >常用行业SDK集成</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >Windows XP支持</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >模拟移动端环境</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+                <tr height="40">
+                  <td style="border: 1px solid black;" >专属客服及技术支持</td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" ></td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >√</td>
+                  <td style="border: 1px solid black;" >-</td>
+                  <td style="border: 1px solid black;" >-</td>
+                </tr>
+            </table>
         </div>
 
         <div class="container-title">
-            <h1>注意事项</h1>
-            <p>Matters needing attention</p>
+            <h1>版本及购买说明</h1>
         </div>
         <div class="feature-tips">
             <blockquote>
                 <ul>
-                    <li>个人版仅供个人使用，企业使用请购买企业版</li>
-                    <li>付费版是个独立的dll，需要依赖开源版的dll实现部分功能</li>
-                    <li>开源版由于渲染线程和UI线程是同一个，所以一旦网页js逻辑复杂，会引起UI卡慢。付费版的多线程渲染解决了这一问题</li>
-                    <li>尊享版提供定制编译服务。可自由选择是否开启某些功能，以达到最精简的体积</li>
-                    <li>定制功能包括：openssl、devtools、nodejs、v8版本选择等</li>
-                    <li>以上价格，除个人版外均含发票</li>
-                    <li>以上价格，包含一年有效期。第二年起均半价续订</li>
-                    <li>若需购买，请下载最新SDK包，打开vip-miniblink.exe，点击“更多”按钮，填入您的邮箱，并将请求码通过邮件发送给 weolar@miniblink.net</li>
-                    <li>购买后，会获得一个lisence.key文件，放在dll目录下即可。此文件开发时才需要，发布后不需要</li>
-                    <li>付款后不支持退款,谢谢支持</li>
+                    <li>● 基础版：完全免费，有广告，可通过接口选择关闭广告。仅提供最基本的页面渲染功能，可用于作为用户界面组件实现原生+H5开发模式，类似移动端的react框架，不设限制，可用于个人及企业发布软件。</li>
+                    <li>● 标准版：完全免费，有广告，且广告不可关闭，如不能接受请购买VIP版。在免费版的基础上提供更多的实用接口，免费实用广告不可关闭，不设限制，可用于个人及企业发布软件。</li>
+                    <li>● 个人VIP版：999元永久授权，提供更多实用功能，同时仅供个人学习、教育机构教学，独立开发者发布个人作品使用，不可用于企业发布软件，违者将受到法律追责。</li>
+                    <li>● 企业VIP版：价格面议。功能基本同个人VIP版，但同时提供更多企业级配置，插件等，可用于个人及企业发布软件。</li>
+                    <li>● 特殊定制版：价格面议。提供以上所有功能的定制开发、优化性编译、特殊功能需求等，不设限制，可用于个人及企业发布软件。</li>
+                    <li>● 企业及特殊定制版定价原则：按最终客户端使用数一次性付费或按年订阅式付费。</li>
+                    <li>● 关于定价：除个人版VIP版外均可开具正规发票。</li>
+                    <li>● 关于广告：广告形式非常轻量，至多每周在用户电脑桌面上释放一个网页快捷方式，通常是淘宝客或导航页的链接，无任何其他形式广告，不会干扰用户正常使用电脑。</li>
+                    <li>● 购买vip后会获得一个lisence.key文件，放在dll目录下即可。此文件开发调试时才需要，发布后不需要。</li>
+                    <li>● 如果您是企业发布软件产品并且需要使用VIP版本的功能，请务必购买企业版并取得版权授权，请尊重我们的劳动成果，如发现未经授权使用，我们将按照每个最终用户客户端至少1元钱的标准进行起诉索赔。</li>
+                    <li>● 版本定制及购买联系QQ：17136608，付款后不支持退款，感谢支持。</li>
                 </ul>
             </blockquote>
         </div>
@@ -187,7 +319,7 @@
 <!-- footer -->
 <div class="footer">
     <div class="container">
-        <p>珠海独角兽科技有限公司 版权所有，邮箱：weolar@miniblink.net , <a href="http://beian.miit.gov.cn">粤ICP备18103739号</a></p>
+        <p>珠海独角兽科技有限公司<a href="http://beian.miit.gov.cn">粤ICP备18103739号</a></p>
     </div>
 </div>
 </body>
